@@ -9,7 +9,7 @@ export default class Engine {
     this.canvas.height = height;
     this.context = this.canvas.getContext('2d');
 
-    this.loop = new GameLoop(60);
+    this.loop = new GameLoop(60, this.context);
     this.scene = null;
   }
 
@@ -18,7 +18,7 @@ export default class Engine {
   }
 
   startScene() {
-    this.loop.start();
+    this.loop.start(this.scene);
   }
 
   removeScene() {

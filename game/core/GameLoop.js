@@ -1,14 +1,17 @@
 export default class GameLoop {
-  constructor(ops) {
+  constructor(ops, context) {
     this.timeUPS = 1000.0 / ops;
     this.running = false;
     this.lastUpdateTime = null;
     this._render = this._render.bind(this);
     this._update = this._update.bind(this);
+    this.context = context;
+
+    this.scene = null;
   }
 
   _render() {
-    //TODO here I should run all of the render stuff
+    this.scene.render(this.context);
 
     if (this.running) {
       window.requestAnimationFrame(this._render);
@@ -18,7 +21,7 @@ export default class GameLoop {
   _update() {
     let lastUpdateTimedelta = window.performance.now() - this.lastUpdateTime;
     while (lastUpdateTimedelta > this.timeUPS) {
-      //TODO - here I should call update function
+      this.scene.update();
       this.lastUpdateTime += this.timeUPS;
       lastUpdateTimedelta -= this.timeUPS;
     }
@@ -28,9 +31,9 @@ export default class GameLoop {
     }
   }
 
-  start() {
+  start(scene) {
     this.running = true;
-
+    this.scene = scene;
     window.requestAnimationFrame(this._render);
 
     this.lastUpdateTime = window.performance.now();
