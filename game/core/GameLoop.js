@@ -2,7 +2,7 @@ export default class GameLoop {
   constructor(ops) {
     this.timeUPS = 1000.0 / ops;
     this.running = false;
-    this.lastUpdateTime = undefined;
+    this.lastUpdateTime = null;
     this._render = this._render.bind(this);
     this._update = this._update.bind(this);
   }

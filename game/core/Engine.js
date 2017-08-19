@@ -10,7 +10,20 @@ export default class Engine {
     this.context = this.canvas.getContext('2d');
 
     this.loop = new GameLoop(60);
+    this.scene = null;
+  }
 
+  setScene(newScene) {
+    this.scene = newScene
+  }
+
+  startScene() {
     this.loop.start();
+  }
+
+  removeScene() {
+    this.loop.stop();
+    this.scene.unload();
+    this.scene = null;
   }
 }
