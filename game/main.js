@@ -1,3 +1,3 @@
-import { HELLO } from './hello';
+import Engine from './core/engine';
 
-document.write(HELLO);
+const engine = new Engine('game', 1000, 1000);
