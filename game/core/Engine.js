@@ -1,4 +1,4 @@
-import GameLoop from './loop';
+import GameLoop from './GameLoop';
 
 export default class Engine {
   constructor(canvasId, width, height) {
