@@ -1,7 +1,9 @@
 import Engine from './core/Engine';
 import SpaceScene from './space/SpaceScene';
 
-Engine.setup('game', 640, 480);
+const gameCanvas = document.getElementById('game');
+
+Engine.setup(gameCanvas, 960, 540);
 
 Engine.setScene(new SpaceScene());
 Engine.startScene();

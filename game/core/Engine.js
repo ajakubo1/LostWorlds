@@ -3,8 +3,8 @@ import GameLoop from './GameLoop';
 let instance = null;
 
 class EngineImplementation {
-  setup(canvasId, width, height) {
-    this.canvas = document.getElementById(canvasId);
+  setup(canvasDOM, width, height) {
+    this.canvas = canvasDOM;
     this.width = width;
     this.height = height;
     this.canvas.width = width;
