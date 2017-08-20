@@ -1,4 +1,5 @@
 import Scene from '../core/Scene';
+import Engine from '../core/Engine';
 
 export default class SpaceScene extends Scene {
 
@@ -11,9 +12,9 @@ export default class SpaceScene extends Scene {
   }
 
   render(context) {
-    context.clearRect(0, 0, 1000, 1000);
+    context.clearRect(0, 0, Engine.width, Engine.height);
 
-    context.fillRect(0, 0, 1000, 1000);
+    context.fillRect(0, 0, Engine.width, Engine.height);
   }
 
 

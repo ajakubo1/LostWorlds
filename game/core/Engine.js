@@ -1,7 +1,9 @@
 import GameLoop from './GameLoop';
 
-export default class Engine {
-  constructor(canvasId, width, height) {
+let instance = null;
+
+class EngineImplementation {
+  setup(canvasId, width, height) {
     this.canvas = document.getElementById(canvasId);
     this.width = width;
     this.height = height;
@@ -9,7 +11,7 @@ export default class Engine {
     this.canvas.height = height;
     this.context = this.canvas.getContext('2d');
 
-    this.loop = new GameLoop(60, this.context);
+    this.loop = new GameLoop(60);
     this.scene = null;
   }
 
@@ -27,3 +29,15 @@ export default class Engine {
     this.scene = null;
   }
 }
+
+class Engine {
+  constructor() {
+    if (instance === null) {
+      instance = new EngineImplementation()
+    }
+
+    return instance;
+  }
+}
+
+export default new Engine()

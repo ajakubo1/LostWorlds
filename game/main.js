@@ -1,7 +1,7 @@
 import Engine from './core/Engine';
 import SpaceScene from './space/SpaceScene';
 
-const engine = new Engine('game', 1000, 1000);
+Engine.setup('game', 640, 480);
 
-engine.setScene(new SpaceScene());
-engine.startScene();
+Engine.setScene(new SpaceScene());
+Engine.startScene();

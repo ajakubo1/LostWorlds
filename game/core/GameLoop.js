@@ -1,17 +1,19 @@
+import Engine from './Engine';
+
+
 export default class GameLoop {
-  constructor(ops, context) {
+  constructor(ops) {
     this.timeUPS = 1000.0 / ops;
     this.running = false;
     this.lastUpdateTime = null;
     this._render = this._render.bind(this);
     this._update = this._update.bind(this);
-    this.context = context;
 
     this.scene = null;
   }
 
   _render() {
-    this.scene.render(this.context);
+    this.scene.render(Engine.context);
 
     if (this.running) {
       window.requestAnimationFrame(this._render);
