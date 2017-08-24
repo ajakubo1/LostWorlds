@@ -47,6 +47,11 @@ Engine._putAsset(
   createSquare(960, 540, '#002201'),
   ASSET_TYPES.PLACEHOLDER
 );
+Engine._putAsset(
+  ASSET_IDENTIFIERS.PANEL,
+  createSquare(150, 540, '#AACC22', '#E80088'),
+  ASSET_TYPES.PLACEHOLDER
+);
 
 const config = {
   width: 6,

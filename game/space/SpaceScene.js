@@ -3,6 +3,7 @@ import Engine from '../core/Engine';
 import PlanetSquare from './objects/PlanetSquare';
 import ProbeSquare from './objects/ProbeSquare';
 import Background from './objects/Background';
+import Panel from './objects/Panel';
 
 export default class SpaceScene extends Scene {
 
@@ -22,6 +23,8 @@ export default class SpaceScene extends Scene {
     let i, j, obj;
 
     this.objects.push(new Background(0, 0, Engine.width, Engine.height));
+    this.objects.push(new Panel(0, 0, 150, Engine.height));
+    this.objects.push(new Panel(Engine.width - 150, 0, 150, Engine.height));
 
     const widthPlanetSquares = 50 * this.width;
     const heightPlanetsSquare = 50 * this.height;
@@ -86,9 +89,6 @@ export default class SpaceScene extends Scene {
 
   render(context) {
     context.clearRect(0, 0, Engine.width, Engine.height);
-
-    context.fillRect(0, 0, Engine.width, Engine.height);
-
     let i;
     const length = this.objects.length;
     for (i = 0; i < length ; i += 1) {
