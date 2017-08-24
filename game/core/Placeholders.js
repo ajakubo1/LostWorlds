@@ -5,7 +5,7 @@ const createCanvas = (width, height) => {
   return canvas;
 };
 
-const createSquare = (width, height, color, borderColor = null) => {
+export const createSquare = (width, height, color, borderColor = null) => {
   const canvas = createCanvas(width, height);
   const context = canvas.getContext('2d');
 
@@ -16,17 +16,3 @@ const createSquare = (width, height, color, borderColor = null) => {
   context.fillStyle = color;
   context.fillRect(b, b, w, h);
 };
-
-let placeholders = null;
-
-class Placeholders {
-  constructor() {
-    if (placeholders === null) {
-      placeholders = new Placeholders();
-    }
-
-    return placeholders;
-  }
-}
-
-export default new Placeholders();

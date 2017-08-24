@@ -16,4 +16,8 @@ export default class Assets {
     this.assets[id] = asset;
     this.types[id] = type;
   }
-}
+};
+
+export const TYPES = {
+  'PLACEHOLDER': 'PLACEHOLDER'
+};
