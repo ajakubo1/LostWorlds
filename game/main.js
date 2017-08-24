@@ -49,7 +49,7 @@ Engine._putAsset(
 );
 
 const config = {
-  width: 5,
+  width: 6,
   height: 5,
   planets: [
     {
