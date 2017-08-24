@@ -1,5 +1,5 @@
 import Engine from './core/Engine';
-import { TYPES as ASSET_TYPES } from './core/Assets';
+import { TYPES as ASSET_TYPES, IDENTIFIERS as ASSET_IDENTIFIERS } from './core/Assets';
 import SpaceScene from './space/SpaceScene';
 import { createSquare } from './core/Placeholders';
 
@@ -7,13 +7,46 @@ const gameCanvas = document.getElementById('game');
 
 Engine.setup(gameCanvas, 960, 540);
 
-Engine._putAsset('planet', createSquare(50, 50, '#336600'), ASSET_TYPES.PLACEHOLDER);
-Engine._putAsset('planetSquare', createSquare(50, 50, '#330066'), ASSET_TYPES.PLACEHOLDER);
-Engine._putAsset('probeSquare', createSquare(50, 50, '#484848'), ASSET_TYPES.PLACEHOLDER);
-Engine._putAsset('probe', createSquare(50, 50, '#00CC99'), ASSET_TYPES.PLACEHOLDER);
-Engine._putAsset('energy', createSquare(100, 350, '#CCFF00'), ASSET_TYPES.PLACEHOLDER);
-Engine._putAsset('laserH', createSquare(50, 10, '#E80000'), ASSET_TYPES.PLACEHOLDER);
-Engine._putAsset('laserV', createSquare(10, 50, '#E80000'), ASSET_TYPES.PLACEHOLDER);
+Engine._putAsset(
+  ASSET_IDENTIFIERS.PLANET,
+  createSquare(50, 50, '#336600'),
+  ASSET_TYPES.PLACEHOLDER
+);
+Engine._putAsset(
+  ASSET_IDENTIFIERS.PLANET_SQUARE,
+  createSquare(50, 50, '#330066'),
+  ASSET_TYPES.PLACEHOLDER
+);
+Engine._putAsset(
+  ASSET_IDENTIFIERS.PROBE_SQUARE,
+  createSquare(50, 50, '#484848'),
+  ASSET_TYPES.PLACEHOLDER
+);
+Engine._putAsset(
+  ASSET_IDENTIFIERS.PROBE,
+  createSquare(50, 50, '#00CC99'),
+  ASSET_TYPES.PLACEHOLDER
+);
+Engine._putAsset(
+  ASSET_IDENTIFIERS.ENERGY,
+  createSquare(100, 350, '#CCFF00'),
+  ASSET_TYPES.PLACEHOLDER
+);
+Engine._putAsset(
+  ASSET_IDENTIFIERS.LASER_HORIZONTAL,
+  createSquare(50, 10, '#E80000'),
+  ASSET_TYPES.PLACEHOLDER
+);
+Engine._putAsset(
+  ASSET_IDENTIFIERS.LASER_VERTICAL,
+  createSquare(10, 50, '#E80000'),
+  ASSET_TYPES.PLACEHOLDER
+);
+Engine._putAsset(
+  ASSET_IDENTIFIERS.BACKGROUND,
+  createSquare(960, 540, '#002201'),
+  ASSET_TYPES.PLACEHOLDER
+);
 
 const config = {
   width: 5,
