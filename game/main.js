@@ -5,5 +5,7 @@ const gameCanvas = document.getElementById('game');
 
 Engine.setup(gameCanvas, 960, 540);
 
+Engine.loadAsset()
+
 Engine.setScene(new SpaceScene());
 Engine.startScene();

@@ -1,4 +1,5 @@
 import GameLoop from './GameLoop';
+import Assets from './Assets';
 
 let instance = null;
 
@@ -10,6 +11,7 @@ class EngineImplementation {
     this.canvas.width = width;
     this.canvas.height = height;
     this.context = this.canvas.getContext('2d');
+    this.assets = new Assets();
 
     this.loop = new GameLoop(60);
     this.scene = null;
@@ -27,6 +29,18 @@ class EngineImplementation {
     this.loop.stop();
     this.scene.unload();
     this.scene = null;
+  }
+
+  loadAsset(id, asset, type) {
+    // TODO later if needed
+  }
+
+  _putAsset(id, asset, type) {
+    this.assets.set(id, asset, type)
+  }
+
+  getAsset(id) {
+    return this.assets.get(id)
   }
 }
 
