@@ -12,9 +12,14 @@ export default class SpaceScene extends Scene {
     this.height = config.height;
     this.planets = config.planets;
 
+    this.probeSquares = new Array(this.width * 2 + this.height * 2);
+    let currentProbeSquare = 0;
+    this.planetSquares = new Array(this.width * this.height);
+    let currentPlanetSquare = 0;
+
     this.objects = [];
 
-    let i, j;
+    let i, j, obj;
 
     this.objects.push(new Background(0, 0, Engine.width, Engine.height));
 
@@ -28,40 +33,50 @@ export default class SpaceScene extends Scene {
 
     for (i = 0; i < this.width; i += 1) {
       for (j = 0; j < this.height; j += 1) {
-        this.objects.push(new PlanetSquare(
+        obj = new PlanetSquare(
           this.limitX1 + i * 50,
           this.limitY1 + j * 50,
           50, 50
-        ));
+        );
+        this.objects.push(obj);
+        this.planetSquares[currentPlanetSquare++] = obj
       }
     }
 
     for (i = 0; i < this.width; i += 1) {
-      this.objects.push(new ProbeSquare(
+      obj = new ProbeSquare(
         this.limitX1 + i * 50,
         10,
         50, 50
-      ));
+      );
+      this.objects.push(obj);
+      this.probeSquares[currentProbeSquare++] = obj;
 
-      this.objects.push(new ProbeSquare(
+      obj = new ProbeSquare(
         this.limitX1 + i * 50,
         Engine.height - 10 - 50,
         50, 50
-      ));
+      );
+      this.objects.push(obj);
+      this.probeSquares[currentProbeSquare++] = obj;
     }
 
     for (i = 0; i < this.height; i += 1) {
-      this.objects.push(new ProbeSquare(
+      obj = new ProbeSquare(
         150 + 10,
         this.limitY1 + i * 50,
         50, 50
-      ));
+      );
+      this.objects.push(obj);
+      this.probeSquares[currentProbeSquare++] = obj;
 
-      this.objects.push(new ProbeSquare(
+      obj = new ProbeSquare(
         Engine.width - 150 - 10 - 50,
         this.limitY1 + i * 50,
         50, 50
-      ));
+      );
+      this.objects.push(obj);
+      this.probeSquares[currentProbeSquare++] = obj;
     }
   }
 
