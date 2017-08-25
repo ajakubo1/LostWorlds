@@ -4,12 +4,14 @@ import PlanetSquare from './objects/PlanetSquare';
 import ProbeSquare from './objects/ProbeSquare';
 import Background from './objects/Background';
 import Panel from './objects/Panel';
+import Beam from "./objects/Beam";
 
 export default class SpaceScene extends Scene {
 
   constructor(config) {
     super();
     this.clickedElement = null;
+    this.beam = null;
 
     this.width = config.width;
     this.height = config.height;
@@ -110,6 +112,8 @@ export default class SpaceScene extends Scene {
           if (square.inRange(x, y)) {
             this.clickedElement = square;
             this.clickedElement.setState('active');
+            this.beam = new Beam();
+            this.beam.setProbe(square);
             break;
           }
         }
@@ -122,22 +126,30 @@ export default class SpaceScene extends Scene {
 
   released() {
     console.info('released');
-    if (this.clickedElement != null) {
+    if (this.clickedElement !== null) {
       this.clickedElement.setState('inactive');
       this.clickedElement = null;
+    }
+    if (this.beam !== null) {
+      this.beam = null;
     }
   }
 
   moved(x, y) {
     console.info('moved', x, y);
-    if (this.clickedElement != null) {
+    if (this.clickedElement !== null) {
       this.clickedElement.setState('inactive');
       this.clickedElement = null;
+    }
+    if (this.beam !== null) {
+      this.beam = null;
     }
   }
 
   update() {
-
+    if (this.beam !== null) {
+      this.beam.update();
+    }
   }
 
   render(context) {
@@ -146,6 +158,10 @@ export default class SpaceScene extends Scene {
     const length = this.objects.length;
     for (i = 0; i < length ; i += 1) {
       this.objects[i].render(context);
+    }
+
+    if (this.beam !== null) {
+      this.beam.render(context);
     }
   }
 

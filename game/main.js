@@ -43,13 +43,8 @@ Engine._putAsset(
   ASSET_TYPES.PLACEHOLDER
 );
 Engine._putAsset(
-  ASSET_IDENTIFIERS.LASER_HORIZONTAL,
-  createSquare(50, 10, '#E80000'),
-  ASSET_TYPES.PLACEHOLDER
-);
-Engine._putAsset(
-  ASSET_IDENTIFIERS.LASER_VERTICAL,
-  createSquare(10, 50, '#E80000'),
+  ASSET_IDENTIFIERS.LASER,
+  createSquare(10, 10, '#E80000'),
   ASSET_TYPES.PLACEHOLDER
 );
 Engine._putAsset(
