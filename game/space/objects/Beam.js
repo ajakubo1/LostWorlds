@@ -7,29 +7,31 @@ export default class Beam extends Renderable {
     return Engine.getAsset(ASSET_IDENTIFIERS.LASER)
   }
 
+  fakeIt() {
+    this.image = Engine.getAsset(ASSET_IDENTIFIERS.LASER_FAKE)
+    this.fake = true;
+  }
+
   setProbe(probe) {
+    this.fake = false;
     this.finished = false;
     this.tick = 0;
     this.probe = probe;
     this.pathX = [];
     this.pathY = [];
-    this.limitX1 = 150 + 10 + 50;
-    this.limitX2 = Engine.width - 150 - 10 - 50;
-    this.limitY1 = 10 + 50;
-    this.limitY2 = Engine.height - 10 - 50;
-    if (this.probe.x < this.limitX1) {
+    if (this.probe.x < this.x) {
       this.pathX.push(this.probe.x + this.probe.width);
       this.pathY.push(this.probe.y + 20);
       this.direction = 'right'
-    } else if (this.probe.x === this.limitX2) {
+    } else if (this.probe.x > this.width) {
       this.pathX.push(this.probe.x - 10);
       this.pathY.push(this.probe.y + 20);
       this.direction = 'left'
-    } else if (this.probe.y < this.limitY1) {
+    } else if (this.probe.y < this.y) {
       this.pathX.push(this.probe.x + 20);
       this.pathY.push(this.probe.y + this.probe.width);
       this.direction = 'down'
-    } else if (this.probe.y === this.limitY2) {
+    } else if (this.probe.y > this.height) {
       this.pathX.push(this.probe.x + 20);
       this.pathY.push(this.probe.y - 10);
       this.direction = 'up'
@@ -41,7 +43,14 @@ export default class Beam extends Renderable {
     const length = this.pathX.length;
     let i;
     for (i = 0; i < length; i += 1) {
-      context.drawImage(this.image, this.pathX[i], this.pathY[i], 10, 10);
+      if (this.fake) {
+        context.drawImage(this.image, this.pathX[i], this.pathY[i], 10, 10);
+      } else {
+        if (this.pathX[i] < this.x || this.pathX[i] > this.width - 10 ||
+          this.pathY[i] < this.y || this.pathY[i] > this.height - 10) {
+          context.drawImage(this.image, this.pathX[i], this.pathY[i], 10, 10);
+        }
+      }
     }
   }
 
@@ -54,8 +63,8 @@ export default class Beam extends Renderable {
         const prevX = this.pathX[lastElement];
         const prevY = this.pathY[lastElement];
 
-        if (prevX < this.limitX1 || prevX > this.limitX2 ||
-          prevY < this.limitY1 || prevY > this.limitY2) {
+        if (prevX < this.x - 50 || prevX > this.width + 40 ||
+          prevY < this.y - 50 || prevY > this.height + 40) {
           this.finished = true;
           return;
         }

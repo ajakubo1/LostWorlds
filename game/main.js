@@ -48,6 +48,11 @@ Engine._putAsset(
   ASSET_TYPES.PLACEHOLDER
 );
 Engine._putAsset(
+  ASSET_IDENTIFIERS.LASER_FAKE,
+  createSquare(10, 10, '#EE6222'),
+  ASSET_TYPES.PLACEHOLDER
+);
+Engine._putAsset(
   ASSET_IDENTIFIERS.BACKGROUND,
   createSquare(960, 540, '#002201'),
   ASSET_TYPES.PLACEHOLDER

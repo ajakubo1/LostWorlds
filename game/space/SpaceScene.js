@@ -12,6 +12,7 @@ export default class SpaceScene extends Scene {
     super();
     this.clickedElement = null;
     this.beam = null;
+    this.fake = null;
 
     this.width = config.width;
     this.height = config.height;
@@ -53,7 +54,7 @@ export default class SpaceScene extends Scene {
     for (i = 0; i < this.width; i += 1) {
       obj = new ProbeSquare(
         this.limitX1 + i * 50,
-        10,
+        this.limitY1 - 100,
         50, 50
       );
       this.objects.push(obj);
@@ -61,7 +62,7 @@ export default class SpaceScene extends Scene {
 
       obj = new ProbeSquare(
         this.limitX1 + i * 50,
-        Engine.height - 10 - 50,
+        this.limitY2 + 50,
         50, 50
       );
       this.objects.push(obj);
@@ -70,7 +71,7 @@ export default class SpaceScene extends Scene {
 
     for (i = 0; i < this.height; i += 1) {
       obj = new ProbeSquare(
-        150 + 10,
+        this.limitX1 - 100,
         this.limitY1 + i * 50,
         50, 50
       );
@@ -78,7 +79,7 @@ export default class SpaceScene extends Scene {
       this.probeSquares[currentProbeSquare++] = obj;
 
       obj = new ProbeSquare(
-        Engine.width - 150 - 10 - 50,
+        this.limitX2 + 50,
         this.limitY1 + i * 50,
         50, 50
       );
@@ -112,8 +113,11 @@ export default class SpaceScene extends Scene {
           if (square.inRange(x, y)) {
             this.clickedElement = square;
             this.clickedElement.setState('active');
-            this.beam = new Beam();
+            this.beam = new Beam(this.limitX1, this.limitY1, this.limitX2, this.limitY2);
             this.beam.setProbe(square);
+            this.fake = new Beam(this.limitX1, this.limitY1, this.limitX2, this.limitY2);
+            this.fake.setProbe(square);
+            this.fake.fakeIt();
             break;
           }
         }
@@ -132,6 +136,7 @@ export default class SpaceScene extends Scene {
     }
     if (this.beam !== null) {
       this.beam = null;
+      this.fake = null;
     }
   }
 
@@ -143,12 +148,14 @@ export default class SpaceScene extends Scene {
     }
     if (this.beam !== null) {
       this.beam = null;
+      this.fake = null;
     }
   }
 
   update() {
     if (this.beam !== null) {
       this.beam.update();
+      this.fake.update();
     }
   }
 
@@ -161,6 +168,7 @@ export default class SpaceScene extends Scene {
     }
 
     if (this.beam !== null) {
+      this.fake.render(context);
       this.beam.render(context);
     }
   }
