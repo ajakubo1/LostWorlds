@@ -9,6 +9,8 @@ export default class SpaceScene extends Scene {
 
   constructor(config) {
     super();
+    this.clickedElement = null;
+
     this.width = config.width;
     this.height = config.height;
     this.planets = config.planets;
@@ -84,15 +86,54 @@ export default class SpaceScene extends Scene {
   }
 
   pressed(x, y) {
+    let i;
     console.info('pressed', x, y);
+    if (x > 160 && x < Engine.width - 160) {
+      if (x > this.limitX1 && x < this.limitX2 && y > this.limitY1 && y < this.limitY2) {
+        //Squares
+        console.info('Squares')
+        const length = this.planetSquares.length;
+        for (i = 0; i < length; i += 1) {
+          const square = this.planetSquares[i];
+          if (square.inRange(x, y)) {
+            this.clickedElement = square;
+            this.clickedElement.setState('active');
+            break;
+          }
+        }
+      } else {
+        //Probes
+        console.info('Probes')
+        const length = this.probeSquares.length;
+        for (i = 0; i < length; i += 1) {
+          const square = this.probeSquares[i];
+          if (square.inRange(x, y)) {
+            this.clickedElement = square;
+            this.clickedElement.setState('active');
+            break;
+          }
+        }
+      }
+    } else {
+      //Screens
+      console.info('Screens')
+    }
   }
 
   released() {
     console.info('released');
+    if (this.clickedElement != null) {
+      this.clickedElement.setState('inactive');
+      this.clickedElement = null;
+    }
   }
 
   moved(x, y) {
     console.info('moved', x, y);
+    if (this.clickedElement != null) {
+      this.clickedElement.setState('inactive');
+      this.clickedElement = null;
+    }
   }
 
   update() {

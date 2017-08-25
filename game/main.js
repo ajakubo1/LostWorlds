@@ -18,8 +18,18 @@ Engine._putAsset(
   ASSET_TYPES.PLACEHOLDER
 );
 Engine._putAsset(
+  ASSET_IDENTIFIERS.PLANET_SQUARE_ACTIVE,
+  createSquare(50, 50, '#660066'),
+  ASSET_TYPES.PLACEHOLDER
+);
+Engine._putAsset(
   ASSET_IDENTIFIERS.PROBE_SQUARE,
   createSquare(50, 50, '#484848'),
+  ASSET_TYPES.PLACEHOLDER
+);
+Engine._putAsset(
+  ASSET_IDENTIFIERS.PROBE_SQUARE_ACTIVE,
+  createSquare(50, 50, '#6A4848'),
   ASSET_TYPES.PLACEHOLDER
 );
 Engine._putAsset(
