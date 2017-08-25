@@ -56,32 +56,42 @@ export default class Beam extends Renderable {
 
   update() {
     if (!this.finished) {
-      this.tick += 1;
-      if (this.tick === 1) {
-        this.tick = 0;
-        const lastElement = this.pathX.length - 1;
-        const prevX = this.pathX[lastElement];
-        const prevY = this.pathY[lastElement];
 
-        if (prevX < this.x - 50 || prevX > this.width + 40 ||
-          prevY < this.y - 50 || prevY > this.height + 40) {
-          this.finished = true;
-          return;
-        }
+      const lastElement = this.pathX.length - 1;
+      const prevX = this.pathX[lastElement];
+      const prevY = this.pathY[lastElement];
 
-        if (this.direction === 'up') {
-          this.pathX.push(prevX);
-          this.pathY.push(prevY - 10)
-        } else if (this.direction === 'down') {
-          this.pathX.push(prevX);
-          this.pathY.push(prevY + 10)
-        } else if (this.direction === 'left') {
-          this.pathX.push(prevX - 10);
-          this.pathY.push(prevY);
-        } else if (this.direction === 'right') {
-          this.pathX.push(prevX + 10);
-          this.pathY.push(prevY);
+      if (prevX < this.x - 50 || prevX > this.width + 40 ||
+        prevY < this.y - 50 || prevY > this.height + 40) {
+        this.finished = true;
+        return;
+      }
+
+      if (prevX > this.x && prevX < this.width &&
+        prevY > this.y && prevY < this.height) {
+        if (this.direction === 'left' || this.direction === 'right') {
+          if ((lastElement + 3) % 5 === 0) {
+            this.direction = 'down';
+          }
+        } else {
+          if ((lastElement + 3) % 5 === 0) {
+            this.direction = 'right';
+          }
         }
+      }
+
+      if (this.direction === 'up') {
+        this.pathX.push(prevX);
+        this.pathY.push(prevY - 10)
+      } else if (this.direction === 'down') {
+        this.pathX.push(prevX);
+        this.pathY.push(prevY + 10)
+      } else if (this.direction === 'left') {
+        this.pathX.push(prevX - 10);
+        this.pathY.push(prevY);
+      } else if (this.direction === 'right') {
+        this.pathX.push(prevX + 10);
+        this.pathY.push(prevY);
       }
     }
   }
