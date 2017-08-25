@@ -1,4 +1,5 @@
 import GameLoop from './GameLoop';
+import Events from './Events';
 import Assets from './Assets';
 
 let instance = null;
@@ -12,6 +13,7 @@ class EngineImplementation {
     this.canvas.height = height;
     this.context = this.canvas.getContext('2d');
     this.assets = new Assets();
+    this.events = new Events();
 
     this.loop = new GameLoop(60);
     this.scene = null;
@@ -22,6 +24,7 @@ class EngineImplementation {
   }
 
   startScene() {
+    this.events.addOnPressEvent(this.canvas, this.scene);
     this.loop.start(this.scene);
   }
 

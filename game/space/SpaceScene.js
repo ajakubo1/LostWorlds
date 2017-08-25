@@ -83,6 +83,18 @@ export default class SpaceScene extends Scene {
     }
   }
 
+  pressed(x, y) {
+    console.info('pressed', x, y);
+  }
+
+  released() {
+    console.info('released');
+  }
+
+  moved(x, y) {
+    console.info('moved', x, y);
+  }
+
   update() {
 
   }
