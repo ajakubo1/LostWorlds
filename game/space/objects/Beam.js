@@ -12,10 +12,13 @@ export default class Beam extends Renderable {
     this.fake = true;
   }
 
+  setScene(scene) {
+    this.scene = scene;
+  }
+
   setProbe(probe) {
     this.fake = false;
     this.finished = false;
-    this.tick = 0;
     this.probe = probe;
     this.pathX = [];
     this.pathY = [];
@@ -69,14 +72,8 @@ export default class Beam extends Renderable {
 
       if (prevX > this.x && prevX < this.width &&
         prevY > this.y && prevY < this.height) {
-        if (this.direction === 'left' || this.direction === 'right') {
-          if ((lastElement + 3) % 5 === 0) {
-            this.direction = 'down';
-          }
-        } else {
-          if ((lastElement + 3) % 5 === 0) {
-            this.direction = 'right';
-          }
+        if ((lastElement + 3) % 5 === 0) {
+          this.direction = this.scene.determineDirection(prevX, prevY, this.direction, this.fake)
         }
       }
 

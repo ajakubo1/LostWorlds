@@ -88,13 +88,16 @@ export default class SpaceScene extends Scene {
     }
   }
 
+  determineDirection (x, y, direction, fake) {
+    return direction;
+  }
+
   pressed(x, y) {
     let i;
     console.info('pressed', x, y);
     if (x > 160 && x < Engine.width - 160) {
       if (x > this.limitX1 && x < this.limitX2 && y > this.limitY1 && y < this.limitY2) {
         //Squares
-        console.info('Squares')
         const length = this.planetSquares.length;
         for (i = 0; i < length; i += 1) {
           const square = this.planetSquares[i];
@@ -106,7 +109,6 @@ export default class SpaceScene extends Scene {
         }
       } else {
         //Probes
-        console.info('Probes')
         const length = this.probeSquares.length;
         for (i = 0; i < length; i += 1) {
           const square = this.probeSquares[i];
@@ -115,8 +117,10 @@ export default class SpaceScene extends Scene {
             this.clickedElement.setState('active');
             this.beam = new Beam(this.limitX1, this.limitY1, this.limitX2, this.limitY2);
             this.beam.setProbe(square);
+            this.beam.setScene(this);
             this.fake = new Beam(this.limitX1, this.limitY1, this.limitX2, this.limitY2);
             this.fake.setProbe(square);
+            this.fake.setScene(this);
             this.fake.fakeIt();
             break;
           }
