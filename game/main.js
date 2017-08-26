@@ -40,7 +40,7 @@ Engine._putAsset(
 );
 Engine._putAsset(
   ASSET_IDENTIFIERS.ENERGY,
-  createSquare(100, 350, '#CCFF00'),
+  createSquare(100, 350, '#DD55AA'),
   ASSET_TYPES.PLACEHOLDER
 );
 Engine._putAsset(
@@ -69,6 +69,10 @@ const config = {
   height: 5,
   planets: [
     {
+      type: PLANET_TYPES.NORMAL
+    },{
+      type: PLANET_TYPES.NORMAL
+    },{
       type: PLANET_TYPES.NORMAL
     },
   ]

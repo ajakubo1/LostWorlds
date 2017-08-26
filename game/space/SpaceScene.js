@@ -6,6 +6,7 @@ import Background from './objects/Background';
 import Panel from './objects/Panel';
 import Beam from "./objects/Beam";
 import Planet from "./objects/Planet";
+import Energy from "./objects/Energy";
 
 export default class SpaceScene extends Scene {
 
@@ -15,6 +16,7 @@ export default class SpaceScene extends Scene {
     this.selectedPlanet = null;
     this.beam = null;
     this.fake = null;
+    this.energyIndicator = new Energy(Engine.width - 125, 25, 100, 350);
 
     this.width = config.width;
     this.height = config.height;
@@ -33,6 +35,7 @@ export default class SpaceScene extends Scene {
     let i, j, obj;
 
     this.fakePlanets = new Array(this.planets.length);
+    this.energyIndicator.setEnergy(1000 * this.planets.length);
 
     this.objects.push(new Background(0, 0, Engine.width, Engine.height));
     this.objects.push(new Panel(0, 0, 150, Engine.height));
@@ -108,6 +111,8 @@ export default class SpaceScene extends Scene {
       this.fakePlanets[i] = obj;
       this.objects.push(obj);
     }
+
+    this.objects.push(this.energyIndicator);
   }
 
   getPotentialLocation() {
@@ -318,6 +323,7 @@ export default class SpaceScene extends Scene {
     if (this.beam !== null) {
       this.beam.update();
       this.fake.update();
+      this.energyIndicator.update();
     }
   }
 

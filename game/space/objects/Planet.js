@@ -31,7 +31,7 @@ export default class Planet extends Renderable {
   }
 
   setSquare(square) {
-    if (this.square) {
+    if (this.square && square) {
       this.square.setFake(null);
     }
 
