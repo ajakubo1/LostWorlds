@@ -61,6 +61,8 @@ export default class SpaceScene extends Scene {
       }
     }
 
+    this.fillDirections();
+
     for (i = 0; i < this.width; i += 1) {
       obj = new ProbeSquare(
         this.limitX1 + i * 50,
@@ -98,6 +100,60 @@ export default class SpaceScene extends Scene {
     }
   }
 
+  getPotentialLocation() {
+    let potX = Math.floor(Math.random() * this.width);
+    let potY = Math.floor(Math.random() * this.height);
+    if (this.determine[potX][potY] !== null && this.determine[potX][potY].planet) {
+      return this.getPotentialLocation();
+    }
+    return [potX, potY]
+  }
+
+  addDirection(x, y, type, change) {
+    if (x < 0 || y < 0 || x >= this.width || y >= this.height) {
+      return;
+    }
+
+    let determineObject = this.determine[x][y];
+    if (determineObject === null) {
+      this.determine[x][y] = {};
+      determineObject = this.determine[x][y];
+    }
+    if (determineObject[type] === 'stop') {
+      return;
+    }
+    determineObject[type] = change;
+    if (type === 'planet') {
+      determineObject.left = 'stop';
+      determineObject.right = 'stop';
+      determineObject.top = 'stop';
+      determineObject.down = 'stop';
+    }
+  }
+
+  fillDirections() {
+    let p;
+
+    for (p = 0; p < this.planets.length; p += 1) {
+      const planet = this.planets[p];
+      const location = this.getPotentialLocation();
+      planet.x = location[0];
+      planet.y = location[1];
+      this.addDirection(planet.x, planet.y, 'planet', planet.type);
+
+      console.info(planet.x, planet.y);
+
+      this.addDirection(planet.x - 1, planet.y - 1, 'right', 'up');
+      this.addDirection(planet.x - 1, planet.y - 1, 'down', 'left');
+      this.addDirection(planet.x + 1, planet.y - 1, 'down', 'right');
+      this.addDirection(planet.x + 1, planet.y - 1, 'left', 'up');
+      this.addDirection(planet.x - 1, planet.y + 1, 'right', 'down');
+      this.addDirection(planet.x - 1, planet.y + 1, 'up', 'left');
+      this.addDirection(planet.x + 1, planet.y + 1, 'up', 'right');
+      this.addDirection(planet.x + 1, planet.y + 1, 'left', 'down');
+    }
+  }
+
   determineDirection (x, y, direction, fake) {
     let directionTable = this.determine;
     if (fake) {
@@ -106,6 +162,7 @@ export default class SpaceScene extends Scene {
 
     const length = this.planetSquares.length;
     let square = null;
+    let i;
     for (i = 0; i < length; i += 1) {
       square = this.planetSquares[i];
       if (square.inRange(x, y)) {
@@ -119,7 +176,7 @@ export default class SpaceScene extends Scene {
       return direction
     }
 
-    
+    return instruction[direction] ? instruction[direction]: direction;
   }
 
   pressed(x, y) {

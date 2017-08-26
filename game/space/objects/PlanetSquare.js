@@ -22,6 +22,7 @@ export default class PlanetSquare extends Renderable {
 
   setState(name) {
     if (name === 'active') {
+      console.info(this.idX, this.idY);
       this.image = Engine.getAsset(ASSET_IDENTIFIERS.PLANET_SQUARE_ACTIVE)
     } else if (name === 'inactive') {
       this.image = Engine.getAsset(ASSET_IDENTIFIERS.PLANET_SQUARE)

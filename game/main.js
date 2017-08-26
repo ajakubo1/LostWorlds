@@ -1,6 +1,7 @@
 import Engine from './core/Engine';
 import { TYPES as ASSET_TYPES, IDENTIFIERS as ASSET_IDENTIFIERS } from './core/Assets';
 import SpaceScene from './space/SpaceScene';
+import { TYPES as PLANET_TYPES } from './space/objects/Planet';
 import { createSquare } from './core/Placeholders';
 
 const gameCanvas = document.getElementById('game');
@@ -68,14 +69,8 @@ const config = {
   height: 5,
   planets: [
     {
-      type: "planet"
+      type: PLANET_TYPES.NORMAL
     },
-    {
-      type: "planet"
-    },
-    {
-      type: "planet"
-    }
   ]
 };
 

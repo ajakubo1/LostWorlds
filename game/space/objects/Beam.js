@@ -77,6 +77,10 @@ export default class Beam extends Renderable {
         }
       }
 
+      if (this.direction === 'stop') {
+        this.finished = true;
+      }
+
       if (this.direction === 'up') {
         this.pathX.push(prevX);
         this.pathY.push(prevY - 10)
