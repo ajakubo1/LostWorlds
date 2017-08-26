@@ -20,12 +20,19 @@ export default class PlanetSquare extends Renderable {
     this.idY = y;
   }
 
-  setState(name) {
-    if (name === 'active') {
-      console.info(this.idX, this.idY);
-      this.image = Engine.getAsset(ASSET_IDENTIFIERS.PLANET_SQUARE_ACTIVE)
-    } else if (name === 'inactive') {
-      this.image = Engine.getAsset(ASSET_IDENTIFIERS.PLANET_SQUARE)
+  setFake(planet) {
+    this.fake = planet;
+
+    if (this.fake !== null) {
+      this.fake.setSquare(this)
+    }
+  }
+
+  render(context) {
+    context.drawImage(this.image, this.x, this.y, this.width, this.height);
+
+    if (this.fake) {
+      this.fake.renderInLocation(this.x, this.y, context)
     }
   }
 }

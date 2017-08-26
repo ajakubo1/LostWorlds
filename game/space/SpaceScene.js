@@ -5,12 +5,14 @@ import ProbeSquare from './objects/ProbeSquare';
 import Background from './objects/Background';
 import Panel from './objects/Panel';
 import Beam from "./objects/Beam";
+import Planet from "./objects/Planet";
 
 export default class SpaceScene extends Scene {
 
   constructor(config) {
     super();
     this.clickedElement = null;
+    this.selectedPlanet = null;
     this.beam = null;
     this.fake = null;
 
@@ -29,6 +31,8 @@ export default class SpaceScene extends Scene {
     this.objects = [];
 
     let i, j, obj;
+
+    this.fakePlanets = new Array(this.planets.length);
 
     this.objects.push(new Background(0, 0, Engine.width, Engine.height));
     this.objects.push(new Panel(0, 0, 150, Engine.height));
@@ -97,6 +101,12 @@ export default class SpaceScene extends Scene {
       );
       this.objects.push(obj);
       this.probeSquares[currentProbeSquare++] = obj;
+    }
+
+    for (i = 0; i < this.planets.length; i += 1) {
+      const obj = new Planet(15 + i % 2 * 65, 25 + Math.floor(i / 2) * 65, 50, 50);
+      this.fakePlanets[i] = obj;
+      this.objects.push(obj);
     }
   }
 
@@ -188,8 +198,15 @@ export default class SpaceScene extends Scene {
         for (i = 0; i < length; i += 1) {
           const square = this.planetSquares[i];
           if (square.inRange(x, y)) {
-            this.clickedElement = square;
-            this.clickedElement.setState('active');
+            if (square.fake) {
+              square.setFake(null);
+            }
+
+            if (this.selectedPlanet) {
+              square.setFake(this.selectedPlanet);
+              this.selectedPlanet.setState('inactive');
+              this.selectedPlanet = null;
+            }
             break;
           }
         }
@@ -214,6 +231,25 @@ export default class SpaceScene extends Scene {
       }
     } else {
       //Screens
+      if (x < 160) {
+        const length = this.fakePlanets.length;
+        for (i = 0; i < length; i += 1) {
+          const square = this.fakePlanets[i];
+          if (square.inRange(x, y)) {
+            if (this.selectedPlanet !== null) {
+              this.selectedPlanet.setState('inactive')
+            }
+
+            if (this.selectedPlanet === square) {
+              this.selectedPlanet = null;
+            } else {
+              this.selectedPlanet = square;
+              this.selectedPlanet.setState('active');
+            }
+            break;
+          }
+        }
+      }
     }
   }
 
