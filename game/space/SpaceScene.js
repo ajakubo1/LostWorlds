@@ -126,7 +126,7 @@ export default class SpaceScene extends Scene {
     if (type === 'planet') {
       determineObject.left = 'stop';
       determineObject.right = 'stop';
-      determineObject.top = 'stop';
+      determineObject.up = 'stop';
       determineObject.down = 'stop';
     }
   }
