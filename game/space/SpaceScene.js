@@ -164,6 +164,10 @@ export default class SpaceScene extends Scene {
     }
   }
 
+  planetPlaced() {
+    
+  }
+
   determineDirection (x, y, direction, fake) {
     let directionTable = this.determine;
     if (fake) {
@@ -198,14 +202,21 @@ export default class SpaceScene extends Scene {
         for (i = 0; i < length; i += 1) {
           const square = this.planetSquares[i];
           if (square.inRange(x, y)) {
+            let recount = false;
             if (square.fake) {
               square.setFake(null);
+              recount = true;
             }
 
             if (this.selectedPlanet) {
               square.setFake(this.selectedPlanet);
               this.selectedPlanet.setState('inactive');
               this.selectedPlanet = null;
+              recount = true;
+            }
+
+            if (recount) {
+              this.planetPlaced();
             }
             break;
           }
