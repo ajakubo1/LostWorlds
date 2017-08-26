@@ -202,9 +202,6 @@ export default class SpaceScene extends Scene {
     if (fake) {
       directionTable = this.fakeDetermine;
     }
-
-    console.info(directionTable)
-
     const length = this.planetSquares.length;
     let square = null;
     let i;
