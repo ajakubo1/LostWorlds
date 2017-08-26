@@ -15,6 +15,11 @@ export default class PlanetSquare extends Renderable {
     return false;
   }
 
+  setId(x, y) {
+    this.idX = x;
+    this.idY = y;
+  }
+
   setState(name) {
     if (name === 'active') {
       this.image = Engine.getAsset(ASSET_IDENTIFIERS.PLANET_SQUARE_ACTIVE)

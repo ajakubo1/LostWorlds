@@ -18,6 +18,9 @@ export default class SpaceScene extends Scene {
     this.height = config.height;
     this.planets = config.planets;
 
+    this.fakeDetermine = new Array(this.width);
+    this.determine = new Array(this.width);
+
     this.probeSquares = new Array(this.width * 2 + this.height * 2);
     let currentProbeSquare = 0;
     this.planetSquares = new Array(this.width * this.height);
@@ -40,14 +43,21 @@ export default class SpaceScene extends Scene {
     this.limitY2 = Engine.height / 2 + heightPlanetsSquare / 2;
 
     for (i = 0; i < this.width; i += 1) {
+      this.fakeDetermine[i] = new Array(this.height);
+      this.determine[i] = new Array(this.height);
+
       for (j = 0; j < this.height; j += 1) {
         obj = new PlanetSquare(
           this.limitX1 + i * 50,
           this.limitY1 + j * 50,
           50, 50
         );
+        obj.setId(i, j);
         this.objects.push(obj);
-        this.planetSquares[currentPlanetSquare++] = obj
+        this.planetSquares[currentPlanetSquare++] = obj;
+
+        this.fakeDetermine[i][j] = null;
+        this.determine[i][j] = null;
       }
     }
 
@@ -89,12 +99,31 @@ export default class SpaceScene extends Scene {
   }
 
   determineDirection (x, y, direction, fake) {
-    return direction;
+    let directionTable = this.determine;
+    if (fake) {
+      directionTable = this.fakeDetermine;
+    }
+
+    const length = this.planetSquares.length;
+    let square = null;
+    for (i = 0; i < length; i += 1) {
+      square = this.planetSquares[i];
+      if (square.inRange(x, y)) {
+        break;
+      }
+    }
+
+    const instruction = directionTable[square.idX][square.idY];
+
+    if (instruction === null) {
+      return direction
+    }
+
+    
   }
 
   pressed(x, y) {
     let i;
-    console.info('pressed', x, y);
     if (x > 160 && x < Engine.width - 160) {
       if (x > this.limitX1 && x < this.limitX2 && y > this.limitY1 && y < this.limitY2) {
         //Squares
@@ -128,12 +157,10 @@ export default class SpaceScene extends Scene {
       }
     } else {
       //Screens
-      console.info('Screens')
     }
   }
 
   released() {
-    console.info('released');
     if (this.clickedElement !== null) {
       this.clickedElement.setState('inactive');
       this.clickedElement = null;
@@ -145,7 +172,6 @@ export default class SpaceScene extends Scene {
   }
 
   moved(x, y) {
-    console.info('moved', x, y);
     if (this.clickedElement !== null) {
       this.clickedElement.setState('inactive');
       this.clickedElement = null;
