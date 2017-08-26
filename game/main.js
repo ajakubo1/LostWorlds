@@ -70,11 +70,7 @@ const config = {
   planets: [
     {
       type: PLANET_TYPES.NORMAL
-    },{
-      type: PLANET_TYPES.NORMAL
-    },{
-      type: PLANET_TYPES.NORMAL
-    }
+    },
   ]
 };
 
