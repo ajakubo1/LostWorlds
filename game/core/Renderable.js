@@ -7,6 +7,14 @@ export default class Renderable {
     this.image = this.getImage();
   }
 
+  inRange(x, y) {
+    if (x > this.x && x < this.x + this.width &&
+      y > this.y && y < this.y + this.height) {
+      return true;
+    }
+    return false;
+  }
+
   getImage() {
 
   }

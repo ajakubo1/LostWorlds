@@ -16,7 +16,7 @@ export default class SpaceScene extends Scene {
 
     this.check = this.check.bind(this);
 
-    this.clickedElement = null;
+    this.clickedSquare = null;
     this.selectedPlanet = null;
     this.beam = null;
     this.fake = null;
@@ -269,8 +269,8 @@ export default class SpaceScene extends Scene {
         for (i = 0; i < length; i += 1) {
           const square = this.probeSquares[i];
           if (square.inRange(x, y)) {
-            this.clickedElement = square;
-            this.clickedElement.setState('active');
+            this.clickedSquare = square;
+            this.clickedSquare.setState('active');
             this.beam = new Beam(this.limitX1, this.limitY1, this.limitX2, this.limitY2);
             this.beam.setProbe(square);
             this.beam.setScene(this);
@@ -307,9 +307,9 @@ export default class SpaceScene extends Scene {
   }
 
   released() {
-    if (this.clickedElement !== null) {
-      this.clickedElement.setState('inactive');
-      this.clickedElement = null;
+    if (this.clickedSquare !== null) {
+      this.clickedSquare.setState('inactive');
+      this.clickedSquare = null;
     }
     if (this.beam !== null) {
       this.beam = null;
@@ -318,13 +318,22 @@ export default class SpaceScene extends Scene {
   }
 
   moved(x, y) {
-    if (this.clickedElement !== null) {
-      this.clickedElement.setState('inactive');
-      this.clickedElement = null;
-    }
-    if (this.beam !== null) {
-      this.beam = null;
-      this.fake = null;
+    if (this.clickedSquare !== null && !this.clickedSquare.inRange(x, y)) {
+      this.clickedSquare.setState('inactive');
+      this.clickedSquare = null;
+
+      if (this.beam !== null) {
+        this.beam = null;
+        this.fake = null;
+      }
+    } else {
+      if (this.checkButton.state === 0 && this.checkButton.inRange(x, y)) {
+        this.checkButton.setHover();
+      }
+
+      if (this.checkButton.state === 1 && !this.checkButton.inRange(x, y)) {
+        this.checkButton.setNormal();
+      }
     }
   }
 

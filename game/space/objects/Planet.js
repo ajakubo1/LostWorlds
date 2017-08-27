@@ -7,14 +7,6 @@ export default class Planet extends Renderable {
     return Engine.getAsset(ASSET_IDENTIFIERS.PLANET)
   }
 
-  inRange(x, y) {
-    if (x > this.x && x < this.x + this.width &&
-      y > this.y && y < this.y + this.height) {
-      return true;
-    }
-    return false;
-  }
-
   render(context) {
     this.renderInLocation(this.x, this.y, context)
   }

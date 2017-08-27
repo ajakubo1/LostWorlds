@@ -25,6 +25,7 @@ export default class Events {
       element.addEventListener('touchstart', this.onTouchStart);
     } else {
       element.addEventListener('mousedown', this.onMouseDown);
+      this.element.addEventListener('mousemove', this.onMouseMove);
     }
   }
 
@@ -43,7 +44,6 @@ export default class Events {
   onMouseDown(event) {
     const x = event.clientX;
     const y = event.clientY;
-    this.element.addEventListener('mousemove', this.onMouseMove);
     this.element.addEventListener('mouseup', this.onMouseUp);
     this.element.addEventListener('mouseleave', this.onMouseLeave);
     this.callbackPressed(x, y);
@@ -56,14 +56,12 @@ export default class Events {
   }
 
   onMouseUp(event) {
-    this.element.removeEventListener('mousemove', this.onMouseMove);
     this.element.removeEventListener('mouseup', this.onMouseUp);
     this.element.removeEventListener('mouseleave', this.onMouseLeave);
     this.callbackReleased();
   }
 
   onMouseLeave(event) {
-    this.element.removeEventListener('mousemove', this.onMouseMove);
     this.element.removeEventListener('mouseup', this.onMouseUp);
     this.element.removeEventListener('mouseleave', this.onMouseLeave);
     this.callbackReleased();

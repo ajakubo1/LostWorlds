@@ -6,5 +6,6 @@ TODO
 - [ ] Button for checking if sequence is correct
 - [x] A scientist which is searching for stuff in his lab?
 - [ ] Main menu
+- [ ] Check the mobile
 - [ ] Ability to save progress?
 - [ ] Menu for picking levels + tutorial levels for each type
