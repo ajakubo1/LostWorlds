@@ -8,6 +8,7 @@ import Beam from "./objects/Beam";
 import Planet from "./objects/Planet";
 import Energy from "./objects/Energy";
 import Button from '../core/Button';
+import LevelScene from "../level/LevelScene";
 
 export default class SpaceScene extends Scene {
 
@@ -218,7 +219,7 @@ export default class SpaceScene extends Scene {
 
     for (p = 0; p < this.planets.length; p += 1) {
       const planet = this.planets[p];
-      if (!planet.x) {
+      if (planet.x === undefined) {
         const location = this.getPotentialLocation();
         planet.x = location[0];
         planet.y = location[1];
@@ -415,7 +416,25 @@ export default class SpaceScene extends Scene {
       }
     }
 
-    console.info('Noice!')
+    this.levelWon();
+  }
+
+  levelWon() {
+    Engine.removeScene();
+    let i;
+    for (i = 0 ; i < Engine.globals.levels.length ; i += 1) {
+      const level = Engine.globals.levels[i];
+      if (!level.open) {
+        level.open = true;
+        break;
+      }
+    }
+    Engine.setScene(new LevelScene());
+    Engine.startScene();
+  }
+
+  levelLost() {
+
   }
 
   render(context) {
