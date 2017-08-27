@@ -133,6 +133,18 @@ export default class SpaceScene extends Scene {
     return [potX, potY]
   }
 
+  opositeDirection(direction) {
+    if (direction === 'left') {
+      return 'right';
+    } else if (direction === 'right') {
+      return 'left';
+    } else if (direction === 'up') {
+      return 'down';
+    } else if (direction === 'down') {
+      return 'up';
+    }
+  }
+
   addDirection(x, y, type, change, fake = false) {
     if (x < 0 || y < 0 || x >= this.width || y >= this.height) {
       return;
@@ -152,7 +164,19 @@ export default class SpaceScene extends Scene {
     if (determineObject[type] === 'stop') {
       return;
     }
-    determineObject[type] = change;
+
+    if (determineObject[type]) {
+      if (determineObject[type] === this.opositeDirection(determineObject[type])) {
+        return;
+      } else if (determineObject[type] === this.opositeDirection(change)){
+        determineObject[type] = this.opositeDirection(determineObject[type])
+      } else {
+        determineObject[type] = change;
+      }
+    } else {
+      determineObject[type] = change;
+    }
+
     if (type === 'planet') {
       determineObject.left = 'stop';
       determineObject.right = 'stop';
