@@ -17,6 +17,7 @@ export default class SpaceScene extends Scene {
 
     this.check = this.check.bind(this);
     this.backToLevel = this.backToLevel.bind(this);
+    this.checkSolution = this.checkSolution.bind(this);
     this.checkLimit = 3;
 
     this.clickedSquare = null;
@@ -31,6 +32,10 @@ export default class SpaceScene extends Scene {
     this.backButton = new Button(
       Engine.width - 130, Engine.height - 115, 120, 40,
       '<- Back', undefined, undefined, this.backToLevel
+    );
+    this.solutionButton = new Button(
+      Engine.width - 130, Engine.height - 165, 120, 40,
+      'Check solution', undefined, undefined, this.checkSolution
     );
 
     this.width = config.width;
@@ -130,6 +135,7 @@ export default class SpaceScene extends Scene {
     this.objects.push(this.energyIndicator);
     this.objects.push(this.checkButton);
     this.objects.push(this.backButton);
+    this.objects.push(this.solutionButton);
   }
 
   getPotentialLocation() {
@@ -359,6 +365,10 @@ export default class SpaceScene extends Scene {
         if (this.backButton.state === 1 && this.backButton.inRange(x, y)) {
           this.backButton.click();
         }
+
+        if (this.solutionButton.state === 1 && this.solutionButton.inRange(x, y)) {
+          this.solutionButton.click();
+        }
       }
     }
   }
@@ -398,6 +408,14 @@ export default class SpaceScene extends Scene {
 
       if (this.backButton.state === 1 && !this.backButton.inRange(x, y)) {
         this.backButton.setNormal();
+      }
+
+      if (this.solutionButton.state === 0 && this.solutionButton.inRange(x, y)) {
+        this.solutionButton.setHover();
+      }
+
+      if (this.solutionButton.state === 1 && !this.solutionButton.inRange(x, y)) {
+        this.solutionButton.setNormal();
       }
     }
   }
@@ -448,6 +466,12 @@ export default class SpaceScene extends Scene {
       }
     }
     this.backToLevel();
+  }
+
+  checkSolution() {
+    this.fakeDetermine = this.determine;
+    this.zeroFakeDetermine();
+    this.planetPlaced()
   }
 
   backToLevel() {
