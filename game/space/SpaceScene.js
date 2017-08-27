@@ -439,7 +439,6 @@ export default class SpaceScene extends Scene {
   }
 
   levelWon() {
-    Engine.removeScene();
     let i;
     for (i = 0 ; i < Engine.globals.levels.length ; i += 1) {
       const level = Engine.globals.levels[i];
@@ -448,8 +447,7 @@ export default class SpaceScene extends Scene {
         break;
       }
     }
-    Engine.setScene(new LevelScene());
-    Engine.startScene();
+    this.backToLevel();
   }
 
   backToLevel() {
