@@ -22,8 +22,8 @@ export default class SpaceScene extends Scene {
     this.fake = null;
     this.energyIndicator = new Energy(Engine.width - 125, 25, 100, 350);
     this.checkButton = new Button(
-      Engine.width - 125, Engine.height - 65, 100, 40,
-      'Check', undefined, undefined, this.check
+      Engine.width - 130, Engine.height - 65, 120, 40,
+      'Is that it?', undefined, undefined, this.check
     );
 
     this.width = config.width;
@@ -218,10 +218,11 @@ export default class SpaceScene extends Scene {
 
     for (p = 0; p < this.planets.length; p += 1) {
       const planet = this.planets[p];
-      const location = this.getPotentialLocation();
-      planet.x = location[0];
-      planet.y = location[1];
-
+      if (!planet.x) {
+        const location = this.getPotentialLocation();
+        planet.x = location[0];
+        planet.y = location[1];
+      }
       console.info(planet.x, planet.y);
 
       this.addPlanet(planet.x, planet.y, planet.type);
