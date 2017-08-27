@@ -16,6 +16,8 @@ export default class SpaceScene extends Scene {
     super();
 
     this.check = this.check.bind(this);
+    this.backToLevel = this.backToLevel.bind(this);
+    this.checkLimit = 3;
 
     this.clickedSquare = null;
     this.selectedPlanet = null;
@@ -25,6 +27,10 @@ export default class SpaceScene extends Scene {
     this.checkButton = new Button(
       Engine.width - 130, Engine.height - 65, 120, 40,
       'Is that it?', undefined, undefined, this.check
+    );
+    this.backButton = new Button(
+      Engine.width - 130, Engine.height - 115, 120, 40,
+      '<- Back', undefined, undefined, this.backToLevel
     );
 
     this.width = config.width;
@@ -123,6 +129,7 @@ export default class SpaceScene extends Scene {
 
     this.objects.push(this.energyIndicator);
     this.objects.push(this.checkButton);
+    this.objects.push(this.backButton);
   }
 
   getPotentialLocation() {
@@ -348,6 +355,10 @@ export default class SpaceScene extends Scene {
         if (this.checkButton.state === 1 && this.checkButton.inRange(x, y)) {
           this.checkButton.click();
         }
+
+        if (this.backButton.state === 1 && this.backButton.inRange(x, y)) {
+          this.backButton.click();
+        }
       }
     }
   }
@@ -379,6 +390,14 @@ export default class SpaceScene extends Scene {
 
       if (this.checkButton.state === 1 && !this.checkButton.inRange(x, y)) {
         this.checkButton.setNormal();
+      }
+
+      if (this.backButton.state === 0 && this.backButton.inRange(x, y)) {
+        this.backButton.setHover();
+      }
+
+      if (this.backButton.state === 1 && !this.backButton.inRange(x, y)) {
+        this.backButton.setNormal();
       }
     }
   }
@@ -433,8 +452,10 @@ export default class SpaceScene extends Scene {
     Engine.startScene();
   }
 
-  levelLost() {
-
+  backToLevel() {
+    Engine.removeScene();
+    Engine.setScene(new LevelScene());
+    Engine.startScene();
   }
 
   render(context) {
