@@ -166,10 +166,10 @@ export default class SpaceScene extends Scene {
     }
 
     if (determineObject[type]) {
-      if (determineObject[type] === this.opositeDirection(determineObject[type])) {
+      if (determineObject[type] === this.opositeDirection(type)) {
         return;
       } else if (determineObject[type] === this.opositeDirection(change)){
-        determineObject[type] = this.opositeDirection(determineObject[type])
+        determineObject[type] = this.opositeDirection(type)
       } else {
         determineObject[type] = change;
       }
