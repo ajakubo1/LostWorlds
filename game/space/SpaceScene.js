@@ -302,6 +302,10 @@ export default class SpaceScene extends Scene {
             break;
           }
         }
+      } else {
+        if (this.checkButton.state === 1 && this.checkButton.inRange(x, y)) {
+          this.checkButton.click();
+        }
       }
     }
   }
@@ -350,7 +354,27 @@ export default class SpaceScene extends Scene {
   }
 
   check() {
+    var i, j;
+    for (i = 0; i < this.width; i += 1) {
+      for (j = 0 ; j < this.height; j += 1) {
+        const real = this.determine[i][j];
+        const fake = this.fakeDetermine[i][j];
 
+        if (real !== null && real.planet) {
+          if (fake !== null && fake.planet) {
+            if (real.planet.type !== fake.planet.type) {
+              console.info('nope!');
+              return;
+            }
+          } else {
+            console.info('nope!');
+            return;
+          }
+        }
+      }
+    }
+
+    console.info('Noice!')
   }
 
   render(context) {
