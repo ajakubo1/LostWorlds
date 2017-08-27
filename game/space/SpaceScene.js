@@ -7,16 +7,24 @@ import Panel from './objects/Panel';
 import Beam from "./objects/Beam";
 import Planet from "./objects/Planet";
 import Energy from "./objects/Energy";
+import Button from '../core/Button';
 
 export default class SpaceScene extends Scene {
 
   constructor(config) {
     super();
+
+    this.check = this.check.bind(this);
+
     this.clickedElement = null;
     this.selectedPlanet = null;
     this.beam = null;
     this.fake = null;
     this.energyIndicator = new Energy(Engine.width - 125, 25, 100, 350);
+    this.checkButton = new Button(
+      Engine.width - 125, Engine.height - 65, 100, 40,
+      'Check', undefined, undefined, this.check
+    );
 
     this.width = config.width;
     this.height = config.height;
@@ -113,6 +121,7 @@ export default class SpaceScene extends Scene {
     }
 
     this.objects.push(this.energyIndicator);
+    this.objects.push(this.checkButton);
   }
 
   getPotentialLocation() {
@@ -324,7 +333,15 @@ export default class SpaceScene extends Scene {
       this.beam.update();
       this.fake.update();
       this.energyIndicator.update();
+
+      if (this.energyIndicator.energy === 0) {
+        this.released();
+      }
     }
+  }
+
+  check() {
+
   }
 
   render(context) {

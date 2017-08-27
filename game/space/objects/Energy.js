@@ -13,7 +13,9 @@ export default class Energy extends Renderable {
   }
 
   update () {
-    this.energy -= 1;
+    if (this.energy > 0) {
+      this.energy -= 1;
+    }
   }
 
   render(context) {
