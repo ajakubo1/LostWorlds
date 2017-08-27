@@ -17,6 +17,8 @@ class EngineImplementation {
 
     this.loop = new GameLoop(60);
     this.scene = null;
+
+    this.globals = null;
   }
 
   setScene(newScene) {
@@ -32,6 +34,7 @@ class EngineImplementation {
     this.loop.stop();
     this.scene.unload();
     this.scene = null;
+    this.events.removeOnPressEvent();
   }
 
   loadAsset(id, asset, type) {

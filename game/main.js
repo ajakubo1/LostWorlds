@@ -2,6 +2,8 @@ import Engine from './core/Engine';
 import { TYPES as ASSET_TYPES, IDENTIFIERS as ASSET_IDENTIFIERS } from './core/Assets';
 import SpaceScene from './space/SpaceScene';
 import { TYPES as PLANET_TYPES } from './space/objects/Planet';
+
+import LevelScene from './level/LevelScene';
 import { createSquare } from './core/Placeholders';
 
 const gameCanvas = document.getElementById('game');
@@ -64,19 +66,66 @@ Engine._putAsset(
   ASSET_TYPES.PLACEHOLDER
 );
 
-const config = {
-  width: 6,
-  height: 5,
-  planets: [
+Engine._putAsset(
+  ASSET_IDENTIFIERS.LEVEL_SQUARE,
+  createSquare(100, 100, '#660066'),
+  ASSET_TYPES.PLACEHOLDER
+);
+
+Engine._putAsset(
+  ASSET_IDENTIFIERS.LEVEL_SQUARE_ACTIVE,
+  createSquare(100, 100, '#660066'),
+  ASSET_TYPES.PLACEHOLDER
+);
+
+Engine.globals = {
+  levels: [
     {
-      type: PLANET_TYPES.NORMAL
-    },{
-      type: PLANET_TYPES.NORMAL
-    },{
-      type: PLANET_TYPES.NORMAL
-    },
-  ]
+      name: 'Tutorial',
+      width: 3,
+      height: 3,
+      planets: [
+        {
+          type: PLANET_TYPES.NORMAL,
+          x: 0,
+          y: 1
+        }
+      ],
+      open: true,
+      isTutorial: true
+    }, {
+      name: 'Easy start',
+      width: 4,
+      height: 4,
+      planets: [
+        {
+          type: PLANET_TYPES.NORMAL,
+        }, {
+          type: PLANET_TYPES.NORMAL,
+        }
+      ],
+      open: false
+    }, {
+      name: 'Serious stuff',
+      width: 6,
+      height: 6,
+      planets: [
+        {
+          type: PLANET_TYPES.NORMAL,
+        }, {
+          type: PLANET_TYPES.NORMAL,
+        }, {
+          type: PLANET_TYPES.NORMAL,
+        }, {
+          type: PLANET_TYPES.NORMAL,
+        }
+      ],
+      open: false
+    }
+  ],
+  tutorialEnabled: true
 };
 
-Engine.setScene(new SpaceScene(config));
+
+Engine.setScene(new LevelScene());
 Engine.startScene();

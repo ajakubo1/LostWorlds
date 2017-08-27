@@ -22,11 +22,22 @@ export default class Events {
     this.callback = callback;
     this.element = element;
     if (this.isMobile) {
-      element.addEventListener('touchstart', this.onTouchStart);
+      this.element.addEventListener('touchstart', this.onTouchStart);
     } else {
-      element.addEventListener('mousedown', this.onMouseDown);
+      this.element.addEventListener('mousedown', this.onMouseDown);
       this.element.addEventListener('mousemove', this.onMouseMove);
     }
+  }
+
+  removeOnPressEvent () {
+    if (this.isMobile) {
+      this.element.removeEventListener('touchstart', this.onTouchStart);
+    } else {
+      this.element.removeEventListener('mousedown', this.onMouseDown);
+      this.element.removeEventListener('mousemove', this.onMouseMove);
+    }
+    this.callback = null;
+    this.element = null;
   }
 
   callbackPressed(x, y) {
