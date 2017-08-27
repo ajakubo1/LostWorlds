@@ -171,6 +171,22 @@ export default class SpaceScene extends Scene {
     this.addDirection(x - 1, y + 1, 'up', 'left', fake);
     this.addDirection(x + 1, y + 1, 'up', 'right', fake);
     this.addDirection(x + 1, y + 1, 'left', 'down', fake);
+
+    if (x === 0) {
+      this.addDirection(x, y - 1, 'right', 'left', fake);
+      this.addDirection(x, y + 1, 'right', 'left', fake);
+    } else if (x === this.width -1) {
+      this.addDirection(x, y - 1, 'left', 'right', fake);
+      this.addDirection(x, y + 1, 'left', 'right', fake);
+    }
+
+    if (y === 0) {
+      this.addDirection(x + 1, y, 'down', 'up', fake);
+      this.addDirection(x - 1, y, 'down', 'up', fake);
+    } else if (y === this.height -1) {
+      this.addDirection(x + 1, y, 'up', 'down', fake);
+      this.addDirection(x - 1, y, 'up', 'down', fake);
+    }
   }
 
   fillDirections() {
