@@ -1,4 +1,5 @@
 import Renderable from './Renderable';
+import {fill} from './Letters';
 
 export default class Button extends Renderable {
   constructor(x, y, width, height, text, color = '#222299', hoverColor = '#1111FF', onClick) {
@@ -25,13 +26,9 @@ export default class Button extends Renderable {
       context.fillStyle = this.colorHover;
     }
 
-
-    context.textAlign = 'center';
-    context.textBaseline = 'middle';
-    context.font = 'small-caps bold 14px Georgia';
     context.fillRect(this.x, this.y, this.width, this.height);
-    context.fillStyle = "#ff0000";
-    context.fillText(this.text, this.x + this.width / 2, this.y + this.height / 2);
+
+    fill(this.x, this.y, this.width, this.height, this.text, context, 'red', 2)
   }
 
   click() {
