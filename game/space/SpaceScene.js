@@ -58,8 +58,8 @@ export default class SpaceScene extends Scene {
     this.energyIndicator.setEnergy(1000 * this.planets.length);
 
     this.objects.push(new Background(0, 0, Engine.width, Engine.height));
-    this.objects.push(new Panel(0, 0, 150, Engine.height));
-    this.objects.push(new Panel(Engine.width - 150, 0, 150, Engine.height));
+    this.objects.push(new Panel(10, 10, 130, Engine.height - 20));
+    this.objects.push(new Panel(Engine.width - 140, 10, 130, Engine.height - 20));
 
     const widthPlanetSquares = 50 * this.width;
     const heightPlanetsSquare = 50 * this.height;
@@ -127,7 +127,7 @@ export default class SpaceScene extends Scene {
     }
 
     for (i = 0; i < this.planets.length; i += 1) {
-      const obj = new Planet(15 + i % 2 * 65, 25 + Math.floor(i / 2) * 65, 50, 50);
+      const obj = new Planet(25 + i % 2 * 50, 25 + Math.floor(i / 2) * 65, 50, 50);
       this.fakePlanets[i] = obj;
       this.objects.push(obj);
     }
