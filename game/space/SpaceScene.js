@@ -26,16 +26,16 @@ export default class SpaceScene extends Scene {
     this.fake = null;
     this.energyIndicator = new Energy(Engine.width - 125, 25, 100, 350);
     this.checkButton = new Button(
-      Engine.width - 130, Engine.height - 65, 120, 40,
+      Engine.width - 120, Engine.height - 65, 90, 30,
       'Is that it?', undefined, undefined, this.check
     );
     this.backButton = new Button(
-      Engine.width - 130, Engine.height - 115, 120, 40,
+      Engine.width - 120, Engine.height - 115, 90, 30,
       '<- Back', undefined, undefined, this.backToLevel
     );
     this.solutionButton = new Button(
-      Engine.width - 130, Engine.height - 165, 120, 40,
-      'Check solution', undefined, undefined, this.checkSolution
+      Engine.width - 120, Engine.height - 165, 90, 30,
+      'solution', undefined, undefined, this.checkSolution
     );
 
     this.width = config.width;
