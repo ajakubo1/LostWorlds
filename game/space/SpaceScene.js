@@ -470,8 +470,28 @@ export default class SpaceScene extends Scene {
 
   checkSolution() {
     this.fakeDetermine = this.determine;
-    this.zeroFakeDetermine();
-    this.planetPlaced()
+
+    let i, j;
+
+    const length = this.planetSquares.length;
+    for (i = 0; i < length; i += 1) {
+      const square = this.planetSquares[i];
+      square.setFake(null);
+    }
+
+    for (i = 0 ; i < this.planets.length; i += 1) {
+      let square;
+      for (j = 0; j < length; j += 1) {
+        square = this.planetSquares[j];
+        if (square.idX === this.planets[i].x && square.idY === this.planets[i].y) {
+          break;
+        }
+      }
+
+      square.setFake(this.fakePlanets[i]);
+    }
+
+    this.planetPlaced();
   }
 
   backToLevel() {
