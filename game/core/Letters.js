@@ -156,7 +156,7 @@ const letters = {
   'W': [
     [1, , , , 1],
     [1, , , , 1],
-    [1, , , , 1],
+    [1, , 1, , 1],
     [1, , 1, , 1],
     [1, 1, 1, 1, 1]
   ],
@@ -187,7 +187,59 @@ const letters = {
     [0],
     [0],
     [0],
-  ]
+  ],
+  '!': [
+    [1],
+    [1],
+    [1],
+    [0],
+    [1],
+  ],
+  '?': [
+    [,1, 1],
+    [1, 0, 0, 1],
+    [0, 0, 1, 0,],
+    [0, 0, 0,],
+    [0, 0, 1],
+  ],
+  ',': [
+    [0],
+    [0],
+    [0],
+    [0],
+    [1],
+    [1],
+  ],
+  '.': [
+    [0],
+    [0],
+    [0],
+    [0],
+    [1],
+  ],
+  '\'': [
+    [1],
+    [1],
+    [0],
+    [0],
+    [0],
+  ],
+  '[': [
+    [1, 1],
+    [1],
+    [1],
+    [1],
+    [1],
+    [1, 1],
+  ],
+  ']': [
+    [1, 1],
+    [,1],
+    [,1],
+    [,1],
+    [,1],
+    [1, 1],
+  ],
 };
 
 export const fill = (globalX, globalY, width, height, word, context, color = 'black', size = 1) => {
@@ -213,6 +265,17 @@ export const fill = (globalX, globalY, width, height, word, context, color = 'bl
     }
     letterWidth += size + addX;
   }
+  let rows;
+  if(letterWidth > width) {
+    rows = 3;
+    letterWidth = letterWidth / 2;
+  } else {
+    rows = 2;
+  }
+
+  let globalRow = 0;
+
+  let adjustedHeight = height / (rows - 1);
 
   let offset = (width - letterWidth) / 2;
 
@@ -227,13 +290,18 @@ export const fill = (globalX, globalY, width, height, word, context, color = 'bl
       let row = letter[y];
       for (let x = 0; x < row.length; x++) {
         if (row[x]) {
-          context.fillRect(globalX + offset + currX + x * size, globalY + height / 2 - 5 * size / 2 + currY, size, size);
+          context.fillRect(globalX + offset + currX + x * size, globalY + (globalRow * adjustedHeight) + (adjustedHeight / 2) - (5 * size / 2) + currY, size, size);
         }
       }
       addX = Math.max(addX, row.length * size);
       currY += size;
     }
     currX += size + addX;
+
+    if(currX > letterWidth && needed[i+1] === letters[' ']) {
+      currX = 0;
+      globalRow ++;
+    }
   }
 
 };

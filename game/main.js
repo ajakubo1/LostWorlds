@@ -5,6 +5,7 @@ import { TYPES as PLANET_TYPES } from './space/objects/Planet';
 
 import LevelScene from './level/LevelScene';
 import {createOpaqCircle, createOpaqSquare, createSquare} from './core/Placeholders';
+import MenuScene from "./menu/MenuScene";
 
 const gameCanvas = document.getElementById('game');
 
@@ -122,5 +123,5 @@ Engine.globals = {
 };
 
 
-Engine.setScene(new LevelScene());
+Engine.setScene(new MenuScene());
 Engine.startScene();
