@@ -266,11 +266,14 @@ export const fill = (globalX, globalY, width, height, word, context, color = 'bl
     letterWidth += size + addX;
   }
   let rows;
+  let disposition;
   if(letterWidth > width) {
     rows = 3;
     letterWidth = letterWidth / 2;
+    disposition = height / 8;
   } else {
     rows = 2;
+    disposition = 0
   }
 
   let globalRow = 0;
@@ -278,6 +281,8 @@ export const fill = (globalX, globalY, width, height, word, context, color = 'bl
   let adjustedHeight = height / (rows - 1);
 
   let offset = (width - letterWidth) / 2;
+
+
 
 
   context.fillStyle = color;
@@ -290,7 +295,7 @@ export const fill = (globalX, globalY, width, height, word, context, color = 'bl
       let row = letter[y];
       for (let x = 0; x < row.length; x++) {
         if (row[x]) {
-          context.fillRect(globalX + offset + currX + x * size, globalY + (globalRow * adjustedHeight) + (adjustedHeight / 2) - (5 * size / 2) + currY, size, size);
+          context.fillRect(globalX + offset + currX + x * size, globalY + disposition + (globalRow * adjustedHeight / 2) + (adjustedHeight / 2) - (5 * size / 2) + currY, size, size);
         }
       }
       addX = Math.max(addX, row.length * size);
