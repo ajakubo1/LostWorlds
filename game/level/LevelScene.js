@@ -14,8 +14,8 @@ const tutorialDialog = [
   "Err... In a box.",
   "Which is purple.",
   "It helps in science alright?!",
-  "Or rather - it would help",
-  "If it were labled properly",
+  "Or rather - it would've helped",
+  "If it were labeled properly",
   "But that's where you come in!",
   "Go ahead!",
   "Take a look at the box I've prepared!"
@@ -45,7 +45,7 @@ export default class LevelScene extends Scene {
     this.dialogOption = dialog;
 
     this.scientist = new Scientist(Engine.width / 2 - 50, Engine.height - 95, 50, 75);
-    this.dialog = new Dialog(Engine.width / 2 + 25, Engine.height - 95, 160, 45, tutorialDialog);
+    this.dialog = new Dialog(Engine.width / 2 + 25, Engine.height - 95, 200, 50, tutorialDialog);
     this.dialog.setPixelSize(2);
     this.dialog.setStepCallback(this.nextStep);
 

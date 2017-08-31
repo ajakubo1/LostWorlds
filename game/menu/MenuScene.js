@@ -24,7 +24,7 @@ export default class MenuScene extends Scene {
       "How did this happen?",       // 1
       "I cannot believe it!",       // 2
       "My lab is wrecked!",         // 3
-      "This is what I get for hiring an intern!",   // 4
+      "Garry must've opened the monkeys once again!",   // 4
       "...",                        // 5
       "Oh, you there!",             // 6
       "Yes you!",                   // 7
@@ -32,7 +32,7 @@ export default class MenuScene extends Scene {
       "Splendid, my dear lad!",     // 12
       "You will help me out!",      // 13
       "...",                        // 14
-      "Everything bit of data is lost!", // 15
+      "Every bit of data is lost!", // 15
       "Every label displaced!", // 16
       "Every battery taken out!", // 17
       "Good thing I marked all of the blackboxes", // 18
@@ -41,7 +41,7 @@ export default class MenuScene extends Scene {
     ];
 
     this.dialog = new Dialog(
-      Engine.width / 2, Engine.height / 2 - 75, 300, 100, this.texts
+      Engine.width / 2, Engine.height / 2 - 75, 350, 100, this.texts
     );
     this.dialog.setPixelSize(3);
     this.dialog.setFinishedCallback(this.moveToLevelChoice);

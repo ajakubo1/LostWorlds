@@ -242,70 +242,90 @@ const letters = {
   ],
 };
 
+const getWidth = (letter) => {
+  let i;
+  let max = 0;
+  for (i = 0 ; i < letter.length; i += 1) {
+    if (letter[i].length > max) {
+      max = letter[i].length;
+    }
+  }
+  return max;
+};
+
+const sum = (arr) => {
+  let i;
+  let sum = 0;
+  for (i = 0 ; i < arr.length; i += 1) {
+    sum += arr[i];
+  }
+  return sum;
+};
+
 export const fill = (globalX, globalY, width, height, word, context, color = 'black', size = 1) => {
   word = word.toUpperCase();
-  let needed = [], i;
+  let needed = [], i, j;
+
+  let textWidth = [];
+  let textInRow = [];
+  let rowWidth = [];
 
   for (i = 0; i < word.length; i++) {
     const letter = letters[word.charAt(i)];
     if (letter) {
       needed.push(letter);
+      textWidth.push(size * (getWidth(letter) + 1));
+      if (sum(textWidth) > width * 0.9) {
+        let inc = 0;
+        while (word.charAt(i - inc) !== ' ' && inc <= needed.length) {
+          inc += 1;
+        }
+
+        if (inc >= needed.length) {
+          inc = 0;
+        }
+
+        i = i - inc;
+
+        if (inc > 0) {
+          textWidth.splice(-inc);
+          needed.splice(-inc);
+        }
+
+        rowWidth.push(sum(textWidth));
+        textWidth = [];
+        textInRow.push(needed);
+        needed = [];
+      }
     }
   }
 
-  let letterWidth = 0;
-  for (i = 0; i < needed.length; i++) {
-    let letter = needed[i];
-    let currY = 0;
-    let addX = 0;
-    for (let y = 0; y < letter.length; y++) {
-      let row = letter[y];
-      addX = Math.max(addX, row.length * size);
-      currY += size;
-    }
-    letterWidth += size + addX;
-  }
-  let rows;
-  let disposition;
-  if(letterWidth > width) {
-    rows = 3;
-    letterWidth = letterWidth / 2;
-    disposition = height / 8;
-  } else {
-    rows = 2;
-    disposition = 0
-  }
-
-  let globalRow = 0;
-
-  let adjustedHeight = height / (rows - 1);
-
-  let offset = (width - letterWidth) / 2;
-
-
-
+  textInRow.push(needed);
+  rowWidth.push(sum(textWidth));
 
   context.fillStyle = color;
-  let currX = 0;
-  for (i = 0; i < needed.length; i++) {
-    let letter = needed[i];
-    let currY = 0;
-    let addX = 0;
-    for (let y = 0; y < letter.length; y++) {
-      let row = letter[y];
-      for (let x = 0; x < row.length; x++) {
-        if (row[x]) {
-          context.fillRect(globalX + offset + currX + x * size, globalY + disposition + (globalRow * adjustedHeight / 2) + (adjustedHeight / 2) - (5 * size / 2) + currY, size, size);
-        }
-      }
-      addX = Math.max(addX, row.length * size);
-      currY += size;
-    }
-    currX += size + addX;
 
-    if(currX > letterWidth && needed[i+1] === letters[' ']) {
-      currX = 0;
-      globalRow ++;
+  for(j = 0; j < textInRow.length; j += 1) {
+    needed = textInRow[j];
+    let currX = 0;
+    for (i = 0; i < needed.length; i++) {
+      let letter = needed[i];
+      let currY = 0;
+      let addX = 0;
+      for (let y = 0; y < letter.length; y++) {
+        let row = letter[y];
+        for (let x = 0; x < row.length; x++) {
+          if (row[x]) {
+            context.fillRect(
+              globalX + (width - rowWidth[j]) / 2 + currX + x * size,
+              globalY + (j + 1) * (height / (textInRow.length + 1)) - 5 * size / 2 + currY,
+              size, size);
+          }
+        }
+        addX = Math.max(addX, row.length * size);
+        currY += size;
+      }
+      currX += size + addX;
     }
   }
 
