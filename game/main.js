@@ -1,9 +1,6 @@
 import Engine from './core/Engine';
 import { TYPES as ASSET_TYPES, IDENTIFIERS as ASSET_IDENTIFIERS } from './core/Assets';
-import SpaceScene from './space/SpaceScene';
 import { TYPES as PLANET_TYPES } from './space/objects/Planet';
-
-import LevelScene from './level/LevelScene';
 import {createOpaqCircle, createOpaqSquare, createSquare} from './core/Placeholders';
 import MenuScene from "./menu/MenuScene";
 
@@ -58,7 +55,7 @@ Engine._putAsset(
 );
 Engine._putAsset(
   ASSET_IDENTIFIERS.PANEL,
-  createOpaqSquare(130, 520, '#AAFF22', '#AAFF22', 5, 0.4),
+  createOpaqSquare(130, 520, '#6600ff', '#6600ff', 2, 0.4),
   ASSET_TYPES.PLACEHOLDER
 );
 

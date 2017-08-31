@@ -9,6 +9,52 @@ import Planet from "./objects/Planet";
 import Energy from "./objects/Energy";
 import Button from '../core/Button';
 import LevelScene from "../level/LevelScene";
+import Scientist from "../menu/objects/Scientist";
+import Dialog from "../menu/objects/Dialog";
+
+const tutorialDialog = [
+  "So, your have a very important job here",
+  "You have to label all of the elements from here",
+  "To the blackbox",
+  "And you have to do it correctly",
+  "This bit here",
+  "Is the 'green particle'",
+  "If you don't mind my science jargon",
+  "...",
+  "You don't know where the actual particle is in the box",
+  "But you can check it out using lasers here",
+  "...",
+  "Lasers and the blackbox itself needs power",
+  "Hence the battery",
+  "Don't deplete it all, cause when you do",
+  "It has to be replaced!",
+  "But this screws up current particle layout",
+  "And you have to start your work from scratch",
+  "So that particle here",
+  "When a laser hits one of its corner neighbouring squares",
+  "The beam will be bent by 90 degrees",
+  "Go ahead, click those two buttons to check it out",
+  "Did you noticed?",
+  "You can see a laser beam going in",
+  "And you can see a laser beam going out",
+  "But that's it",
+  "But you do have a helper laser here - that opaque one",
+  "It's above the box and effected by labels you put",
+  "Don't ask, it's magic",
+  "See for yourself - place this particle here",
+  "And observe what happens to that lighter beam right now",
+  "Cool, eh?",
+  "OK, next thing",
+  "If you shoot directly at that particle, beam will stop",
+  "Do it yourself",
+  "And lastly, if the particle is at the corner",
+  "And you shoot at neighboring squares",
+  "The beam will go back to the laser",
+  "OK, you know everything here",
+  "Let's check another blackbox",
+  "Errr... Well...",
+  "Click me, and I will check your solution"
+];
 
 export default class SpaceScene extends Scene {
 
@@ -27,15 +73,15 @@ export default class SpaceScene extends Scene {
     this.energyIndicator = new Energy(Engine.width - 125, 25, 100, 350);
     this.checkButton = new Button(
       Engine.width - 120, Engine.height - 65, 90, 30,
-      'Is that it?', undefined, undefined, this.check
+      'Done!', undefined, undefined, this.check
     );
     this.backButton = new Button(
       Engine.width - 120, Engine.height - 115, 90, 30,
-      '<- Back', undefined, undefined, this.backToLevel
+      'Back', undefined, undefined, this.backToLevel
     );
     this.solutionButton = new Button(
       Engine.width - 120, Engine.height - 165, 90, 30,
-      'solution', undefined, undefined, this.checkSolution
+      'Solution', undefined, undefined, this.checkSolution
     );
 
     this.width = config.width;
@@ -136,6 +182,27 @@ export default class SpaceScene extends Scene {
     this.objects.push(this.checkButton);
     this.objects.push(this.backButton);
     this.objects.push(this.solutionButton);
+
+    let dialog = [];
+    if (config.isTutorial) {
+      dialog = tutorialDialog;
+    }
+
+    this.scientist = new Scientist(80, Engine.height - 95, 50, 75);
+    this.dialog = new Dialog(150, Engine.height - 95, 200, 50, dialog);
+    this.dialog.setPixelSize(2);
+
+    if (config.isTutorial) {
+      this.dialog.setStepCallback(this.nextStep);
+    }
+  }
+
+  nextStep(step) {
+    if(step === -1) {
+      this.indicator = new Indicator(80, 80, 140, 140);
+    } else {
+      this.indicator = null;
+    }
   }
 
   getPotentialLocation() {
@@ -292,7 +359,9 @@ export default class SpaceScene extends Scene {
 
   pressed(x, y) {
     let i;
-    if (x > 160 && x < Engine.width - 160) {
+    if (this.dialog && this.dialog.inRange(x, y)) {
+      this.dialog.pressed(x, y);
+    } else if (x > 160 && x < Engine.width - 160) {
       if (x > this.limitX1 && x < this.limitX2 && y > this.limitY1 && y < this.limitY2) {
         //Squares
         const length = this.planetSquares.length;
@@ -385,6 +454,7 @@ export default class SpaceScene extends Scene {
   }
 
   moved(x, y) {
+    this.dialog.moved(x, y);
     if (this.clickedSquare !== null && !this.clickedSquare.inRange(x, y)) {
       this.clickedSquare.setState('inactive');
       this.clickedSquare = null;
@@ -429,6 +499,14 @@ export default class SpaceScene extends Scene {
       if (this.energyIndicator.energy === 0) {
         this.released();
       }
+    }
+
+    if (this.indicator) {
+      this.indicator.update();
+    }
+
+    if (this.dialog) {
+      this.dialog.update();
     }
   }
 
@@ -511,6 +589,15 @@ export default class SpaceScene extends Scene {
     if (this.beam !== null) {
       this.fake.render(context);
       this.beam.render(context);
+    }
+
+    this.scientist.render(context);
+
+    if (this.indicator) {
+      this.indicator.render(context);
+    }
+    if (this.dialog) {
+      this.dialog.render(context)
     }
   }
 

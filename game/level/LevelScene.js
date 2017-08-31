@@ -31,7 +31,7 @@ export default class LevelScene extends Scene {
     this.levels = [];
     let i;
     const levels = Engine.globals.levels;
-    for (i = 0 ; i < levels.length ; i += 1) {
+    for (i = 0; i < levels.length; i += 1) {
       const level = levels[i];
       if (level.open) {
         const square = new LevelSquare(100 + i * 125, 100, 100, 100);
@@ -47,8 +47,9 @@ export default class LevelScene extends Scene {
     this.scientist = new Scientist(Engine.width / 2 - 50, Engine.height - 95, 50, 75);
     this.dialog = new Dialog(Engine.width / 2 + 25, Engine.height - 95, 200, 50, tutorialDialog);
     this.dialog.setPixelSize(2);
-    this.dialog.setStepCallback(this.nextStep);
-
+    if (dialog === 0) {
+      this.dialog.setStepCallback(this.nextStep);
+    }
   }
 
   nextStep(step) {
@@ -86,7 +87,7 @@ export default class LevelScene extends Scene {
         break;
       }
     }
-    if (this.dialog.inRange(x, y)) {
+    if (this.dialog && this.dialog.inRange(x, y)) {
       this.dialog.pressed(x, y);
     }
   }
