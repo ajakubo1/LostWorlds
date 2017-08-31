@@ -12,7 +12,7 @@ export default class Dialog extends Renderable {
 
     this.continue = new Button(x + width - 50, y + height - 20, 50, 20,
       '[...]', undefined, undefined, this.continueClicked);
-    
+
     this.finished = texts.length - 1;
 
     this.currentText = 0;
@@ -30,6 +30,11 @@ export default class Dialog extends Renderable {
 
   setPixelSize(size) {
     this.size = size;
+    this.continue.setFontSize(size - 1);
+    this.continue.width = 30 * (size - 1);
+    this.continue.height = 15 * (size - 1);
+    this.continue.x = this.x + this.width - this.continue.width;
+    this.continue.y = this.y + this.height - this.continue.height;
   }
 
   textToLoad(text) {
@@ -41,8 +46,12 @@ export default class Dialog extends Renderable {
     this.stop = false;
   }
 
-  setCallback(callback) {
-    this.callback = callback;
+  setFinishedCallback(callback) {
+    this.finishedCallback = callback;
+  }
+
+  setStepCallback(callback) {
+    this.stepCallback = callback;
   }
 
   showContinue() {
@@ -53,8 +62,14 @@ export default class Dialog extends Renderable {
   continueClicked() {
     this.continueEnabled = false;
 
+    if (this.stepCallback) {
+      this.stepCallback(this.currentText);
+    }
+
     if(this.currentText === this.finished) {
-      this.callback();
+      if (this.finishedCallback) {
+        this.finishedCallback();
+      }
     } else {
       this.currentText += 1;
       this.textToLoad(this.texts[this.currentText]);

@@ -19,7 +19,7 @@ export default class Events {
   };
 
   addOnPressEvent (element, callback) {
-    this.callback = callback;
+    this.finished = callback;
     this.element = element;
     if (this.isMobile) {
       this.element.addEventListener('touchstart', this.onTouchStart);
@@ -36,20 +36,20 @@ export default class Events {
       this.element.removeEventListener('mousedown', this.onMouseDown);
       this.element.removeEventListener('mousemove', this.onMouseMove);
     }
-    this.callback = null;
+    this.finished = null;
     this.element = null;
   }
 
   callbackPressed(x, y) {
-    this.callback.pressed(x, y);
+    this.finished.pressed(x, y);
   }
 
   callbackReleased() {
-    this.callback.released();
+    this.finished.released();
   }
 
   callbackMoved(x, y) {
-    this.callback.moved(x, y);
+    this.finished.moved(x, y);
   }
 
   onMouseDown(event) {

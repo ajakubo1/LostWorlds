@@ -9,6 +9,11 @@ export default class Button extends Renderable {
     this.colorHover = hoverColor;
     this.state = 0;
     this.onClick = onClick;
+    this.size = 2;
+  }
+
+  setFontSize(size) {
+    this.size = size;
   }
 
   setNormal() {
@@ -28,7 +33,7 @@ export default class Button extends Renderable {
 
     context.fillRect(this.x, this.y, this.width, this.height);
 
-    fill(this.x, this.y, this.width, this.height, this.text, context, 'red', 2)
+    fill(this.x, this.y, this.width, this.height, this.text, context, 'red', this.size)
   }
 
   click() {

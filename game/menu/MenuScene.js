@@ -44,7 +44,7 @@ export default class MenuScene extends Scene {
       Engine.width / 2, Engine.height / 2 - 75, 300, 100, this.texts
     );
     this.dialog.setPixelSize(3);
-    this.dialog.setCallback(this.moveToLevelChoice);
+    this.dialog.setFinishedCallback(this.moveToLevelChoice);
 
     this.skip = new Button(Engine.width - 125, 25, 100, 30,
       'skip & play', undefined, undefined, this.onSkip);
@@ -66,7 +66,7 @@ export default class MenuScene extends Scene {
 
   moveToLevelChoice() {
     Engine.removeScene();
-    Engine.setScene(new LevelScene());
+    Engine.setScene(new LevelScene(0));
     Engine.startScene();
   }
 

@@ -70,7 +70,7 @@ Engine._putAsset(
 
 Engine._putAsset(
   ASSET_IDENTIFIERS.LEVEL_SQUARE_ACTIVE,
-  createSquare(100, 100, '#660066'),
+  createSquare(100, 100, '#6600ff'),
   ASSET_TYPES.PLACEHOLDER
 );
 
