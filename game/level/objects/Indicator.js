@@ -1,8 +1,8 @@
 import Renderable from '../../core/Renderable';
 
 export default class Indicator extends Renderable {
-  constructor(x, y, width, height, color = '#AAAA00') {
-    super(x, y, width, height);
+  constructor(element, color = '#AAAA00') {
+    super(element.x - 5, element.y - 5, element.width + 10, element.height + 10);
     this.color = color;
     this.time = 0;
     this.maxTime = 10;

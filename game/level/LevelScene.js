@@ -15,7 +15,7 @@ const tutorialDialog = [
   "Which is purple.",
   "It helps in science alright?!",
   "Or rather - it would've helped",
-  "If it were labeled properly",
+  "If it was labeled properly",
   "But that's where you come in!",
   "Go ahead!",
   "Take a look at the box I've prepared!"
@@ -53,8 +53,8 @@ export default class LevelScene extends Scene {
   }
 
   nextStep(step) {
-    if(step === 0 || step === 10) {
-      this.indicator = new Indicator(80, 80, 140, 140);
+    if(step === 0 || step >= 10) {
+      this.indicator = new Indicator(this.levels[0]);
     } else {
       this.indicator = null;
     }

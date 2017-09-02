@@ -56,7 +56,11 @@ export default class Dialog extends Renderable {
 
   showContinue() {
     this.stop = true;
-    this.continueEnabled = true;
+    if(this.currentText === this.finished && this.finishedCallback) {
+      this.continueEnabled = true;
+    } else if (this.currentText !== this.finished) {
+      this.continueEnabled = true;
+    }
   }
 
   continueClicked() {

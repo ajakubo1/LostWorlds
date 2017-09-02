@@ -11,9 +11,11 @@ import Button from '../core/Button';
 import LevelScene from "../level/LevelScene";
 import Scientist from "../menu/objects/Scientist";
 import Dialog from "../menu/objects/Dialog";
+import Indicator from "../level/objects/Indicator";
+import Renderable from "../core/Renderable";
 
 const tutorialDialog = [
-  "So, your have a very important job here",
+  "So, you have a very important job here",
   "You have to label all of the elements from here",
   "To the blackbox",
   "And you have to do it correctly",
@@ -26,11 +28,12 @@ const tutorialDialog = [
   "...",
   "Lasers and the blackbox itself needs power",
   "Hence the battery",
-  "Don't deplete it all, cause when you do",
+  "Don't deplete the power, cause when you do",
   "It has to be replaced!",
   "But this screws up current particle layout",
   "And you have to start your work from scratch",
-  "So that particle here",
+  "I will give you a clue about this particle here",
+  "It is placed in here - I have checked myself",
   "When a laser hits one of its corner neighbouring squares",
   "The beam will be bent by 90 degrees",
   "Go ahead, click those two buttons to check it out",
@@ -40,19 +43,21 @@ const tutorialDialog = [
   "But that's it",
   "But you do have a helper laser here - that opaque one",
   "It's above the box and effected by labels you put",
-  "Don't ask, it's magic",
-  "See for yourself - place this particle here",
+  "Don't ask, it's magic.",
+  "Ekhm. Science. It's science",
+  "See for yourself - place this particle",
+  "Here",
   "And observe what happens to that lighter beam right now",
   "Cool, eh?",
   "OK, next thing",
   "If you shoot directly at that particle, beam will stop",
   "Do it yourself",
-  "And lastly, if the particle is at the corner",
+  "And lastly, if the particle is placed at the corner of the box",
   "And you shoot at neighboring squares",
   "The beam will go back to the laser",
-  "OK, you know everything here",
+  "OK, you know everything now",
   "Let's check another blackbox",
-  "Errr... Well...",
+  "Ekhm... Well...",
   "Click me, and I will check your solution"
 ];
 
@@ -64,6 +69,7 @@ export default class SpaceScene extends Scene {
     this.check = this.check.bind(this);
     this.backToLevel = this.backToLevel.bind(this);
     this.checkSolution = this.checkSolution.bind(this);
+    this.nextStep = this.nextStep.bind(this);
     this.checkLimit = 3;
 
     this.clickedSquare = null;
@@ -104,7 +110,8 @@ export default class SpaceScene extends Scene {
     this.energyIndicator.setEnergy(1000 * this.planets.length);
 
     this.objects.push(new Background(0, 0, Engine.width, Engine.height));
-    this.objects.push(new Panel(10, 10, 130, Engine.height - 20));
+    this.leftPanel = new Panel(10, 10, 130, Engine.height - 20);
+    this.objects.push(this.leftPanel);
     this.objects.push(new Panel(Engine.width - 140, 10, 130, Engine.height - 20));
 
     const widthPlanetSquares = 50 * this.width;
@@ -195,13 +202,60 @@ export default class SpaceScene extends Scene {
     if (config.isTutorial) {
       this.dialog.setStepCallback(this.nextStep);
     }
+
+    this.indicator = [];
+
+    this.middlePanel = new Renderable(this.limitX1, this.limitY1, widthPlanetSquares, heightPlanetsSquare);
   }
 
   nextStep(step) {
-    if(step === -1) {
-      this.indicator = new Indicator(80, 80, 140, 140);
+    let i;
+    if(step === 0) {
+      this.indicator = [new Indicator(this.leftPanel)];
+    } else if(step === 1 || step === 7) {
+      this.indicator = [new Indicator(this.middlePanel)];
+    } else if(step === 3 || step === 4 || step === 16 || step === 30) {
+      this.indicator = [new Indicator(this.fakePlanets[0])];
+    } else if(step === 8) {
+      this.indicator = [];
+      for (i = 0; i < this.probeSquares.length; i += 1) {
+        this.indicator.push(new Indicator(this.probeSquares[i]))
+      }
+    } else if(step === 10) {
+      this.indicator = [];
+      for (i = 0; i < this.probeSquares.length; i += 1) {
+        this.indicator.push(new Indicator(this.probeSquares[i]))
+      }
+      this.indicator.push(new Indicator(this.middlePanel))
+    } else if(step === 10 ||step === 11) {
+      this.indicator = [new Indicator(this.energyIndicator)];
+    } else if(step === 17 || step === 31 || step === 35) {
+      this.indicator = [new Indicator(this.planetSquares[1])];
+    } else if(step === 18 || step === 19) {
+      this.indicator = [];
+      this.indicator.push(new Indicator(this.planetSquares[3]));
+      this.indicator.push(new Indicator(this.planetSquares[5]));
+    } else if(step === 20) {
+      this.indicator = [];
+      this.indicator.push(new Indicator(this.probeSquares[2]));
+      this.indicator.push(new Indicator(this.probeSquares[3]));
+    } else if(step === 36) {
+      this.indicator = [new Indicator(this.probeSquares[8])];
+    } else if(step === 37) {
+      this.indicator = [];
+      for (i = 0; i < this.probeSquares.length; i += 1) {
+        if(i !== 4) {
+          this.indicator.push(new Indicator(this.probeSquares[i]))
+        }
+      }
+    } else if(step === 39) {
+      this.indicator = [];
+      this.indicator.push(new Indicator(this.probeSquares[6]));
+      this.indicator.push(new Indicator(this.probeSquares[10]));
+    } else if(step === 43) {
+      this.indicator = [new Indicator(this.scientist)];
     } else {
-      this.indicator = null;
+      this.indicator = [];
     }
   }
 
@@ -491,6 +545,7 @@ export default class SpaceScene extends Scene {
   }
 
   update() {
+    let i;
     if (this.beam !== null) {
       this.beam.update();
       this.fake.update();
@@ -501,8 +556,8 @@ export default class SpaceScene extends Scene {
       }
     }
 
-    if (this.indicator) {
-      this.indicator.update();
+    for (i = 0 ; i < this.indicator.length; i += 1) {
+      this.indicator[i].update();
     }
 
     if (this.dialog) {
@@ -593,8 +648,8 @@ export default class SpaceScene extends Scene {
 
     this.scientist.render(context);
 
-    if (this.indicator) {
-      this.indicator.render(context);
+    for (i = 0 ; i < this.indicator.length; i += 1) {
+      this.indicator[i].render(context);
     }
     if (this.dialog) {
       this.dialog.render(context)
