@@ -41,7 +41,7 @@ export default class Dialog extends Renderable {
     this.text = text;
     this.textSoFar = "";
     this.currentLetter = 0;
-    this.interval = 10;
+    this.interval = 6;
     this.step = 0;
     this.stop = false;
   }

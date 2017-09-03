@@ -38,17 +38,17 @@ const tutorialDialog = [
   "The beam will be bent by 90 degrees",
   "Go ahead, click those two buttons to check it out",
   "Did you noticed?",
-  "You can see a laser beam going in",
-  "And you can see a laser beam going out",
-  "But that's it",
-  "But you do have a helper laser here - that opaque one",
-  "It's above the box and effected by labels you put",
+  "You can see the laser beam going in",
+  "And you can see the laser beam going out",
+  "But that's it. Rest is inside the blackbox",
+  "Except - I mounted a smaller helper laser",
+  "It's above the box and effected by particles you put on it",
   "Don't ask, it's magic.",
   "Ekhm. Science. It's science",
   "See for yourself - place this particle",
   "Here",
-  "And observe what happens to that lighter beam right now",
-  "Cool, eh?",
+  "And observe what happens to that helper beam right now",
+  "Cool, eh? It follows the beam inside the box!",
   "OK, next thing",
   "If you shoot directly at that particle, beam will stop",
   "Do it yourself",
@@ -214,7 +214,7 @@ export default class SpaceScene extends Scene {
       this.indicator = [new Indicator(this.leftPanel)];
     } else if(step === 1 || step === 7) {
       this.indicator = [new Indicator(this.middlePanel)];
-    } else if(step === 3 || step === 4 || step === 16 || step === 30) {
+    } else if(step === 3 || step === 4 || step === 16 || step === 29) {
       this.indicator = [new Indicator(this.fakePlanets[0])];
     } else if(step === 8) {
       this.indicator = [];
@@ -227,9 +227,9 @@ export default class SpaceScene extends Scene {
         this.indicator.push(new Indicator(this.probeSquares[i]))
       }
       this.indicator.push(new Indicator(this.middlePanel))
-    } else if(step === 10 ||step === 11) {
+    } else if(step === 11) {
       this.indicator = [new Indicator(this.energyIndicator)];
-    } else if(step === 17 || step === 31 || step === 35) {
+    } else if(step === 17 || step === 30 || step === 34) {
       this.indicator = [new Indicator(this.planetSquares[1])];
     } else if(step === 18 || step === 19) {
       this.indicator = [];
@@ -239,20 +239,20 @@ export default class SpaceScene extends Scene {
       this.indicator = [];
       this.indicator.push(new Indicator(this.probeSquares[2]));
       this.indicator.push(new Indicator(this.probeSquares[3]));
-    } else if(step === 36) {
+    } else if(step === 35) {
       this.indicator = [new Indicator(this.probeSquares[8])];
-    } else if(step === 37) {
+    } else if(step === 36) {
       this.indicator = [];
-      for (i = 0; i < this.probeSquares.length; i += 1) {
+      for (i = 0; i < this.planetSquares.length; i += 1) {
         if(i !== 4) {
-          this.indicator.push(new Indicator(this.probeSquares[i]))
+          this.indicator.push(new Indicator(this.planetSquares[i]))
         }
       }
-    } else if(step === 39) {
+    } else if(step === 38) {
       this.indicator = [];
       this.indicator.push(new Indicator(this.probeSquares[6]));
       this.indicator.push(new Indicator(this.probeSquares[10]));
-    } else if(step === 43) {
+    } else if(step === 42) {
       this.indicator = [new Indicator(this.scientist)];
     } else {
       this.indicator = [];
