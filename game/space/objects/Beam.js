@@ -4,13 +4,10 @@ import { IDENTIFIERS as ASSET_IDENTIFIERS } from '../../core/Assets';
 
 export default class Beam extends Renderable {
   getImage() {
-    this.imageHorizontal = Engine.getAsset(ASSET_IDENTIFIERS.LASER);
-    return Engine.getAsset(ASSET_IDENTIFIERS.LASER);
+    return null;
   }
 
   fakeIt() {
-    this.image = Engine.getAsset(ASSET_IDENTIFIERS.LASER_FAKE_VERTICAL);
-    this.imageHorizontal = Engine.getAsset(ASSET_IDENTIFIERS.LASER_FAKE_HORIZONTAL);
     this.fake = true;
   }
 
@@ -86,9 +83,9 @@ export default class Beam extends Renderable {
     let grd = context.createRadialGradient(x, y, 1, x, y, range);
 
     let color = "#FF0000";
-    if (this.step === 1) {
+    if (this.step === 3 || this.step === 4 || this.step === 5) {
       color = "#C00000";
-    } else if (this.step === 2) {
+    } else if (this.step === 6 || this.step === 7 || this.step === 8) {
       color = "#700000";
     }
 
@@ -96,7 +93,8 @@ export default class Beam extends Renderable {
     grd.addColorStop(1, "transparent");
 
     context.fillStyle = grd;
-    context.arc(x, y, 20, 0, 2*Math.PI);
+    context.beginPath();
+    context.arc(x, y, 20, 0, 2.01*Math.PI);
     context.shadowBlur = 20;
     context.shadowColor = color;
     context.fill();
@@ -112,7 +110,7 @@ export default class Beam extends Renderable {
 
     this.step += 1;
 
-    if (this.step === 3) {
+    if (this.step === 9) {
       this.step = 0;
     }
 
