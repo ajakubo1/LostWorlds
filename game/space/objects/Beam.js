@@ -4,11 +4,13 @@ import { IDENTIFIERS as ASSET_IDENTIFIERS } from '../../core/Assets';
 
 export default class Beam extends Renderable {
   getImage() {
-    return Engine.getAsset(ASSET_IDENTIFIERS.LASER)
+    this.imageHorizontal = Engine.getAsset(ASSET_IDENTIFIERS.LASER);
+    return Engine.getAsset(ASSET_IDENTIFIERS.LASER);
   }
 
   fakeIt() {
-    this.image = Engine.getAsset(ASSET_IDENTIFIERS.LASER_FAKE)
+    this.image = Engine.getAsset(ASSET_IDENTIFIERS.LASER_FAKE_VERTICAL);
+    this.imageHorizontal = Engine.getAsset(ASSET_IDENTIFIERS.LASER_FAKE_HORIZONTAL);
     this.fake = true;
   }
 
@@ -22,6 +24,8 @@ export default class Beam extends Renderable {
     this.probe = probe;
     this.pathX = [];
     this.pathY = [];
+    this.directionHistory = [];
+    this.step = 0;
     if (this.probe.x < this.x) {
       this.pathX.push(this.probe.x + this.probe.width);
       this.pathY.push(this.probe.y + 20);
@@ -39,25 +43,79 @@ export default class Beam extends Renderable {
       this.pathY.push(this.probe.y - 10);
       this.direction = 'up'
     }
+    this.directionHistory.push(this.direction);
+  }
 
+  drawLines(context) {
+    const length = this.pathX.length;
+    let beginX = this.pathX[0] + 5;
+    let beginY = this.pathY[0] + 5;
+    let currentDirection = this.directionHistory[0];
+    let i;
+
+    context.beginPath();
+    context.strokeStyle = "red";
+    if (this.fake) {
+      context.lineWidth = 2;
+    } else {
+      context.lineWidth = 4;
+    }
+
+    context.moveTo(beginX,beginY);
+    for (i = 1; i < length; i += 1) {
+      if (currentDirection !== this.directionHistory[i]) {
+        let x = this.pathX[i-1];
+        let y = this.pathY[i-1];
+        context.lineTo(this.pathX[i-1] + 5,this.pathY[i-1] + 5);
+        currentDirection = this.directionHistory[i]
+      }
+    }
+    context.lineTo(this.pathX[length-1] + 5,this.pathY[length-1] + 5);
+    context.stroke();
+  }
+
+  drawPoint(context) {
+    context.save();
+    const length = this.pathX.length - 1;
+    const x = this.pathX[length] + 5;
+    const y = this.pathY[length] + 5;
+    let range = 15;
+    if (this.fake) {
+      range = 8
+    }
+    let grd = context.createRadialGradient(x, y, 1, x, y, range);
+
+    let color = "#FF0000";
+    if (this.step === 1) {
+      color = "#C00000";
+    } else if (this.step === 2) {
+      color = "#700000";
+    }
+
+    grd.addColorStop(0, color);
+    grd.addColorStop(1, "transparent");
+
+    context.fillStyle = grd;
+    context.arc(x, y, 20, 0, 2*Math.PI);
+    context.shadowBlur = 20;
+    context.shadowColor = color;
+    context.fill();
+    context.restore();
   }
 
   render(context) {
-    const length = this.pathX.length;
-    let i;
-    for (i = 0; i < length; i += 1) {
-      if (this.fake) {
-        context.drawImage(this.image, this.pathX[i], this.pathY[i], 10, 10);
-      } else {
-        if (this.pathX[i] < this.x || this.pathX[i] > this.width - 10 ||
-          this.pathY[i] < this.y || this.pathY[i] > this.height - 10) {
-          context.drawImage(this.image, this.pathX[i], this.pathY[i], 10, 10);
-        }
-      }
-    }
+    this.drawLines(context);
+    this.drawPoint(context);
   }
 
   update() {
+
+    this.step += 1;
+
+    if (this.step === 3) {
+      this.step = 0;
+    }
+
     if (!this.finished) {
 
       const lastElement = this.pathX.length - 1;
@@ -94,6 +152,8 @@ export default class Beam extends Renderable {
         this.pathX.push(prevX + 10);
         this.pathY.push(prevY);
       }
+
+      this.directionHistory.push(this.direction);
     }
   }
 }

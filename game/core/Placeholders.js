@@ -19,13 +19,13 @@ export const createSquare = (width, height, color, borderColor = null) => {
   return canvas;
 };
 
-export const createOpaqSquare = (width, height, color, borderColor, borderSize, alpha) => {
+export const createOpaqSquare = (width, height, color, borderColor, borderSize, alpha, x = 0, y = 0) => {
   const canvas = createCanvas(width, height);
   const context = canvas.getContext('2d');
 
   const b = borderColor === null ? 2 : borderSize;
-  const w = width - 2 * b;
-  const h = height - 2 * b;
+  const w = width - 2 * x - 2 * b;
+  const h = height - 2 * y - 2 * b;
 
   context.fillStyle = color;
   context.globalAlpha = alpha;
@@ -35,7 +35,7 @@ export const createOpaqSquare = (width, height, color, borderColor, borderSize, 
   if (borderColor) {
     context.strokeStyle = borderColor;
     context.lineWidth = borderSize;
-    context.strokeRect(b, b, w, h);
+    context.strokeRect(b + x, b + y, w, h);
   }
 
   return canvas;

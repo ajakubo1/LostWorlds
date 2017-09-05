@@ -93,6 +93,7 @@ export default class SpaceScene extends Scene {
     this.width = config.width;
     this.height = config.height;
     this.planets = config.planets;
+    this.isTutorial = config.isTutorial;
 
     this.fakeDetermine = new Array(this.width);
     this.determine = new Array(this.width);
@@ -109,7 +110,7 @@ export default class SpaceScene extends Scene {
     this.fakePlanets = new Array(this.planets.length);
     this.energyIndicator.setEnergy(1000 * this.planets.length);
 
-    this.objects.push(new Background(0, 0, Engine.width, Engine.height));
+    this.background = new Background(0, 0, Engine.width, Engine.height);
     this.leftPanel = new Panel(10, 10, 130, Engine.height - 20);
     this.objects.push(this.leftPanel);
     this.objects.push(new Panel(Engine.width - 140, 10, 130, Engine.height - 20));
@@ -149,7 +150,6 @@ export default class SpaceScene extends Scene {
         this.limitY1 - 100,
         50, 50
       );
-      this.objects.push(obj);
       this.probeSquares[currentProbeSquare++] = obj;
 
       obj = new ProbeSquare(
@@ -157,7 +157,6 @@ export default class SpaceScene extends Scene {
         this.limitY2 + 50,
         50, 50
       );
-      this.objects.push(obj);
       this.probeSquares[currentProbeSquare++] = obj;
     }
 
@@ -167,7 +166,6 @@ export default class SpaceScene extends Scene {
         this.limitY1 + i * 50,
         50, 50
       );
-      this.objects.push(obj);
       this.probeSquares[currentProbeSquare++] = obj;
 
       obj = new ProbeSquare(
@@ -175,7 +173,6 @@ export default class SpaceScene extends Scene {
         this.limitY1 + i * 50,
         50, 50
       );
-      this.objects.push(obj);
       this.probeSquares[currentProbeSquare++] = obj;
     }
 
@@ -551,7 +548,7 @@ export default class SpaceScene extends Scene {
       this.fake.update();
       this.energyIndicator.update();
 
-      if (this.energyIndicator.energy === 0) {
+      if (this.energyIndicator.energy === 0 && !this.isTutorial) {
         this.released();
       }
     }
@@ -636,14 +633,28 @@ export default class SpaceScene extends Scene {
   render(context) {
     context.clearRect(0, 0, Engine.width, Engine.height);
     let i;
-    const length = this.objects.length;
+    let length = this.probeSquares.length;
+
+    this.background.render(context);
+
+    for (i = 0; i < length ; i += 1) {
+      this.probeSquares[i].render(context);
+    }
+
+    if (this.beam !== null) {
+      this.beam.render(context);
+      context.fillStyle = "#111111";
+      context.fillRect(this.limitX1, this.limitY1, this.width * 50, this.height * 50);
+    }
+
+    length = this.objects.length;
+
     for (i = 0; i < length ; i += 1) {
       this.objects[i].render(context);
     }
 
     if (this.beam !== null) {
       this.fake.render(context);
-      this.beam.render(context);
     }
 
     this.scientist.render(context);

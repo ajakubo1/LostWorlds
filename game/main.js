@@ -44,8 +44,13 @@ Engine._putAsset(
   ASSET_TYPES.PLACEHOLDER
 );
 Engine._putAsset(
-  ASSET_IDENTIFIERS.LASER_FAKE,
-  createOpaqSquare(10, 10, '#E80000', '#E80000', 0, 0.3),
+  ASSET_IDENTIFIERS.LASER_FAKE_VERTICAL,
+  createOpaqSquare(10, 10, '#E80000', '#E80000', 0, 0.3, 4),
+  ASSET_TYPES.PLACEHOLDER
+);
+Engine._putAsset(
+  ASSET_IDENTIFIERS.LASER_FAKE_HORIZONTAL,
+  createOpaqSquare(10, 10, '#E80000', '#E80000', 0, 0.3, 10, 4),
   ASSET_TYPES.PLACEHOLDER
 );
 Engine._putAsset(
