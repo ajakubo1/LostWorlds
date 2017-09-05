@@ -29,7 +29,7 @@ const tutorialDialog = [
   "Lasers and the blackbox itself needs power",
   "Hence the battery",
   "Don't deplete the power, cause when you do",
-  "It has to be replaced!",
+  "Battery has to be replaced!",
   "But this screws up current particle layout",
   "And you have to start your work from scratch",
   "I will give you a clue about this particle here",

@@ -45,7 +45,12 @@ export default class LevelScene extends Scene {
     this.dialogOption = dialog;
 
     this.scientist = new Scientist(Engine.width / 2 - 50, Engine.height - 95, 50, 75);
-    this.dialog = new Dialog(Engine.width / 2 + 25, Engine.height - 95, 200, 50, tutorialDialog);
+
+    let text = null;
+    if (dialog === 0) {
+      text = tutorialDialog;
+    }
+    this.dialog = new Dialog(Engine.width / 2 + 25, Engine.height - 95, 200, 50, text);
     this.dialog.setPixelSize(2);
     if (dialog === 0) {
       this.dialog.setStepCallback(this.nextStep);

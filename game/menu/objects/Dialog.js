@@ -13,11 +13,22 @@ export default class Dialog extends Renderable {
     this.continue = new Button(x + width - 50, y + height - 20, 50, 20,
       '[...]', undefined, undefined, this.continueClicked);
 
-    this.finished = texts.length - 1;
+    if (texts === null) {
+      this.noGuideText = true;
+      this.finished = 0;
+    } else {
+      this.noGuideText = false;
+      this.finished = texts.length;
+    }
+
+
 
     this.currentText = 0;
 
     this.texts = texts;
+    if (texts === null) {
+      this.noGuideText = true;
+    }
 
     this.continueEnabled = false;
 
@@ -97,13 +108,15 @@ export default class Dialog extends Renderable {
   }
 
   update() {
-    this.step += 1;
-    if (!this.stop && this.step % this.interval === 0) {
-      this.textSoFar = this.textSoFar + this.text[this.currentLetter];
-      this.currentLetter += 1;
+    if (this.text !== null) {
+      this.step += 1;
+      if (!this.stop && this.step % this.interval === 0) {
+        this.textSoFar = this.textSoFar + this.text[this.currentLetter];
+        this.currentLetter += 1;
 
-      if (this.currentLetter === this.text.length) {
-        this.showContinue();
+        if (this.currentLetter === this.text.length) {
+          this.showContinue();
+        }
       }
     }
   }
@@ -114,11 +127,13 @@ export default class Dialog extends Renderable {
   }
 
   render(context) {
-    context.drawImage(this.image, this.x, this.y, this.width, this.height);
-    fill(this.x, this.y, this.width, this.height, this.textSoFar, context, 'red', this.size);
+    if (this.text !== null) {
+      context.drawImage(this.image, this.x, this.y, this.width, this.height);
+      fill(this.x, this.y, this.width, this.height, this.textSoFar, context, 'red', this.size);
 
-    if(this.continueEnabled) {
-      this.continue.render(context);
+      if(this.continueEnabled) {
+        this.continue.render(context);
+      }
     }
   }
 }
