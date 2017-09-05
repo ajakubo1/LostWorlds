@@ -26,13 +26,13 @@ export default class Dialog extends Renderable {
     this.currentText = 0;
 
     this.texts = texts;
-    if (texts === null) {
-      this.noGuideText = true;
-    }
 
     this.continueEnabled = false;
-
-    this.textToLoad(this.texts[this.currentText]);
+    if (!this.noGuideText) {
+      this.textToLoad(this.texts[this.currentText]);
+    } else {
+      this.textToLoad(null);
+    }
   }
 
   getImage() {
@@ -108,7 +108,7 @@ export default class Dialog extends Renderable {
   }
 
   update() {
-    if (this.text !== null) {
+    if (this.text) {
       this.step += 1;
       if (!this.stop && this.step % this.interval === 0) {
         this.textSoFar = this.textSoFar + this.text[this.currentLetter];
@@ -127,7 +127,7 @@ export default class Dialog extends Renderable {
   }
 
   render(context) {
-    if (this.text !== null) {
+    if (this.text) {
       context.drawImage(this.image, this.x, this.y, this.width, this.height);
       fill(this.x, this.y, this.width, this.height, this.textSoFar, context, 'red', this.size);
 
