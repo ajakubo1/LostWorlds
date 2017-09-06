@@ -58,12 +58,12 @@ export default class MenuScene extends Scene {
       "Every label displaced!", // 16
       "Every battery taken out!", // 17
       "Good thing I marked all of the blackboxes", // 18
-      "Or we wouldn't even know what's inside", // 19
-      "OK then. Blackboxes... Let me explain.", // 20
+      "Or we wouldn't even know what to do", // 19
+      "OK then. Blackboxes... Follow me here.", // 20
     ];
 
     this.dialog = new Dialog(
-      Engine.width / 2, Engine.height / 2 - 75, 350, 100, this.texts
+      Engine.width / 2 - 100, Engine.height / 2 - 75, 350, 100, this.texts, this.scientist
     );
     this.dialog.setPixelSize(3);
     this.dialog.setFinishedCallback(this.moveToLevelChoice);

@@ -55,7 +55,7 @@ export default class Scientist extends Renderable {
       ],
       [
         [0, 0, 0, 4, 3, 4, 0, 0, 0],
-        [0, 0, 0, 3, 3, 3, 0, 0, 0],
+        [0, 0, 0, 4, 3, 4, 0, 0, 0],
       ],
     ];
 
@@ -81,14 +81,31 @@ export default class Scientist extends Renderable {
     this.size = 8;
 
     this.eyeTick = 0;
-    this.eyeTickLimit = Math.floor(Math.random() * 100) + 20;
+    this.eyeTickLimit = Math.floor(Math.random() * 200) + 20;
     this.mouthTick = 0;
+    this.mouthTickLimit = 10;
+    this.talking = true;
 
-    this.currentMouth = this.mouth[0];
+    this.currentMouth = 0;
 
     this.currentEyes = this.eyes[0];
 
     return null
+  }
+
+  setTalking(talking) {
+    if (talking) {
+      this.talking = true;
+      this.currentMouth = 1;
+    } else {
+      this.talking = false;
+      this.mouthTick = 0;
+      this.currentMouth = 0;
+    }
+  }
+
+  getRandomFace(face) {
+    return face[Math.floor(Math.random() * face.length)];
   }
 
   setSize(size) {
@@ -101,7 +118,18 @@ export default class Scientist extends Renderable {
     if (this.eyeTick === this.eyeTickLimit) {
       this.eyeTick = 0;
       this.eyeTickLimit = Math.floor(Math.random() * 100) + 20;
-      this.currentEyes = this.eyes[Math.floor(Math.random() * this.eyes.length)];
+      this.currentEyes = this.getRandomFace(this.eyes);
+    }
+
+    if (this.talking) {
+      this.mouthTick += 1;
+      if (this.mouthTick === this.mouthTickLimit) {
+        this.mouthTick = 0;
+        this.currentMouth += 1;
+        if (this.currentMouth === this.mouth.length) {
+          this.currentMouth -= 2;
+        }
+      }
     }
   }
 
@@ -134,8 +162,8 @@ export default class Scientist extends Renderable {
       }
 
       if (i === 5) {
-        for (j = 0; j < this.currentMouth.length; j += 1) {
-          this.renderLine(context, this.currentMouth[j], i + this.currentEyes.length + j);
+        for (j = 0; j < 2; j += 1) {
+          this.renderLine(context, this.mouth[this.currentMouth][j], i + this.currentEyes.length + j);
         }
       }
 
@@ -146,7 +174,7 @@ export default class Scientist extends Renderable {
       }
 
       if (i > 4) {
-        renderY += this.currentMouth.length;
+        renderY += 2;
       }
 
       this.renderLine(context, this.guy[i], renderY);

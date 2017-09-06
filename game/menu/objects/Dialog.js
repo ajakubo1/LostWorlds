@@ -6,7 +6,7 @@ import Button from "../../core/Button";
 
 export default class Dialog extends Renderable {
 
-  constructor(x, y, width, height, texts) {
+  constructor(x, y, width, height, texts, scientist) {
     super(x, y, width, height);
     this.continueClicked = this.continueClicked.bind(this);
 
@@ -18,14 +18,13 @@ export default class Dialog extends Renderable {
       this.finished = 0;
     } else {
       this.noGuideText = false;
-      this.finished = texts.length;
+      this.finished = texts.length - 1;
     }
-
-
 
     this.currentText = 0;
 
     this.texts = texts;
+    this.scientist = scientist;
 
     this.continueEnabled = false;
     if (!this.noGuideText) {
@@ -49,6 +48,12 @@ export default class Dialog extends Renderable {
   }
 
   textToLoad(text) {
+    if (text !== null) {
+      this.scientist.setTalking(true);
+    } else {
+      this.scientist.setTalking(false);
+    }
+
     this.text = text;
     this.textSoFar = "";
     this.currentLetter = 0;
@@ -66,6 +71,7 @@ export default class Dialog extends Renderable {
   }
 
   showContinue() {
+    this.scientist.setTalking(false);
     this.stop = true;
     if(this.currentText === this.finished && this.finishedCallback) {
       this.continueEnabled = true;

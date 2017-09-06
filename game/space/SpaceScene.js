@@ -194,7 +194,7 @@ export default class SpaceScene extends Scene {
 
     this.scientist = new Scientist(80, Engine.height - 95, 50, 75);
     this.scientist.setSize(4);
-    this.dialog = new Dialog(150, Engine.height - 95, 200, 50, dialog);
+    this.dialog = new Dialog(150, Engine.height - 95, 200, 50, dialog, this.scientist);
     this.dialog.setPixelSize(2);
 
     if (config.isTutorial) {
