@@ -100,7 +100,7 @@ export default class Dialog extends Renderable {
   pressed(x, y) {
     if(this.continueEnabled && this.continue.inRange(x, y)) {
       this.continue.click();
-    } else {
+    } else if (this.inRange(x, y)){
       this.loadText();
     }
   }

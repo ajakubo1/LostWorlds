@@ -187,18 +187,16 @@ export default class SpaceScene extends Scene {
     this.objects.push(this.backButton);
     this.objects.push(this.solutionButton);
 
-    let dialog = [];
+    let dialog = null;
     if (config.isTutorial) {
       dialog = tutorialDialog;
     }
 
-    this.scientist = new Scientist(80, Engine.height - 95, 50, 75);
+    this.scientist = new Scientist(80, Engine.height - 95, 50, 75, dialog, 2);
     this.scientist.setSize(4);
-    this.dialog = new Dialog(150, Engine.height - 95, 200, 50, dialog, this.scientist);
-    this.dialog.setPixelSize(2);
 
     if (config.isTutorial) {
-      this.dialog.setStepCallback(this.nextStep);
+      this.scientist.setDialogStepCallback(this.nextStep);
     }
 
     this.indicator = [];
@@ -411,9 +409,10 @@ export default class SpaceScene extends Scene {
 
   pressed(x, y) {
     let i;
-    if (this.dialog && this.dialog.inRange(x, y)) {
-      this.dialog.pressed(x, y);
-    } else if (x > 160 && x < Engine.width - 160) {
+
+    this.scientist.pressed(x, y);
+
+    if (x > 160 && x < Engine.width - 160) {
       if (x > this.limitX1 && x < this.limitX2 && y > this.limitY1 && y < this.limitY2) {
         //Squares
         const length = this.planetSquares.length;
@@ -506,7 +505,7 @@ export default class SpaceScene extends Scene {
   }
 
   moved(x, y) {
-    this.dialog.moved(x, y);
+    this.scientist.moved(x, y);
     if (this.clickedSquare !== null && !this.clickedSquare.inRange(x, y)) {
       this.clickedSquare.setState('inactive');
       this.clickedSquare = null;
@@ -557,11 +556,6 @@ export default class SpaceScene extends Scene {
     for (i = 0 ; i < this.indicator.length; i += 1) {
       this.indicator[i].update();
     }
-
-    if (this.dialog) {
-      this.dialog.update();
-    }
-
     this.scientist.update();
   }
 
@@ -664,9 +658,6 @@ export default class SpaceScene extends Scene {
 
     for (i = 0 ; i < this.indicator.length; i += 1) {
       this.indicator[i].render(context);
-    }
-    if (this.dialog) {
-      this.dialog.render(context)
     }
   }
 
