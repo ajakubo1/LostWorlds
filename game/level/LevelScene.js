@@ -41,20 +41,14 @@ export default class LevelScene extends Scene {
         break;
       }
     }
-
-    this.dialogOption = dialog;
-
-    this.scientist = new Scientist(Engine.width / 2 - 50, Engine.height - 95, 50, 75);
-    this.scientist.setSize(4);
-
     let text = null;
     if (dialog === 0) {
       text = tutorialDialog;
     }
-    this.dialog = new Dialog(Engine.width / 2 + 25, Engine.height - 95, 200, 50, text, this.scientist);
-    this.dialog.setPixelSize(2);
+    this.scientist = new Scientist(Engine.width / 2 - 50, Engine.height - 95, 50, 75, text, 2);
+    this.scientist.setSize(4);
     if (dialog === 0) {
-      this.dialog.setStepCallback(this.nextStep);
+      this.scientist.setDialogStepCallback(this.nextStep);
     }
   }
 
@@ -78,7 +72,7 @@ export default class LevelScene extends Scene {
       }
     }
 
-    this.dialog.moved(x, y);
+    this.scientist.moved(x, y);
   }
 
   released() {
@@ -93,20 +87,13 @@ export default class LevelScene extends Scene {
         break;
       }
     }
-    if (this.dialog && this.dialog.inRange(x, y)) {
-      this.dialog.pressed(x, y);
-    }
+    this.scientist.pressed(x, y);
   }
 
   update() {
     if (this.indicator) {
       this.indicator.update();
     }
-
-    if (this.dialog) {
-      this.dialog.update();
-    }
-
     this.scientist.update();
   }
 
@@ -119,9 +106,6 @@ export default class LevelScene extends Scene {
     this.scientist.render(context);
     if (this.indicator) {
       this.indicator.render(context);
-    }
-    if (this.dialog) {
-      this.dialog.render(context)
     }
   }
 }

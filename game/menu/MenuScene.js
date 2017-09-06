@@ -69,10 +69,6 @@ export default class MenuScene extends Scene {
 
     this.skip = new Button(Engine.width - 125, 25, 100, 30,
       'skip & play', undefined, undefined, this.onSkip);
-
-    this.dialogEnabled = false;
-
-    this.ticksPassed = 0;
   }
 
   onSkip() {

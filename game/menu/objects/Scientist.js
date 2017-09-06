@@ -80,17 +80,18 @@ export default class Scientist extends Renderable {
         [0, 7, 8, 8, 7, 8, 8, 7, 0],
       ],
     ];
-
+    this.talking = false;
     if (texts === null) {
       this.sayRandom = true;
       this.dialog = null
     } else {
       this.sayRandom = false;
       this.dialog = new Dialog(
-        x + 100, y, 350, 100, texts, this
+        x + dialogSize * 30, y, dialogSize * 120, dialogSize * 30, texts, this
       );
       this.dialog.setPixelSize(dialogSize);
     }
+    this.dialogSize = dialogSize;
 
     this.size = 8;
 
@@ -98,7 +99,6 @@ export default class Scientist extends Renderable {
     this.eyeTickLimit = Math.floor(Math.random() * 200) + 20;
     this.mouthTick = 0;
     this.mouthTickLimit = 10;
-    this.talking = true;
 
     this.currentMouth = 0;
 
@@ -147,6 +147,10 @@ export default class Scientist extends Renderable {
 
   setDialogFinishedCallback (callback) {
     this.dialog.setFinishedCallback(callback);
+  }
+
+  setDialogStepCallback (callback) {
+    this.dialog.setStepCallback(callback);
   }
 
   update() {
