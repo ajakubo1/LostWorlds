@@ -116,7 +116,9 @@ export default class MenuScene extends Scene {
   }
 
   update() {
-    this.ticksPassed += 1;
+    if (this.ticksPassed < 100) {
+      this.ticksPassed += 1;
+    }
 
     if (this.ticksPassed === 100 && !this.dialogEnabled) {
       this.dialogEnabled = true;
@@ -126,6 +128,8 @@ export default class MenuScene extends Scene {
       this.dialog.update();
     }
 
+
+    this.scientist.update();
   }
 
   render(context) {

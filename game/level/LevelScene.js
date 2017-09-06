@@ -45,6 +45,7 @@ export default class LevelScene extends Scene {
     this.dialogOption = dialog;
 
     this.scientist = new Scientist(Engine.width / 2 - 50, Engine.height - 95, 50, 75);
+    this.scientist.setSize(4);
 
     let text = null;
     if (dialog === 0) {
@@ -105,6 +106,8 @@ export default class LevelScene extends Scene {
     if (this.dialog) {
       this.dialog.update();
     }
+
+    this.scientist.update();
   }
 
   render(context) {
