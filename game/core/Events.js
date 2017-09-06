@@ -1,13 +1,11 @@
+import Engine from "./Engine";
+
 export default class Events {
   constructor() {
     this.onMouseDown = this.onMouseDown.bind(this);
     this.onMouseMove = this.onMouseMove.bind(this);
     this.onMouseLeave = this.onMouseLeave.bind(this);
     this.onMouseUp = this.onMouseUp.bind(this);
-    this.onTouchStart = this.onTouchStart.bind(this);
-    this.onTouchEnd = this.onTouchEnd.bind(this);
-    this.onTouchMove = this.onTouchMove.bind(this);
-    this.onTouchCancel = this.onTouchCancel.bind(this);
   }
 
 
@@ -38,16 +36,18 @@ export default class Events {
   }
 
   onMouseDown(event) {
-    const x = event.clientX;
-    const y = event.clientY;
+    console.info(event);
+    const x = (event.clientX / event.target.offsetWidth) * Engine.width;
+    const y = (event.clientY / event.target.offsetHeight) * Engine.height;
+
     this.element.addEventListener('mouseup', this.onMouseUp);
     this.element.addEventListener('mouseleave', this.onMouseLeave);
     this.callbackPressed(x, y);
   }
 
   onMouseMove(event) {
-    const x = event.clientX;
-    const y = event.clientY;
+    const x = (event.clientX / event.target.offsetWidth) * Engine.width;
+    const y = (event.clientY / event.target.offsetHeight) * Engine.height;
     this.callbackMoved(x, y);
   }
 
