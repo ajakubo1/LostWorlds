@@ -1,9 +1,12 @@
 import Renderable from '../../core/Renderable';
 import Engine from '../../core/Engine';
 import { IDENTIFIERS as ASSET_IDENTIFIERS } from '../../core/Assets';
+import Dialog from "./Dialog";
 
 export default class Scientist extends Renderable {
-  getImage() {
+
+  constructor (x = 0, y = 0, width = 0, height = 0, texts = null, dialogSize = 2) {
+    super(x, y, width, height);
     this.colors = [
       "#1bd9c9", //coat 1
       "#2eec2b", //eyes 2
@@ -78,6 +81,17 @@ export default class Scientist extends Renderable {
       ],
     ];
 
+    if (texts === null) {
+      this.sayRandom = true;
+      this.dialog = null
+    } else {
+      this.sayRandom = false;
+      this.dialog = new Dialog(
+        x + 100, y, 350, 100, texts, this
+      );
+      this.dialog.setPixelSize(dialogSize);
+    }
+
     this.size = 8;
 
     this.eyeTick = 0;
@@ -90,7 +104,14 @@ export default class Scientist extends Renderable {
 
     this.currentEyes = this.eyes[0];
 
-    return null
+  }
+
+  sayOK() {
+
+  }
+
+  sayWrong(tries) {
+
   }
 
   setTalking(talking) {
@@ -112,6 +133,22 @@ export default class Scientist extends Renderable {
     this.size = size;
   }
 
+  moved (x, y) {
+    if (this.dialog) {
+      this.dialog.moved(x, y)
+    }
+  }
+
+  pressed (x, y) {
+    if (this.dialog) {
+      this.dialog.pressed(x, y)
+    }
+  }
+
+  setDialogFinishedCallback (callback) {
+    this.dialog.setFinishedCallback(callback);
+  }
+
   update() {
     this.eyeTick += 1;
 
@@ -130,6 +167,10 @@ export default class Scientist extends Renderable {
           this.currentMouth -= 2;
         }
       }
+    }
+
+    if (this.dialog) {
+      this.dialog.update();
     }
   }
 
@@ -178,6 +219,10 @@ export default class Scientist extends Renderable {
       }
 
       this.renderLine(context, this.guy[i], renderY);
+    }
+
+    if (this.dialog) {
+      this.dialog.render(context);
     }
   }
 }

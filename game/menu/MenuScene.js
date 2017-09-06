@@ -39,7 +39,6 @@ export default class MenuScene extends Scene {
 
     context.stroke();
 
-    this.scientist = new Scientist(Engine.width / 2 - 200, Engine.height / 2 - 75, 100, 150);
 
     this.texts = [
       "Oh, what a mess!",           // 0
@@ -62,11 +61,11 @@ export default class MenuScene extends Scene {
       "OK then. Blackboxes... Follow me here.", // 20
     ];
 
-    this.dialog = new Dialog(
-      Engine.width / 2 - 100, Engine.height / 2 - 75, 350, 100, this.texts, this.scientist
+    this.scientist = new Scientist(
+      Engine.width / 2 - 200, Engine.height / 2 - 75, 100, 150, this.texts, 3
     );
-    this.dialog.setPixelSize(3);
-    this.dialog.setFinishedCallback(this.moveToLevelChoice);
+
+    this.scientist.setDialogFinishedCallback(this.moveToLevelChoice);
 
     this.skip = new Button(Engine.width - 125, 25, 100, 30,
       'skip & play', undefined, undefined, this.onSkip);
@@ -97,7 +96,7 @@ export default class MenuScene extends Scene {
     } else if (this.skip.state === 1 && !this.skip.inRange(x, y)) {
       this.skip.setNormal();
     } else {
-      this.dialog.moved(x, y)
+      this.scientist.moved(x, y)
     }
   }
 
@@ -106,39 +105,20 @@ export default class MenuScene extends Scene {
   }
 
   pressed(x, y) {
-    if (this.dialog.inRange(x, y)) {
-      this.dialog.pressed(x, y);
-    } else if (this.skip.inRange(x, y)) {
+    if (this.skip.inRange(x, y)) {
       this.skip.click();
-    } else if (this.dialogEnabled) {
-      this.dialog.loadText();
+    } else {
+      this.scientist.pressed(x, y);
     }
   }
 
   update() {
-    if (this.ticksPassed < 100) {
-      this.ticksPassed += 1;
-    }
-
-    if (this.ticksPassed === 100 && !this.dialogEnabled) {
-      this.dialogEnabled = true;
-    }
-
-    if (this.dialogEnabled) {
-      this.dialog.update();
-    }
-
-
     this.scientist.update();
   }
 
   render(context) {
     this.background.render(context);
-
     this.scientist.render(context);
-    if (this.dialogEnabled) {
-      this.dialog.render(context);
-    }
     this.skip.render(context);
   }
 }
