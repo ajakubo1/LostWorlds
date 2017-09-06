@@ -86,7 +86,7 @@ export default class Scientist extends Renderable {
       ],
     ];
 
-    this.size = 6;
+    this.size = 8;
     return null
   }
 

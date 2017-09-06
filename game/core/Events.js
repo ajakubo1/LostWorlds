@@ -36,7 +36,6 @@ export default class Events {
   }
 
   onMouseDown(event) {
-    console.info(event);
     const x = (event.clientX / event.target.offsetWidth) * Engine.width;
     const y = (event.clientY / event.target.offsetHeight) * Engine.height;
 
