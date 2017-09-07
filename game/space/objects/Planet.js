@@ -8,6 +8,14 @@ export default class Planet extends Renderable {
     super(x, y, width, height);
     this.type = type;
     this.image = this.getImage();
+
+    this.lastVertical = "left";
+    this.lastHorizontal = "up";
+  }
+
+  setId(x, y) {
+    this.idX = x;
+    this.idY = y;
   }
 
   getImage() {
@@ -26,6 +34,28 @@ export default class Planet extends Renderable {
       context.globalAlpha = 0.2;
       context.fillRect(x, y, this.width, this.height);
       context.globalAlpha = 1.0;
+    }
+  }
+
+  getDirectionForCat (direction, fake) {
+    if (direction === "left" || direction == "right") {
+      if (!fake) {
+        if (this.lastHorizontal === "up") {
+          this.lastHorizontal = "down";
+        } else {
+          this.lastHorizontal = "up";
+        }
+      }
+      return this.lastHorizontal;
+    } else {
+      if (!fake) {
+        if (this.lastVertical === "left") {
+          this.lastVertical = "right";
+        } else {
+          this.lastVertical = "left";
+        }
+      }
+      return this.lastVertical;
     }
   }
 

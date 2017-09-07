@@ -100,17 +100,17 @@ Engine.globals = {
   levels: [
     {
       name: 'Tutorial',
-      width: 3,
+      width: 5,
       height: 3,
       planets: [
         {
-          type: PLANET_TYPES.BLUE,
-          x: 2,
-          y: 0
+          type: PLANET_TYPES.CAT,
+          x: 1,
+          y: 1,
         }, {
-          type: PLANET_TYPES.RED,
-          x: 2,
-          y: 2
+          type: PLANET_TYPES.CAT,
+          x: 3,
+          y: 1,
         },
       ],
       open: true,

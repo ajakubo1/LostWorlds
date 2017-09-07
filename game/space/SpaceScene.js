@@ -392,7 +392,6 @@ export default class SpaceScene extends Scene {
         planet.x = location[0];
         planet.y = location[1];
       }
-      console.info(planet.x, planet.y);
 
       this.addPlanet(planet.x, planet.y, planet.type);
     }
@@ -421,6 +420,15 @@ export default class SpaceScene extends Scene {
     }
   }
 
+  getFakeFromSquare(square) {
+    let i;
+    for (i = 0; i < this.planets.length; i += 1) {
+      if (this.planets[i].x === square.idX && this.planets[i].y === square.idY) {
+        return this.fakePlanets[i];
+      }
+    }
+  }
+
   determineDirection (x, y, direction, fake) {
     let directionTable = this.determine;
     if (fake) {
@@ -442,10 +450,12 @@ export default class SpaceScene extends Scene {
       return [ direction, null ]
     }
 
-    const returnDirection = instruction[direction] ? instruction[direction]: direction;
+    let returnDirection = instruction[direction] ? instruction[direction]: direction;
 
     if (returnDirection === "stop" && instruction.planet === TYPES.CAT) {
       // Get the cat
+      const cat = this.getFakeFromSquare(square);
+      returnDirection = cat.getDirectionForCat(direction, fake);
     }
 
     const colorChange = instruction['change_' + direction] ? instruction['change_' + direction] : null;
