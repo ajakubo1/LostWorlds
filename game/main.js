@@ -10,7 +10,7 @@ Engine.setup(gameCanvas, 960, 540);
 
 Engine._putAsset(
   ASSET_IDENTIFIERS.PLANET,
-  createOpaqCircle(50, 50, 15, '#33FF00', '#33FF00', 2, 0.3),
+  createOpaqCircle(50, 50, 15, '#E80000', '#E80000', 2, 0.3),
   ASSET_TYPES.PLACEHOLDER
 );
 Engine._putAsset(

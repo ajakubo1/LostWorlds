@@ -43,32 +43,49 @@ export default class Beam extends Renderable {
     this.directionHistory.push(this.direction);
   }
 
-  drawLines(context) {
+  drawBeam(context, lineWidth, fill, opacity = 1.0) {
     const length = this.pathX.length;
     let beginX = this.pathX[0] + 5;
     let beginY = this.pathY[0] + 5;
     let currentDirection = this.directionHistory[0];
     let i;
-
     context.beginPath();
-    context.strokeStyle = "red";
-    if (this.fake) {
-      context.lineWidth = 2;
-    } else {
-      context.lineWidth = 4;
-    }
+    context.strokeStyle = fill;
+
+    context.lineWidth = lineWidth;
+
+    context.globalAlpha = opacity;
 
     context.moveTo(beginX,beginY);
     for (i = 1; i < length; i += 1) {
       if (currentDirection !== this.directionHistory[i]) {
-        let x = this.pathX[i-1];
-        let y = this.pathY[i-1];
         context.lineTo(this.pathX[i-1] + 5,this.pathY[i-1] + 5);
         currentDirection = this.directionHistory[i]
       }
     }
     context.lineTo(this.pathX[length-1] + 5,this.pathY[length-1] + 5);
     context.stroke();
+    context.globalAlpha = 1.0;
+  }
+
+  getColor() {
+    let color = "#FF0000";
+    if (this.step > 2 && this.step < 6) {
+      color = "#C00000";
+    } else if (this.step > 5) {
+      color = "#700000";
+    }
+    return color;
+  }
+
+  drawLines(context) {
+    if (this.fake) {
+      this.drawBeam(context, 2, "red", 0.2)
+    } else {
+      this.drawBeam(context, 6, "purple");
+      this.drawBeam(context, 3, this.getColor());
+      this.drawBeam(context, 1, "white");
+    }
   }
 
   drawPoint(context) {
@@ -82,13 +99,7 @@ export default class Beam extends Renderable {
     }
     let grd = context.createRadialGradient(x, y, 1, x, y, range);
 
-    let color = "#FF0000";
-    if (this.step === 3 || this.step === 4 || this.step === 5) {
-      color = "#C00000";
-    } else if (this.step === 6 || this.step === 7 || this.step === 8) {
-      color = "#700000";
-    }
-
+    let color = this.getColor()
     grd.addColorStop(0, color);
     grd.addColorStop(1, "transparent");
 
