@@ -315,7 +315,9 @@ export default class SpaceScene extends Scene {
       if (determineObject[type] === this.opositeDirection(type)) {
         return;
       } else if (determineObject[type] === this.opositeDirection(change)){
-        determineObject['change_' + type] = planet;
+        determineObject['change_' + type] = this.determineColorChange(
+          determineObject['change_' + type], planet
+        );
         determineObject[type] = this.opositeDirection(type);
       } else {
         determineObject['change_' + type] = this.determineColorChange(
@@ -441,6 +443,10 @@ export default class SpaceScene extends Scene {
     }
 
     const returnDirection = instruction[direction] ? instruction[direction]: direction;
+
+    if (returnDirection === "stop" && instruction.planet === TYPES.CAT) {
+      // Get the cat
+    }
 
     const colorChange = instruction['change_' + direction] ? instruction['change_' + direction] : null;
 
