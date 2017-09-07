@@ -9,8 +9,18 @@ const gameCanvas = document.getElementById('game');
 Engine.setup(gameCanvas, 960, 540);
 
 Engine._putAsset(
-  ASSET_IDENTIFIERS.PLANET,
-  createOpaqCircle(50, 50, 15, '#E80000', '#E80000', 2, 0.3),
+  ASSET_IDENTIFIERS.RED,
+  createOpaqCircle(50, 50, 15, '#A10000', '#A10000', 2, 0.3),
+  ASSET_TYPES.PLACEHOLDER
+);
+Engine._putAsset(
+  ASSET_IDENTIFIERS.BLUE,
+  createOpaqCircle(50, 50, 15, '#0000A0', '#0000A0', 2, 0.3),
+  ASSET_TYPES.PLACEHOLDER
+);
+Engine._putAsset(
+  ASSET_IDENTIFIERS.GREEN,
+  createOpaqCircle(50, 50, 15, '#00A100', '#00A100', 2, 0.3),
   ASSET_TYPES.PLACEHOLDER
 );
 Engine._putAsset(
@@ -84,10 +94,10 @@ Engine.globals = {
       height: 3,
       planets: [
         {
-          type: PLANET_TYPES.NORMAL,
+          type: PLANET_TYPES.RED,
           x: 0,
           y: 1
-        }
+        },
       ],
       open: true,
       isTutorial: true
@@ -97,9 +107,9 @@ Engine.globals = {
       height: 4,
       planets: [
         {
-          type: PLANET_TYPES.NORMAL,
+          type: PLANET_TYPES.RED,
         }, {
-          type: PLANET_TYPES.NORMAL,
+          type: PLANET_TYPES.RED,
         }
       ],
       open: false
@@ -109,13 +119,13 @@ Engine.globals = {
       height: 6,
       planets: [
         {
-          type: PLANET_TYPES.NORMAL,
+          type: PLANET_TYPES.RED,
         }, {
-          type: PLANET_TYPES.NORMAL,
+          type: PLANET_TYPES.RED,
         }, {
-          type: PLANET_TYPES.NORMAL,
+          type: PLANET_TYPES.GREEN,
         }, {
-          type: PLANET_TYPES.NORMAL,
+          type: PLANET_TYPES.BLUE,
         }
       ],
       open: false

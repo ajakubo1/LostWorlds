@@ -3,8 +3,15 @@ import Engine from '../../core/Engine';
 import { IDENTIFIERS as ASSET_IDENTIFIERS } from '../../core/Assets';
 
 export default class Planet extends Renderable {
+
+  constructor (x, y, width, height, type) {
+    super(x, y, width, height);
+    this.type = type;
+    this.image = this.getImage();
+  }
+
   getImage() {
-    return Engine.getAsset(ASSET_IDENTIFIERS.PLANET)
+    return Engine.getAsset(this.type);
   }
 
   render(context) {
@@ -17,7 +24,7 @@ export default class Planet extends Renderable {
     if (this.state === 'active') {
       context.fillStyle = 'red';
       context.globalAlpha = 0.2;
-      context.fillRect(x, y, this.width, this.height)
+      context.fillRect(x, y, this.width, this.height);
       context.globalAlpha = 1.0;
     }
   }
@@ -40,5 +47,7 @@ export default class Planet extends Renderable {
 }
 
 export const TYPES = {
-  'NORMAL': 'NORMAL',
+  "RED": 'RED',
+  "GREEN": 'GREEN',
+  "BLUE": 'BLUE',
 };

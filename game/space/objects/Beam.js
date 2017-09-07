@@ -1,6 +1,19 @@
 import Renderable from '../../core/Renderable';
 import Engine from '../../core/Engine';
 import { IDENTIFIERS as ASSET_IDENTIFIERS } from '../../core/Assets';
+import {TYPES} from "./Planet";
+
+let colors = {
+  "RED": ["#CC0000", "#FF0033", "#CC0066"],
+  "GREEN": ["#006600", "#009900", "#00CC00"],
+  "BLUE": ["#0000FF", "#0033FF", "#0066FF"]
+};
+
+let sideColors = {
+  "RED": ["#F80000", "#D80000", "#A80000"],
+  "GREEN": ["#33FF00", "#33CC00", "#339900"],
+  "BLUE": ["#3366FF", "#3333FF", "#3300FF"]
+};
 
 export default class Beam extends Renderable {
   getImage() {
@@ -22,7 +35,9 @@ export default class Beam extends Renderable {
     this.pathX = [];
     this.pathY = [];
     this.directionHistory = [];
+    this.colorHistory = [];
     this.step = 0;
+    this.currentColor = TYPES.RED;
     if (this.probe.x < this.x) {
       this.pathX.push(this.probe.x + this.probe.width);
       this.pathY.push(this.probe.y + 20);
@@ -41,6 +56,7 @@ export default class Beam extends Renderable {
       this.direction = 'up'
     }
     this.directionHistory.push(this.direction);
+    this.colorHistory.push(this.currentColor);
   }
 
   drawBeam(context, lineWidth, fill, opacity = 1.0) {
@@ -68,21 +84,29 @@ export default class Beam extends Renderable {
     context.globalAlpha = 1.0;
   }
 
-  getColor() {
-    let color = "#FF0000";
+  getActualColor(colorset) {
+    let color = colorset[0];
     if (this.step > 2 && this.step < 6) {
-      color = "#C00000";
+      color = colorset[1];
     } else if (this.step > 5) {
-      color = "#700000";
+      color = colorset[2];
     }
     return color;
   }
 
+  getHelperColor() {
+    return this.getActualColor(sideColors[this.currentColor]);
+  }
+
+  getColor() {
+    return this.getActualColor(colors[this.currentColor]);
+  }
+
   drawLines(context) {
     if (this.fake) {
-      this.drawBeam(context, 2, "red", 0.2)
+      this.drawBeam(context, 2, this.getColor(), 0.2)
     } else {
-      this.drawBeam(context, 6, "purple");
+      this.drawBeam(context, 6, this.getHelperColor());
       this.drawBeam(context, 3, this.getColor());
       this.drawBeam(context, 1, "white");
     }
@@ -99,7 +123,7 @@ export default class Beam extends Renderable {
     }
     let grd = context.createRadialGradient(x, y, 1, x, y, range);
 
-    let color = this.getColor()
+    let color = this.getColor();
     grd.addColorStop(0, color);
     grd.addColorStop(1, "transparent");
 
@@ -140,7 +164,9 @@ export default class Beam extends Renderable {
       if (prevX > this.x && prevX < this.width &&
         prevY > this.y && prevY < this.height) {
         if ((lastElement + 3) % 5 === 0) {
-          this.direction = this.scene.determineDirection(prevX, prevY, this.direction, this.fake)
+          let directions = this.scene.determineDirection(prevX, prevY, this.direction, this.fake);
+          this.direction = directions[0];
+          this.currentColor = directions[1] ? directions[1] : this.currentColor;
         }
       }
 
@@ -163,6 +189,7 @@ export default class Beam extends Renderable {
       }
 
       this.directionHistory.push(this.direction);
+      this.colorHistory.push(this.currentColor);
     }
   }
 }

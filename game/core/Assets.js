@@ -23,7 +23,9 @@ export const TYPES = {
 };
 
 export const IDENTIFIERS = {
-  'PLANET': 'PLANET',
+  "RED": 'RED',
+  "GREEN": 'GREEN',
+  "BLUE": 'BLUE',
   'PLANET_SQUARE': 'PLANET_SQUARE',
   'PLANET_SQUARE_ACTIVE': 'PLANET_SQUARE_ACTIVE',
   'LEVEL_SQUARE': 'LEVEL_SQUARE',

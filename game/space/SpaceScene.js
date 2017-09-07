@@ -5,7 +5,7 @@ import ProbeSquare from './objects/ProbeSquare';
 import Background from './objects/Background';
 import Panel from './objects/Panel';
 import Beam from "./objects/Beam";
-import Planet from "./objects/Planet";
+import Planet, {TYPES} from "./objects/Planet";
 import Energy from "./objects/Energy";
 import Button from '../core/Button';
 import LevelScene from "../level/LevelScene";
@@ -20,7 +20,7 @@ const tutorialDialog = [
   "To the blackbox",
   "And you have to do it correctly",
   "This bit here",
-  "Is the 'green particle'",
+  "Is the 'red particle'",
   "If you don't mind my science jargon",
   "...",
   "You don't know where the actual particle is in the box",
@@ -177,7 +177,7 @@ export default class SpaceScene extends Scene {
     }
 
     for (i = 0; i < this.planets.length; i += 1) {
-      const obj = new Planet(25 + i % 2 * 50, 25 + Math.floor(i / 2) * 65, 50, 50);
+      const obj = new Planet(25 + i % 2 * 50, 25 + Math.floor(i / 2) * 65, 50, 50, this.planets[i].type);
       this.fakePlanets[i] = obj;
       this.objects.push(obj);
     }
@@ -276,7 +276,7 @@ export default class SpaceScene extends Scene {
     }
   }
 
-  addDirection(x, y, type, change, fake = false) {
+  addDirection(x, y, type, change, planet, fake = false) {
     if (x < 0 || y < 0 || x >= this.width || y >= this.height) {
       return;
     }
@@ -292,6 +292,16 @@ export default class SpaceScene extends Scene {
       determineTable[x][y] = {};
       determineObject = determineTable[x][y];
     }
+
+    if (planet === TYPES.BLUE) {
+      determineObject.change = TYPES.BLUE;
+    } else if (planet === TYPES.GREEN &&
+      (!determineObject.change || determineObject.change !== TYPES.BLUE)) {
+      determineObject.change = TYPES.GREEN;
+    } else if (planet === TYPES.RED && !determineObject.change) {
+      determineObject.change = TYPES.RED;
+    }
+
     if (determineObject[type] === 'stop') {
       return;
     }
@@ -317,30 +327,30 @@ export default class SpaceScene extends Scene {
   }
 
   addPlanet(x, y, type, fake = false) {
-    this.addDirection(x, y, 'planet', type, fake);
-    this.addDirection(x - 1, y - 1, 'right', 'up', fake);
-    this.addDirection(x - 1, y - 1, 'down', 'left', fake);
-    this.addDirection(x + 1, y - 1, 'down', 'right', fake);
-    this.addDirection(x + 1, y - 1, 'left', 'up', fake);
-    this.addDirection(x - 1, y + 1, 'right', 'down', fake);
-    this.addDirection(x - 1, y + 1, 'up', 'left', fake);
-    this.addDirection(x + 1, y + 1, 'up', 'right', fake);
-    this.addDirection(x + 1, y + 1, 'left', 'down', fake);
+    this.addDirection(x, y, 'planet', type, type, fake);
+    this.addDirection(x - 1, y - 1, 'right', 'up', type, fake);
+    this.addDirection(x - 1, y - 1, 'down', 'left', type, fake);
+    this.addDirection(x + 1, y - 1, 'down', 'right', type, fake);
+    this.addDirection(x + 1, y - 1, 'left', 'up', type, fake);
+    this.addDirection(x - 1, y + 1, 'right', 'down', type, fake);
+    this.addDirection(x - 1, y + 1, 'up', 'left', type, fake);
+    this.addDirection(x + 1, y + 1, 'up', 'right', type, fake);
+    this.addDirection(x + 1, y + 1, 'left', 'down', type, fake);
 
     if (x === 0) {
-      this.addDirection(x, y - 1, 'right', 'left', fake);
-      this.addDirection(x, y + 1, 'right', 'left', fake);
+      this.addDirection(x, y - 1, 'right', 'left', type, fake);
+      this.addDirection(x, y + 1, 'right', 'left', type, fake);
     } else if (x === this.width -1) {
-      this.addDirection(x, y - 1, 'left', 'right', fake);
-      this.addDirection(x, y + 1, 'left', 'right', fake);
+      this.addDirection(x, y - 1, 'left', 'right', type, fake);
+      this.addDirection(x, y + 1, 'left', 'right', type, fake);
     }
 
     if (y === 0) {
-      this.addDirection(x + 1, y, 'down', 'up', fake);
-      this.addDirection(x - 1, y, 'down', 'up', fake);
+      this.addDirection(x + 1, y, 'down', 'up', type, fake);
+      this.addDirection(x - 1, y, 'down', 'up', type, fake);
     } else if (y === this.height -1) {
-      this.addDirection(x + 1, y, 'up', 'down', fake);
-      this.addDirection(x - 1, y, 'up', 'down', fake);
+      this.addDirection(x + 1, y, 'up', 'down', type, fake);
+      this.addDirection(x - 1, y, 'up', 'down', type, fake);
     }
   }
 
@@ -401,10 +411,10 @@ export default class SpaceScene extends Scene {
     const instruction = directionTable[square.idX][square.idY];
 
     if (instruction === null) {
-      return direction
+      return [ direction, null ]
     }
 
-    return instruction[direction] ? instruction[direction]: direction;
+    return [instruction[direction] ? instruction[direction]: direction, instruction.change];
   }
 
   pressed(x, y) {
