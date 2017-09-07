@@ -166,7 +166,7 @@ export default class Beam extends Renderable {
         if ((lastElement + 3) % 5 === 0) {
           let directions = this.scene.determineDirection(prevX, prevY, this.direction, this.fake);
           this.direction = directions[0];
-          this.currentColor = directions[1] ? directions[1] : this.currentColor;
+          this.currentColor = colors[directions[1]] ? directions[1] : this.currentColor;
         }
       }
 
