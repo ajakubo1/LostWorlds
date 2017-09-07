@@ -63,9 +63,9 @@ const tutorialDialog = [
 
 export default class SpaceScene extends Scene {
 
-  constructor(config) {
+  constructor(config, currentLevel) {
     super();
-
+    this.currentLevel = currentLevel;
     this.check = this.check.bind(this);
     this.backToLevel = this.backToLevel.bind(this);
     this.checkSolution = this.checkSolution.bind(this);
@@ -645,19 +645,22 @@ export default class SpaceScene extends Scene {
     this.levelWon();
   }
 
-  levelWon() {
-    let i;
-
+  resetPlanets() {
     for (i = 0 ; i < this.planets.length; i += 1) {
       this.planets[i].x = undefined;
       this.planets[i].y = undefined;
     }
+  }
 
-    for (i = 0 ; i < Engine.globals.levels.length ; i += 1) {
-      const level = Engine.globals.levels[i];
+  levelWon() {
+    let i;
+
+    this.resetPlanets();
+
+    if (this.currentLevel < Engine.globals.levels.length - 1) {
+      const level = Engine.globals.levels[this.currentLevel + 1];
       if (!level.open) {
         level.open = true;
-        break;
       }
     }
     this.backToLevel();

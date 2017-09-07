@@ -34,7 +34,7 @@ export default class LevelScene extends Scene {
     for (i = 0; i < levels.length; i += 1) {
       const level = levels[i];
       if (level.open) {
-        const square = new LevelSquare(100 + i * 125, 100, 100, 100);
+        const square = new LevelSquare(100 + i * 125, 100, 100, 100, i);
         square.setInfo(level);
         this.levels.push(square);
       } else {

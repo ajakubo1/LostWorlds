@@ -5,9 +5,10 @@ import SpaceScene from "../../space/SpaceScene";
 
 export default class LevelSquare extends Renderable {
 
-  constructor(x, y, width, height) {
+  constructor(x, y, width, height, level) {
     super(x, y, width, height);
     this.state = 0;
+    this.level = level;
   }
 
   setNormal() {
@@ -30,7 +31,7 @@ export default class LevelSquare extends Renderable {
 
   goToLevel() {
     Engine.removeScene();
-    Engine.setScene(new SpaceScene(this.info));
+    Engine.setScene(new SpaceScene(this.info, this.level));
     Engine.startScene();
   }
 }
