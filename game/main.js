@@ -104,7 +104,11 @@ Engine.globals = {
       height: 3,
       planets: [
         {
-          type: PLANET_TYPES.SINGULARITY,
+          type: PLANET_TYPES.RED,
+          x: 0,
+          y: 1
+        }, {
+          type: PLANET_TYPES.BLUE,
           x: 1,
           y: 1
         },

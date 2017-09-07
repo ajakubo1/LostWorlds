@@ -276,6 +276,20 @@ export default class SpaceScene extends Scene {
     }
   }
 
+  determineColorChange(from, to) {
+    if (!from) {
+      return to;
+    } else {
+      if (from === TYPES.BLUE || to === TYPES.BLUE) {
+        return TYPES.BLUE;
+      } else if (to === TYPES.GREEN || from === TYPES.GREEN) {
+        return TYPES.GREEN;
+      } else {
+        return TYPES.RED;
+      }
+    }
+  }
+
   addDirection(x, y, type, change, planet, fake = false) {
     if (x < 0 || y < 0 || x >= this.width || y >= this.height) {
       return;
@@ -293,15 +307,6 @@ export default class SpaceScene extends Scene {
       determineObject = determineTable[x][y];
     }
 
-    if (planet === TYPES.BLUE) {
-      determineObject.change = TYPES.BLUE;
-    } else if (planet === TYPES.GREEN &&
-      (!determineObject.change || determineObject.change !== TYPES.BLUE)) {
-      determineObject.change = TYPES.GREEN;
-    } else if (planet === TYPES.RED && !determineObject.change) {
-      determineObject.change = TYPES.RED;
-    }
-
     if (determineObject[type] === 'stop') {
       return;
     }
@@ -310,19 +315,28 @@ export default class SpaceScene extends Scene {
       if (determineObject[type] === this.opositeDirection(type)) {
         return;
       } else if (determineObject[type] === this.opositeDirection(change)){
-        determineObject[type] = this.opositeDirection(type)
+        determineObject['change_' + type] = planet;
+        determineObject[type] = this.opositeDirection(type);
       } else {
+        determineObject['change_' + type] = this.determineColorChange(
+          determineObject['change_' + type], planet
+        );
         determineObject[type] = change;
       }
     } else {
+      determineObject['change_' + type] = planet;
       determineObject[type] = change;
     }
 
     if (type === 'planet') {
       determineObject.left = 'stop';
+      determineObject.change_left = planet;
       determineObject.right = 'stop';
+      determineObject.change_right = planet;
       determineObject.up = 'stop';
+      determineObject.change_up = planet;
       determineObject.down = 'stop';
+      determineObject.change_down = planet;
     }
   }
 
@@ -426,7 +440,11 @@ export default class SpaceScene extends Scene {
       return [ direction, null ]
     }
 
-    return [instruction[direction] ? instruction[direction]: direction, instruction.change];
+    const returnDirection = instruction[direction] ? instruction[direction]: direction;
+
+    const colorChange = instruction['change_' + direction] ? instruction['change_' + direction] : null;
+
+    return [returnDirection, colorChange];
   }
 
   pressed(x, y) {
