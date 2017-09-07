@@ -104,14 +104,10 @@ Engine.globals = {
       height: 3,
       planets: [
         {
-          type: PLANET_TYPES.CAT,
-          x: 1,
+          type: PLANET_TYPES.RED,
+          x: 0,
           y: 1,
-        }, {
-          type: PLANET_TYPES.CAT,
-          x: 3,
-          y: 1,
-        },
+        }
       ],
       open: true,
       isTutorial: true

@@ -202,6 +202,12 @@ export default class SpaceScene extends Scene {
     this.indicator = [];
 
     this.middlePanel = new Renderable(this.limitX1, this.limitY1, widthPlanetSquares, heightPlanetsSquare);
+
+    config.isTutorial = false;
+    config.newPlanets = false;
+    config.newSingularity = false;
+    config.newWormhole = false;
+    config.newCat = false;
   }
 
   nextStep(step) {
@@ -641,6 +647,12 @@ export default class SpaceScene extends Scene {
 
   levelWon() {
     let i;
+
+    for (i = 0 ; i < this.planets.length; i += 1) {
+      this.planets[i].x = undefined;
+      this.planets[i].y = undefined;
+    }
+
     for (i = 0 ; i < Engine.globals.levels.length ; i += 1) {
       const level = Engine.globals.levels[i];
       if (!level.open) {
