@@ -15,12 +15,22 @@ Engine._putAsset(
 );
 Engine._putAsset(
   ASSET_IDENTIFIERS.BLUE,
-  createOpaqCircle(50, 50, 15, '#0000A0', '#0000A0', 2, 0.3),
+  createOpaqCircle(50, 50, 15, '#003399', '#003399', 2, 0.3),
   ASSET_TYPES.PLACEHOLDER
 );
 Engine._putAsset(
   ASSET_IDENTIFIERS.GREEN,
   createOpaqCircle(50, 50, 15, '#00A100', '#00A100', 2, 0.3),
+  ASSET_TYPES.PLACEHOLDER
+);
+Engine._putAsset(
+  ASSET_IDENTIFIERS.SINGULARITY,
+  createOpaqCircle(50, 50, 10, '#000000', '#ffffff', 1, 0.6),
+  ASSET_TYPES.PLACEHOLDER
+);
+Engine._putAsset(
+  ASSET_IDENTIFIERS.CAT,
+  createOpaqCircle(50, 50, 15, '#aa4400', '#aa4400', 1, 0.6),
   ASSET_TYPES.PLACEHOLDER
 );
 Engine._putAsset(
@@ -94,8 +104,8 @@ Engine.globals = {
       height: 3,
       planets: [
         {
-          type: PLANET_TYPES.RED,
-          x: 0,
+          type: PLANET_TYPES.SINGULARITY,
+          x: 1,
           y: 1
         },
       ],
@@ -128,7 +138,65 @@ Engine.globals = {
           type: PLANET_TYPES.BLUE,
         }
       ],
-      open: false
+      open: false,
+      newPlanets: true,
+    }, {
+      name: 'The unknown',
+      width: 6,
+      height: 6,
+      planets: [
+        {
+          type: PLANET_TYPES.RED,
+        }, {
+          type: PLANET_TYPES.GREEN,
+        }, {
+          type: PLANET_TYPES.BLUE,
+        }, {
+          type: PLANET_TYPES.SINGULARITY,
+        }
+      ],
+      open: false,
+      newSingularity: true,
+    }, {
+      name: 'Worm hole?',
+      width: 7,
+      height: 6,
+      planets: [
+        {
+          type: PLANET_TYPES.RED,
+        }, {
+          type: PLANET_TYPES.GREEN,
+        }, {
+          type: PLANET_TYPES.BLUE,
+        }, {
+          type: PLANET_TYPES.SINGULARITY,
+        }, {
+          type: PLANET_TYPES.SINGULARITY,
+        }
+      ],
+      open: false,
+      newWormhole: true,
+    }, {
+      name: 'Cat?',
+      width: 7,
+      height: 7,
+      planets: [
+        {
+          type: PLANET_TYPES.RED,
+        }, {
+          type: PLANET_TYPES.RED,
+        }, {
+          type: PLANET_TYPES.RED,
+        }, {
+          type: PLANET_TYPES.GREEN,
+        }, {
+          type: PLANET_TYPES.BLUE,
+        }, {
+          type: PLANET_TYPES.CAT,
+        }
+      ],
+      open: false,
+      newCat: true,
     }
   ],
   tutorialEnabled: true

@@ -50,4 +50,6 @@ export const TYPES = {
   "RED": 'RED',
   "GREEN": 'GREEN',
   "BLUE": 'BLUE',
+  "SINGULARITY": "SINGULARITY",
+  "CAT": "CAT"
 };

@@ -328,29 +328,41 @@ export default class SpaceScene extends Scene {
 
   addPlanet(x, y, type, fake = false) {
     this.addDirection(x, y, 'planet', type, type, fake);
-    this.addDirection(x - 1, y - 1, 'right', 'up', type, fake);
-    this.addDirection(x - 1, y - 1, 'down', 'left', type, fake);
-    this.addDirection(x + 1, y - 1, 'down', 'right', type, fake);
-    this.addDirection(x + 1, y - 1, 'left', 'up', type, fake);
-    this.addDirection(x - 1, y + 1, 'right', 'down', type, fake);
-    this.addDirection(x - 1, y + 1, 'up', 'left', type, fake);
-    this.addDirection(x + 1, y + 1, 'up', 'right', type, fake);
-    this.addDirection(x + 1, y + 1, 'left', 'down', type, fake);
 
-    if (x === 0) {
-      this.addDirection(x, y - 1, 'right', 'left', type, fake);
-      this.addDirection(x, y + 1, 'right', 'left', type, fake);
-    } else if (x === this.width -1) {
-      this.addDirection(x, y - 1, 'left', 'right', type, fake);
-      this.addDirection(x, y + 1, 'left', 'right', type, fake);
-    }
+    if (type === TYPES.SINGULARITY) {
+      this.addDirection(x - 1, y - 1, 'left', 'down', type, fake);
+      this.addDirection(x - 1, y - 1, 'up', 'right', type, fake);
+      this.addDirection(x + 1, y - 1, 'up', 'left', type, fake);
+      this.addDirection(x + 1, y - 1, 'right', 'down', type, fake);
+      this.addDirection(x - 1, y + 1, 'left', 'up', type, fake);
+      this.addDirection(x - 1, y + 1, 'down', 'right', type, fake);
+      this.addDirection(x + 1, y + 1, 'down', 'left', type, fake);
+      this.addDirection(x + 1, y + 1, 'right', 'up', type, fake);
+    } else if (type !== TYPES.CAT) {
+      this.addDirection(x - 1, y - 1, 'right', 'up', type, fake);
+      this.addDirection(x - 1, y - 1, 'down', 'left', type, fake);
+      this.addDirection(x + 1, y - 1, 'down', 'right', type, fake);
+      this.addDirection(x + 1, y - 1, 'left', 'up', type, fake);
+      this.addDirection(x - 1, y + 1, 'right', 'down', type, fake);
+      this.addDirection(x - 1, y + 1, 'up', 'left', type, fake);
+      this.addDirection(x + 1, y + 1, 'up', 'right', type, fake);
+      this.addDirection(x + 1, y + 1, 'left', 'down', type, fake);
 
-    if (y === 0) {
-      this.addDirection(x + 1, y, 'down', 'up', type, fake);
-      this.addDirection(x - 1, y, 'down', 'up', type, fake);
-    } else if (y === this.height -1) {
-      this.addDirection(x + 1, y, 'up', 'down', type, fake);
-      this.addDirection(x - 1, y, 'up', 'down', type, fake);
+      if (x === 0) {
+        this.addDirection(x, y - 1, 'right', 'left', type, fake);
+        this.addDirection(x, y + 1, 'right', 'left', type, fake);
+      } else if (x === this.width -1) {
+        this.addDirection(x, y - 1, 'left', 'right', type, fake);
+        this.addDirection(x, y + 1, 'left', 'right', type, fake);
+      }
+
+      if (y === 0) {
+        this.addDirection(x + 1, y, 'down', 'up', type, fake);
+        this.addDirection(x - 1, y, 'down', 'up', type, fake);
+      } else if (y === this.height -1) {
+        this.addDirection(x + 1, y, 'up', 'down', type, fake);
+        this.addDirection(x - 1, y, 'up', 'down', type, fake);
+      }
     }
   }
 
