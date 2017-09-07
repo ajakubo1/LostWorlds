@@ -646,6 +646,7 @@ export default class SpaceScene extends Scene {
   }
 
   resetPlanets() {
+    let i;
     for (i = 0 ; i < this.planets.length; i += 1) {
       this.planets[i].x = undefined;
       this.planets[i].y = undefined;
@@ -653,8 +654,6 @@ export default class SpaceScene extends Scene {
   }
 
   levelWon() {
-    let i;
-
     this.resetPlanets();
 
     if (this.currentLevel < Engine.globals.levels.length - 1) {

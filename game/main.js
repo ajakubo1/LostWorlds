@@ -100,7 +100,7 @@ Engine.globals = {
   levels: [
     {
       name: 'Tutorial',
-      width: 5,
+      width: 3,
       height: 3,
       planets: [
         {
