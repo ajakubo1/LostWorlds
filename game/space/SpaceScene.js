@@ -495,7 +495,9 @@ export default class SpaceScene extends Scene {
   pressed(x, y) {
     let i;
 
-    this.scientist.pressed(x, y);
+    if(this.scientist.pressed(x, y)) {
+      return;
+    }
 
     if (x > 160 && x < Engine.width - 160) {
       if (x > this.limitX1 && x < this.limitX2 && y > this.limitY1 && y < this.limitY2) {

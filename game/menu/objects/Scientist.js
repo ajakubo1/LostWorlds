@@ -157,12 +157,18 @@ export default class Scientist extends Renderable {
 
   pressed (x, y) {
     if (this.dialog) {
-      this.dialog.pressed(x, y)
+      const dialogReturn = this.dialog.pressed(x, y);
+      if (dialogReturn) {
+        return true;
+      }
     }
 
     if (this.inRange(x, y) && this.clickCallback) {
       this.clickCallback();
+      return true;
     }
+
+    return false;
   }
 
   setDialogFinishedCallback (callback) {
