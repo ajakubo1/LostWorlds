@@ -15,6 +15,7 @@ export default class MenuScene extends Scene {
     this.onSkip = this.onSkip.bind(this);
 
     this.moveToLevelChoice = this.moveToLevelChoice.bind(this);
+    this.moveCloser = this.moveCloser.bind(this);
 
     this.background = new Background(0, 0, Engine.width, Engine.height);
 
@@ -40,32 +41,28 @@ export default class MenuScene extends Scene {
     context.stroke();
 
 
-    this.texts = [
+    this.texts1 = [
       "Oh, what a mess!",           // 0
-      "How did this happen?",       // 1
-      "I cannot believe it!",       // 2
       "My lab is wrecked!",         // 3
-      "Garry must've opened the cages once again!",   // 4
-      "You know, the ones with monkeys...",                        // 5
-      "Oh, and who are you?!",             // 6
+      "Someone opened the cages once again!",   // 4
+      "Bloody monkeys escaped!"
+    ];
+    this.texts2 = [ "Oh, and who are you?!",             // 6
       "Yes you!",                   // 7
       "I have never seen you here!",                   // 7
       "Are you the new intern?",    // 8
-      "Splendid, my dear lad!",     // 12
+      "Splendid!",     // 12
       "You will help me out!",      // 13
-      "Every bit of data is lost!", // 15
-      "Every label displaced!", // 16
-      "Every battery taken out!", // 17
-      "Good thing I marked all of the blackboxes", // 18
-      "Or we wouldn't even know what to do", // 19
-      "OK then. Blackboxes... Follow me here.", // 20
+      "I've lost all of the data", // 15
+      "Good thing I know what's in each of the blackbox", // 18
+      "Follow me" // 20
     ];
 
     this.scientist = new Scientist(
-      Engine.width / 2 - 200, Engine.height / 2 - 75, this.texts, 8, 3
+      Engine.width / 2 - 200, Engine.height / 2 - 75, this.texts1, 8, 3
     );
 
-    this.scientist.setDialogFinishedCallback(this.moveToLevelChoice);
+    this.scientist.setDialogFinishedCallback(this.moveCloser);
 
     this.skip = new Button(Engine.width - 125, 25, 100, 30,
       'skip & play', undefined, undefined, this.onSkip);
@@ -73,6 +70,14 @@ export default class MenuScene extends Scene {
 
   onSkip() {
     this.moveToLevelChoice();
+  }
+
+  moveCloser() {
+    this.scientist = new Scientist(
+      100, Engine.height / 2, this.texts2, 16, 5
+    );
+
+    this.scientist.setDialogFinishedCallback(this.moveToLevelChoice);
   }
 
   moveToLevelChoice() {
