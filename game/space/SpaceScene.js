@@ -70,13 +70,14 @@ export default class SpaceScene extends Scene {
     this.backToLevel = this.backToLevel.bind(this);
     this.checkSolution = this.checkSolution.bind(this);
     this.nextStep = this.nextStep.bind(this);
+    this.restartLevel = this.restartLevel.bind(this);
     this.checkLimit = 3;
 
     this.clickedSquare = null;
     this.selectedPlanet = null;
     this.beam = null;
     this.fake = null;
-    this.energyIndicator = new Energy(Engine.width - 125, 25, 100, 350);
+    this.energyIndicator = new Energy(Engine.width - 125, 25, 100, 350, this.restartLevel);
     this.checkButton = new Button(
       Engine.width - 120, Engine.height - 65, 90, 30,
       'Done!', undefined, undefined, this.check
@@ -551,6 +552,8 @@ export default class SpaceScene extends Scene {
         if (this.solutionButton.state === 1 && this.solutionButton.inRange(x, y)) {
           this.solutionButton.click();
         }
+
+        this.energyIndicator.pressed(x, y);
       }
     }
   }
@@ -651,6 +654,13 @@ export default class SpaceScene extends Scene {
       this.planets[i].x = undefined;
       this.planets[i].y = undefined;
     }
+  }
+
+  restartLevel() {
+    this.resetPlanets();
+    Engine.removeScene();
+    Engine.setScene(new SpaceScene(Engine.globals.levels[this.currentLevel], this.currentLevel));
+    Engine.startScene();
   }
 
   levelWon() {

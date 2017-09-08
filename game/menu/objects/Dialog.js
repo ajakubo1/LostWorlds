@@ -1,7 +1,7 @@
 import Renderable from '../../core/Renderable';
 import Engine from '../../core/Engine';
 import { IDENTIFIERS as ASSET_IDENTIFIERS } from '../../core/Assets';
-import {fill} from "../../core/Letters";
+import {fillText} from "../../core/Letters";
 import Button from "../../core/Button";
 
 export default class Dialog extends Renderable {
@@ -135,7 +135,7 @@ export default class Dialog extends Renderable {
   render(context) {
     if (this.text) {
       context.drawImage(this.image, this.x, this.y, this.width, this.height);
-      fill(this.x, this.y, this.width, this.height, this.textSoFar, context, 'red', this.size);
+      fillText(this.x, this.y, this.width, this.height, this.textSoFar, context, 'red', this.size);
 
       if(this.continueEnabled) {
         this.continue.render(context);

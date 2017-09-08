@@ -290,7 +290,7 @@ const sum = (arr) => {
   return sum;
 };
 
-export const fill = (globalX, globalY, width, height, word, context, color = 'black', size = 1) => {
+export const fillText = (globalX, globalY, width, height, word, context, color = 'black', size = 1) => {
   word = word.toUpperCase();
   let needed = [], i, j;
 

@@ -1,5 +1,5 @@
 import Renderable from './Renderable';
-import {fill} from './Letters';
+import {fillText} from './Letters';
 
 export default class Button extends Renderable {
   constructor(x, y, width, height, text, color = '#222299', hoverColor = '#1111FF', onClick) {
@@ -33,7 +33,7 @@ export default class Button extends Renderable {
 
     context.fillRect(this.x, this.y, this.width, this.height);
 
-    fill(this.x, this.y, this.width, this.height, this.text, context, 'red', this.size)
+    fillText(this.x, this.y, this.width, this.height, this.text, context, 'red', this.size)
   }
 
   click() {
