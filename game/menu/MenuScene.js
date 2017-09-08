@@ -62,7 +62,7 @@ export default class MenuScene extends Scene {
     ];
 
     this.scientist = new Scientist(
-      Engine.width / 2 - 200, Engine.height / 2 - 75, 100, 150, this.texts, 3
+      Engine.width / 2 - 200, Engine.height / 2 - 75, this.texts, 8, 3
     );
 
     this.scientist.setDialogFinishedCallback(this.moveToLevelChoice);

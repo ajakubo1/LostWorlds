@@ -71,6 +71,7 @@ export default class SpaceScene extends Scene {
     this.checkSolution = this.checkSolution.bind(this);
     this.nextStep = this.nextStep.bind(this);
     this.restartLevel = this.restartLevel.bind(this);
+    this.levelWon = this.levelWon.bind(this);
     this.checkLimit = 3;
 
     this.clickedSquare = null;
@@ -78,14 +79,6 @@ export default class SpaceScene extends Scene {
     this.beam = null;
     this.fake = null;
     this.energyIndicator = new Energy(Engine.width - 125, 25, 100, 350, this.restartLevel);
-    this.checkButton = new Button(
-      Engine.width - 120, Engine.height - 65, 90, 30,
-      'Done!', undefined, undefined, this.check
-    );
-    this.backButton = new Button(
-      Engine.width - 120, Engine.height - 115, 90, 30,
-      'Back', undefined, undefined, this.backToLevel
-    );
     this.solutionButton = new Button(
       Engine.width - 120, Engine.height - 165, 90, 30,
       'Solution', undefined, undefined, this.checkSolution
@@ -184,8 +177,6 @@ export default class SpaceScene extends Scene {
     }
 
     this.objects.push(this.energyIndicator);
-    this.objects.push(this.checkButton);
-    this.objects.push(this.backButton);
     this.objects.push(this.solutionButton);
 
     let dialog = null;
@@ -193,8 +184,8 @@ export default class SpaceScene extends Scene {
       dialog = tutorialDialog;
     }
 
-    this.scientist = new Scientist(80, Engine.height - 95, 50, 75, dialog, 2);
-    this.scientist.setSize(4);
+    this.scientist = new Scientist(80, Engine.height - 95, dialog, 4, 2);
+    this.scientist.onClick(this.check);
 
     if (config.isTutorial) {
       this.scientist.setDialogStepCallback(this.nextStep);
@@ -541,13 +532,7 @@ export default class SpaceScene extends Scene {
           }
         }
       } else {
-        if (this.checkButton.state === 1 && this.checkButton.inRange(x, y)) {
-          this.checkButton.click();
-        }
-
         if (this.backButton.state === 1 && this.backButton.inRange(x, y)) {
-          this.backButton.click();
-        }
 
         if (this.solutionButton.state === 1 && this.solutionButton.inRange(x, y)) {
           this.solutionButton.click();
@@ -580,22 +565,6 @@ export default class SpaceScene extends Scene {
         this.fake = null;
       }
     } else {
-      if (this.checkButton.state === 0 && this.checkButton.inRange(x, y)) {
-        this.checkButton.setHover();
-      }
-
-      if (this.checkButton.state === 1 && !this.checkButton.inRange(x, y)) {
-        this.checkButton.setNormal();
-      }
-
-      if (this.backButton.state === 0 && this.backButton.inRange(x, y)) {
-        this.backButton.setHover();
-      }
-
-      if (this.backButton.state === 1 && !this.backButton.inRange(x, y)) {
-        this.backButton.setNormal();
-      }
-
       if (this.solutionButton.state === 0 && this.solutionButton.inRange(x, y)) {
         this.solutionButton.setHover();
       }
@@ -624,6 +593,27 @@ export default class SpaceScene extends Scene {
     this.scientist.update();
   }
 
+  displayScientistDialog(texts, callback) {
+    this.scientist.say(texts, callback);
+  }
+
+  limitOK() {
+    if (this.checkLimit > 0) {
+      this.displayScientistDialog(
+        [
+          'Not quite.',
+          'You still have ' + this.checkLimit + ' left.'
+        ], null);
+    } else {
+      this.displayScientistDialog(
+        [
+          'Not quite.',
+          'I will replace the battery',
+          'This particle placement is wacky'
+        ], this.restartLevel);
+    }
+  }
+
   check() {
     var i, j;
     for (i = 0; i < this.width; i += 1) {
@@ -634,18 +624,25 @@ export default class SpaceScene extends Scene {
         if (real !== null && real.planet) {
           if (fake !== null && fake.planet) {
             if (real.planet.type !== fake.planet.type) {
-              console.info('nope!');
+              this.checkLimit -= 1;
+              this.limitOK();
               return;
             }
           } else {
-            console.info('nope!');
+            this.checkLimit -= 1;
+            this.limitOK();
             return;
           }
         }
       }
     }
 
-    this.levelWon();
+    this.displayScientistDialog(
+      [
+        'Oh, cool!',
+        'You did it!',
+        'Go ahead and try another blackbox then'
+      ], this.levelWon);
   }
 
   resetPlanets() {

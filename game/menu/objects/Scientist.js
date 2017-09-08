@@ -5,8 +5,14 @@ import Dialog from "./Dialog";
 
 export default class Scientist extends Renderable {
 
-  constructor (x = 0, y = 0, width = 0, height = 0, texts = null, dialogSize = 2) {
+  constructor (x = 0, y = 0, texts = null, size = 8, dialogSize = 2) {
+    const width = 9 * size;
+    const height = 27 * size;
+
     super(x, y, width, height);
+
+    this.dialogFinished = this.dialogFinished.bind(this);
+
     this.colors = [
       "#1bd9c9", //coat 1
       "#2eec2b", //eyes 2
@@ -81,19 +87,17 @@ export default class Scientist extends Renderable {
       ],
     ];
     this.talking = false;
+    this.dialogSize = dialogSize;
     if (texts === null) {
       this.sayRandom = true;
       this.dialog = null
     } else {
       this.sayRandom = false;
-      this.dialog = new Dialog(
-        x + dialogSize * 30, y, dialogSize * 120, dialogSize * 30, texts, this
-      );
-      this.dialog.setPixelSize(dialogSize);
+      this.say(texts, this.dialogFinished)
     }
-    this.dialogSize = dialogSize;
 
-    this.size = 8;
+
+    this.size = size;
 
     this.eyeTick = 0;
     this.eyeTickLimit = Math.floor(Math.random() * 200) + 20;
@@ -106,12 +110,23 @@ export default class Scientist extends Renderable {
 
   }
 
-  sayOK() {
-
+  say(texts, callback) {
+    this.dialog = new Dialog(
+      this.x + this.dialogSize * 30, this.y, this.dialogSize * 120, this.dialogSize * 30, texts, this
+    );
+    this.dialog.setPixelSize(this.dialogSize);
+    this.dialog.setFinishedCallback(callback);
   }
 
-  sayWrong(tries) {
+  dialogFinished() {
+    this.dialog = null;
+    if (this.onDialogFinished) {
+      this.onDialogFinished()
+    }
+  }
 
+  onClick(callback) {
+    this.clickCallback = callback;
   }
 
   setTalking(talking) {
@@ -129,10 +144,6 @@ export default class Scientist extends Renderable {
     return face[Math.floor(Math.random() * face.length)];
   }
 
-  setSize(size) {
-    this.size = size;
-  }
-
   moved (x, y) {
     if (this.dialog) {
       this.dialog.moved(x, y)
@@ -143,10 +154,14 @@ export default class Scientist extends Renderable {
     if (this.dialog) {
       this.dialog.pressed(x, y)
     }
+
+    if (this.inRange(x, y) && this.clickCallback) {
+      this.clickCallback();
+    }
   }
 
   setDialogFinishedCallback (callback) {
-    this.dialog.setFinishedCallback(callback);
+    this.onDialogFinished = callback;
   }
 
   setDialogStepCallback (callback) {
