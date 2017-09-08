@@ -93,9 +93,8 @@ export default class Scientist extends Renderable {
       this.dialog = null
     } else {
       this.sayRandom = false;
-      this.say(texts, this.dialogFinished)
+      this.say(texts)
     }
-
 
     this.size = size;
 
@@ -110,12 +109,18 @@ export default class Scientist extends Renderable {
 
   }
 
-  say(texts, callback) {
-    this.dialog = new Dialog(
-      this.x + this.dialogSize * 30, this.y, this.dialogSize * 120, this.dialogSize * 30, texts, this
-    );
-    this.dialog.setPixelSize(this.dialogSize);
-    this.dialog.setFinishedCallback(callback);
+  say(texts, callback = null) {
+    if (!this.dialog) {
+      this.dialog = new Dialog(
+        this.x + this.dialogSize * 30, this.y, this.dialogSize * 120, this.dialogSize * 30, texts, this
+      );
+      this.dialog.setPixelSize(this.dialogSize);
+      this.dialog.setFinishedCallback(this.dialogFinished);
+
+      if (callback) {
+        this.setDialogFinishedCallback(callback)
+      }
+    }
   }
 
   dialogFinished() {

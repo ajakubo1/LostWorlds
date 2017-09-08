@@ -605,10 +605,10 @@ export default class SpaceScene extends Scene {
     } else {
       this.displayScientistDialog(
         [
-          'Not quite.',
-          'I will replace the battery',
-          'This particle placement is wacky'
-        ], this.restartLevel);
+          "Not quite.",
+          "This particle placement is wacky",
+          "Well, let's take a break and go to lunch",
+        ], this.backToLevel);
     }
   }
 
