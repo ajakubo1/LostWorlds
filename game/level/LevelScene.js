@@ -9,16 +9,10 @@ import Indicator from "./objects/Indicator";
 const tutorialDialog = [
   "Welcome to my lab!",
   "This is a blackbox",
-  "What is a blackbox you ask?",
-  "It's essentially a universe",
-  "Err... In a box.",
-  "Which is purple.",
-  "It helps in science alright?!",
-  "Or rather - it would've helped",
-  "If it was labeled properly",
-  "But that's where you come in!",
-  "Go ahead!",
-  "Take a look at the box I've prepared!"
+  "It's essentially a microscopic universe",
+  "Well... In a box.",
+  "It helps me in sciency stuff",
+  "Go ahead! Take a look!",
 ];
 
 export default class LevelScene extends Scene {
@@ -52,7 +46,7 @@ export default class LevelScene extends Scene {
   }
 
   nextStep(step) {
-    if(step === 0 || step >= 10) {
+    if(step === 0 || step === 4) {
       this.indicator = new Indicator(this.levels[0]);
     } else {
       this.indicator = null;
