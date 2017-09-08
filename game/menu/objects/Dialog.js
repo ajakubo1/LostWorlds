@@ -11,7 +11,7 @@ export default class Dialog extends Renderable {
     this.continueClicked = this.continueClicked.bind(this);
 
     this.continue = new Button(x + width - 50, y + height - 20, 50, 20,
-      '[...]', undefined, undefined, this.continueClicked);
+      '[...]', '#121212', '#424242', this.continueClicked);
 
     if (texts === null) {
       this.noGuideText = true;
@@ -32,10 +32,6 @@ export default class Dialog extends Renderable {
     } else {
       this.textToLoad(null);
     }
-  }
-
-  getImage() {
-    return Engine.getAsset(ASSET_IDENTIFIERS.PLANET_SQUARE)
   }
 
   setPixelSize(size) {
@@ -137,8 +133,10 @@ export default class Dialog extends Renderable {
 
   render(context) {
     if (this.text) {
-      context.drawImage(this.image, this.x, this.y, this.width, this.height);
-      fillText(this.x, this.y, this.width, this.height, this.textSoFar, context, 'red', this.size);
+      context.fillStyle = "#DDDDDD";
+      context.fillRect(this.x, this.y, this.width, this.height);
+
+      fillText(this.x, this.y, this.width, this.height, this.textSoFar, context, '#121212', this.size);
 
       if(this.continueEnabled) {
         this.continue.render(context);

@@ -65,7 +65,7 @@ export default class MenuScene extends Scene {
     this.scientist.setDialogFinishedCallback(this.moveCloser);
 
     this.skip = new Button(Engine.width - 125, 25, 100, 30,
-      'skip & play', undefined, undefined, this.onSkip);
+      'skip & play', '#121212', '#424242', this.onSkip);
   }
 
   onSkip() {
