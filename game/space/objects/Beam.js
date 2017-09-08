@@ -141,6 +141,18 @@ export default class Beam extends Renderable {
     this.drawPoint(context);
   }
 
+  opositeDirection(direction) {
+    if (direction === 'left') {
+      return 'right';
+    } else if (direction === 'right') {
+      return 'left';
+    } else if (direction === 'up') {
+      return 'down';
+    } else if (direction === 'down') {
+      return 'up';
+    }
+  }
+
   update() {
 
     this.step += 1;
@@ -151,9 +163,9 @@ export default class Beam extends Renderable {
 
     if (!this.finished) {
 
-      const lastElement = this.pathX.length - 1;
-      const prevX = this.pathX[lastElement];
-      const prevY = this.pathY[lastElement];
+      let lastElement = this.pathX.length - 1;
+      let prevX = this.pathX[lastElement];
+      let prevY = this.pathY[lastElement];
 
       if (prevX < this.x - 50 || prevX > this.width + 40 ||
         prevY < this.y - 50 || prevY > this.height + 40) {
@@ -167,6 +179,17 @@ export default class Beam extends Renderable {
           let directions = this.scene.determineDirection(prevX, prevY, this.direction, this.fake);
           this.direction = directions[0];
           this.currentColor = colors[directions[1]] ? directions[1] : this.currentColor;
+          const displacement = directions[2];
+          if (displacement) {
+            console.info(displacement);
+            this.pathX.push(displacement[0]);
+            this.pathY.push(displacement[1]);
+            this.directionHistory.push(this.opositeDirection(this.direction));
+            this.colorHistory.push(this.currentColor);
+            lastElement = this.pathX.length - 1;
+            prevX = this.pathX[lastElement];
+            prevY = this.pathY[lastElement];
+          }
         }
       }
 

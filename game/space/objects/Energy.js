@@ -30,7 +30,6 @@ export default class Energy extends Renderable {
     const y = this.y + this.height / 2 - 50;
 
     context.beginPath();
-    context.strokeStyle = "#f9f316";
     context.fillStyle = "#f9f316";
     context.moveTo(x, this.y + this.height / 2 + 7);
     context.lineTo(x + 40, y);
@@ -39,7 +38,6 @@ export default class Energy extends Renderable {
     context.lineTo(x + 10, y + 100);
     context.lineTo(x + 25, this.y + this.height / 2 + 7);
     context.lineTo(x, this.y + this.height / 2 + 7);
-    context.stroke();
     context.fill();
   }
 

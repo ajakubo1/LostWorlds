@@ -422,7 +422,29 @@ export default class SpaceScene extends Scene {
     let i;
     for (i = 0; i < this.planets.length; i += 1) {
       if (this.planets[i].x === square.idX && this.planets[i].y === square.idY) {
-        return this.fakePlanets[i];
+        return i;
+      }
+    }
+  }
+
+  getSingularityCount() {
+    let i;
+    let sum = 0;
+    for (i = 0; i < this.planets.length; i += 1) {
+      if (this.planets[i].type === TYPES.SINGULARITY) {
+        sum += 1;
+      }
+    }
+    return sum;
+  }
+
+  getSecondSingularity(singularity) {
+    let i;
+    for (i = 0; i < this.planets.length; i += 1) {
+      console.info(this.planets[i], singularity);
+      if (this.planets[i].type === TYPES.SINGULARITY &&
+        (this.planets[i].x !== singularity.x || this.planets[i].y !== singularity.y)) {
+        return this.planets[i];
       }
     }
   }
@@ -450,15 +472,24 @@ export default class SpaceScene extends Scene {
 
     let returnDirection = instruction[direction] ? instruction[direction]: direction;
 
-    if (returnDirection === "stop" && instruction.planet === TYPES.CAT) {
+    let displacement = null;
+
+    if (returnDirection === "stop" ) {
       // Get the cat
-      const cat = this.getFakeFromSquare(square);
-      returnDirection = cat.getDirectionForCat(direction, fake);
+      if (instruction.planet === TYPES.CAT) {
+        const cat = this.fakePlanets[this.getFakeFromSquare(square)];
+        returnDirection = cat.getDirectionForCat(direction, fake);
+      } else if (instruction.planet === TYPES.SINGULARITY && this.getSingularityCount() === 2){
+        const s1 = this.planets[this.getFakeFromSquare(square)];
+        const s2 = this.getSecondSingularity(s1);
+        returnDirection = direction;
+        displacement = [this.limitX1 + s2.x * 50 + 20, this.limitY1 + s2.y * 50 + 20];
+      }
     }
 
     const colorChange = instruction['change_' + direction] ? instruction['change_' + direction] : null;
 
-    return [returnDirection, colorChange];
+    return [returnDirection, colorChange, displacement];
   }
 
   pressed(x, y) {
