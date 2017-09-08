@@ -532,8 +532,6 @@ export default class SpaceScene extends Scene {
           }
         }
       } else {
-        if (this.backButton.state === 1 && this.backButton.inRange(x, y)) {
-
         if (this.solutionButton.state === 1 && this.solutionButton.inRange(x, y)) {
           this.solutionButton.click();
         }
@@ -543,7 +541,7 @@ export default class SpaceScene extends Scene {
     }
   }
 
-  released() {
+  released () {
     if (this.clickedSquare !== null) {
       this.clickedSquare.setState('inactive');
       this.clickedSquare = null;
