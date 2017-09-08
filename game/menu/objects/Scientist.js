@@ -112,7 +112,7 @@ export default class Scientist extends Renderable {
   say(texts, callback = null) {
     if (!this.dialog) {
       this.dialog = new Dialog(
-        this.x + this.dialogSize * 30, this.y, this.dialogSize * 120, this.dialogSize * 30, texts, this
+        this.x + this.width + this.dialogSize * 3, this.y, this.dialogSize * 120, this.dialogSize * 30, texts, this
       );
       this.dialog.setPixelSize(this.dialogSize);
       this.dialog.setFinishedCallback(this.dialogFinished);
