@@ -253,62 +253,60 @@ export default class SpaceScene extends Scene {
     this.deactivateLaser();
   }
 
-  nextStep(step) {
+  indicate(elements) {
     let i;
+    this.indicator = [];
+    for (i = 0; i < elements.length; i += 1) {
+      this.indicator.push(new Indicator(elements[i]))
+    }
+  }
+
+  nextStep(step) {
     if(step === 0) {
-      this.indicator = [new Indicator(this.leftPanel)];
+      this.indicate([this.leftPanel])
     } else if(step === 1) {
-      this.indicator = [new Indicator(this.middlePanel)];
+      this.indicate([this.middlePanel])
     } else if(step === 2) {
-      this.indicator = [new Indicator(this.fakePlanets[0])];
+      this.indicate([this.fakePlanets[0]])
     } else if(step === 3) {
-      this.indicator = [];
-      for (i = 0; i < this.probeSquares.length; i += 1) {
-        this.indicator.push(new Indicator(this.probeSquares[i]))
-      }
+      this.indicate(this.probeSquares)
     } else if(step === 5) {
-      this.indicator = [new Indicator(this.energyIndicator)];
+      this.indicate([this.energyIndicator])
     } else if(step === 10) {
       this.activateLaser(this.probeSquares[5]);
     } else if(step === 11 || step === 19) {
       this.deactivateLaser();
       this.activateLaser(this.probeSquares[3]);
     } else if(step === 13 || step === 14) {
-      this.indicator = [];
-      this.indicator.push(new Indicator(this.probeSquares[3]));
-      this.indicator.push(new Indicator(this.probeSquares[11]));
+      this.indicate([this.probeSquares[3], this.probeSquares[11]]);
       this.indicator[0].y -= 50;
       this.indicator[1].x -= 50;
     } else if(step === 15 || step === 16) {
-      this.indicator = [new Indicator(this.probeSquares[3])];
+      this.indicate([this.probeSquares[3]]);
       this.indicator[0].y -= 250;
       this.indicator[0].height = 250;
     } else if(step === 17) {
       this.deactivateLaser();
       this.selectPlanet(this.fakePlanets[0]);
       this.placePlanet(this.planetSquares[1]);
-      this.indicator = [new Indicator(this.planetSquares[1])];
+      this.indicate([this.planetSquares[1]])
     } else if(step === 18) {
-      this.indicator = [];
-      this.indicator.push(new Indicator(this.planetSquares[3]));
-      this.indicator.push(new Indicator(this.planetSquares[5]));
+      this.indicate([this.planetSquares[3], this.planetSquares[5]])
     } else if(step === 20) {
       this.indicator = [];
       this.deactivateLaser();
       this.activateLaser(this.probeSquares[8]);
     } else if(step === 21) {
       this.deactivateLaser();
-      this.indicator = [new Indicator(this.planetSquares[1])];
+      this.indicate([this.planetSquares[1]]);
     } else if(step === 22) {
       this.deactivateLaser();
-      this.indicator = [];
-      this.indicator.push(new Indicator(this.probeSquares[6]));
-      this.indicator.push(new Indicator(this.probeSquares[10]));
+      this.indicate([this.probeSquares[6], this.probeSquares[10]]);
       this.activateLaser(this.probeSquares[6]);
     } else if(step === 24) {
       this.deactivateLaser();
     }  else if(step > 26) {
-      this.indicator = [new Indicator(this.scientist)];
+      this.indicate([this.scientist]);
       this.isTutorial = false;
     } else {
       this.indicator = [];

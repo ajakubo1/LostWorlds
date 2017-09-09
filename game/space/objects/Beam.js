@@ -15,10 +15,6 @@ let sideColors = {
 };
 
 export default class Beam extends Renderable {
-  getImage() {
-    return null;
-  }
-
   fakeIt() {
     this.fake = true;
   }
