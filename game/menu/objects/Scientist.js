@@ -1,6 +1,4 @@
 import Renderable from '../../core/Renderable';
-import Engine from '../../core/Engine';
-import { IDENTIFIERS as ASSET_IDENTIFIERS } from '../../core/Assets';
 import Dialog from "./Dialog";
 
 export default class Scientist extends Renderable {

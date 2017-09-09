@@ -1,6 +1,6 @@
 import Renderable from '../../core/Renderable';
 import Engine from '../../core/Engine';
-import { IDENTIFIERS as ASSET_IDENTIFIERS } from '../../core/Assets';
+import {opositeDirection} from "../SpaceScene";
 
 export default class Planet extends Renderable {
 
@@ -29,7 +29,7 @@ export default class Planet extends Renderable {
   renderInLocation(x, y, context) {
     context.drawImage(this.image, x, y, this.width, this.height);
 
-    if (this.state === 'active') {
+    if (this.state === 0) {
       context.fillStyle = 'red';
       context.globalAlpha = 0.2;
       context.fillRect(x, y, this.width, this.height);
@@ -38,22 +38,14 @@ export default class Planet extends Renderable {
   }
 
   getDirectionForCat (direction, fake) {
-    if (direction === "left" || direction == "right") {
+    if (direction === "left" || direction === "right") {
       if (!fake) {
-        if (this.lastHorizontal === "up") {
-          this.lastHorizontal = "down";
-        } else {
-          this.lastHorizontal = "up";
-        }
+        this.lastHorizontal = opositeDirection(this.lastHorizontal);
       }
       return this.lastHorizontal;
     } else {
       if (!fake) {
-        if (this.lastVertical === "left") {
-          this.lastVertical = "right";
-        } else {
-          this.lastVertical = "left";
-        }
+        this.lastVertical = opositeDirection(this.lastVertical);
       }
       return this.lastVertical;
     }

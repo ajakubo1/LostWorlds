@@ -1,6 +1,4 @@
 import Renderable from '../../core/Renderable';
-import Engine from '../../core/Engine';
-import { IDENTIFIERS as ASSET_IDENTIFIERS } from '../../core/Assets';
 import {TYPES} from "./Planet";
 import {opositeDirection} from "../SpaceScene";
 

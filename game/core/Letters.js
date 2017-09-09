@@ -227,37 +227,37 @@ const letters = {
     [1],
     [1],
     [1],
-    [0],
+    [,],
     [1],
   ],
   '?': [
     [,1, 1],
-    [1, 0, 0, 1],
-    [0, 0, 1, 0,],
-    [0, 0, 0,],
-    [0, 0, 1],
+    [1,,, 1],
+    [,, 1,,],
+    [, , ,],
+    [, , 1],
   ],
   ',': [
-    [0],
-    [0],
-    [0],
-    [0],
+    [,],
+    [,],
+    [,],
+    [,],
     [1],
     [1],
   ],
   '.': [
-    [0],
-    [0],
-    [0],
-    [0],
+    [,],
+    [,],
+    [,],
+    [,],
     [1],
   ],
   '\'': [
     [1],
     [1],
-    [0],
-    [0],
-    [0],
+    [,],
+    [,],
+    [,],
   ],
   '[': [
     [1, 1],
@@ -276,11 +276,11 @@ const letters = {
     [1, 1],
   ],
   '-': [
-    [0],
-    [0],
+    [,],
+    [,],
     [1, 1],
-    [0],
-    [0],
+    [,],
+    [,],
   ],
 };
 
@@ -304,7 +304,7 @@ const sum = (arr) => {
   return sum;
 };
 
-export const fillText = (globalX, globalY, width, height, word, context, color = 'black', size = 1) => {
+export const fillText = (globalX, globalY, width, height, word, context, color, size) => {
   word = word.toUpperCase();
   let needed = [], i, j;
 
@@ -370,5 +370,4 @@ export const fillText = (globalX, globalY, width, height, word, context, color =
       currX += size + addX;
     }
   }
-
 };

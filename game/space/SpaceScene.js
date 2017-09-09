@@ -10,7 +10,7 @@ import Energy from "./objects/Energy";
 import Button from '../core/Button';
 import LevelScene from "../level/LevelScene";
 import Scientist from "../menu/objects/Scientist";
-import Dialog from "../menu/objects/Dialog";
+import { IDENTIFIERS as ASSET_IDENTIFIERS } from '../core/Assets';
 import Indicator from "../level/objects/Indicator";
 import Renderable from "../core/Renderable";
 
@@ -71,7 +71,7 @@ export default class SpaceScene extends Scene {
     this.disableTutorial = this.disableTutorial.bind(this);
     this.checkLimit = 3;
 
-    this.clickedSquare = null;
+    this.laser = null;
     this.selectedPlanet = null;
     this.beam = null;
     this.fake = null;
@@ -460,17 +460,17 @@ export default class SpaceScene extends Scene {
   }
 
   deactivateLaser() {
-    if (this.clickedSquare !== null) {
-      this.clickedSquare.setState('inactive');
-      this.clickedSquare = null;
+    if (this.laser !== null) {
+      this.laser.setState(ASSET_IDENTIFIERS.PROBE_SQUARE);
+      this.laser = null;
       this.beam = null;
       this.fake = null;
     }
   }
 
   activateLaser(probeSquare) {
-    this.clickedSquare = probeSquare;
-    this.clickedSquare.setState('active');
+    this.laser = probeSquare;
+    this.laser.setState(ASSET_IDENTIFIERS.PROBE_SQUARE_ACTIVE);
     this.beam = new Beam(this.limitX1, this.limitY1, this.limitX2, this.limitY2);
     this.beam.setProbe(probeSquare);
     this.beam.setScene(this);
@@ -482,14 +482,14 @@ export default class SpaceScene extends Scene {
 
   selectPlanet(square) {
     if (this.selectedPlanet !== null) {
-      this.selectedPlanet.setState('inactive')
+      this.selectedPlanet.setState(1)
     }
 
     if (this.selectedPlanet === square) {
       this.selectedPlanet = null;
     } else {
       this.selectedPlanet = square;
-      this.selectedPlanet.setState('active');
+      this.selectedPlanet.setState(0);
     }
     return true;
   }
@@ -503,7 +503,7 @@ export default class SpaceScene extends Scene {
 
     if (this.selectedPlanet) {
       square.setFake(this.selectedPlanet);
-      this.selectedPlanet.setState('inactive');
+      this.selectedPlanet.setState(1);
       this.selectedPlanet = null;
       recount = true;
     }
@@ -623,7 +623,7 @@ export default class SpaceScene extends Scene {
   moved(x, y) {
     this.scientist.moved(x, y);
     if(!this.isTutorial) {
-      if (this.clickedSquare !== null && !this.clickedSquare.inRange(x, y)) {
+      if (this.laser !== null && !this.laser.inRange(x, y)) {
         this.deactivateLaser();
       } else {
         this.solutionButton.moved(x, y);

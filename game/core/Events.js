@@ -59,7 +59,7 @@ export default class Events {
     this.callbackMoved(x, y);
   }
 
-  onMouseUpLeave(event) {
+  onMouseUpLeave() {
     this.element.removeEventListener('mouseup', this.onMouseUpLeave);
     this.element.removeEventListener('mouseleave', this.onMouseUpLeave);
     this.callbackReleased();
@@ -83,7 +83,7 @@ export default class Events {
     this.callbackPressed(x, y);
   }
 
-  onTouchEndCancel(event) {
+  onTouchEndCancel() {
     this.element.removeEventListener('touchmove', this.onTouchMove);
     this.element.removeEventListener('touchend', this.onTouchEndCancel);
     this.element.removeEventListener('touchcancel', this.onTouchEndCancel);

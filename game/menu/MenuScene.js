@@ -2,11 +2,10 @@ import Scene from '../core/Scene';
 import Engine from '../core/Engine';
 import Background from '../space/objects/Background';
 import Scientist from "./objects/Scientist";
-import Dialog from "./objects/Dialog";
 import Button from "../core/Button";
 import LevelScene from "../level/LevelScene";
 import {createSquare} from "../core/Placeholders";
-import { TYPES as ASSET_TYPES, IDENTIFIERS as ASSET_IDENTIFIERS } from '../core/Assets';
+import { IDENTIFIERS as ASSET_IDENTIFIERS } from '../core/Assets';
 
 export default class MenuScene extends Scene {
   constructor() {
@@ -85,7 +84,6 @@ export default class MenuScene extends Scene {
     Engine._putAsset(
       ASSET_IDENTIFIERS.BACKGROUND,
       createSquare(960, 540, '#111111'),
-      ASSET_TYPES.PLACEHOLDER
     );
     Engine.setScene(new LevelScene(0));
     Engine.startScene();

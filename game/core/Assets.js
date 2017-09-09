@@ -8,18 +8,10 @@ export default class Assets {
     return this.assets[id];
   }
 
-  getType(id) {
-    return this.types[id];
-  }
-
   set(id, asset, type) {
     this.assets[id] = asset;
     this.types[id] = type;
   }
-};
-
-export const TYPES = {
-  'PLACEHOLDER': 'PLACEHOLDER'
 };
 
 export const IDENTIFIERS = {

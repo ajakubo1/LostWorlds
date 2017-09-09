@@ -8,10 +8,6 @@ export default class ProbeSquare extends Renderable {
   }
 
   setState(name) {
-    if (name === 'active') {
-      this.image = Engine.getAsset(ASSET_IDENTIFIERS.PROBE_SQUARE_ACTIVE)
-    } else if (name === 'inactive') {
-      this.image = Engine.getAsset(ASSET_IDENTIFIERS.PROBE_SQUARE)
-    }
+    this.image = Engine.getAsset(name)
   }
 }
