@@ -13,13 +13,13 @@ TODO
 
 - [ ] First tutorial should be more interactive (lasers firing on itself)
 - [ ] Tutorials/test areas for new particles
-- [ ] When someone checks the solution:
-  - [ ] Battery should be disabled (energy)
-  - [ ] He should be able to interact with lasers
-  - [ ] He should be able to interact with scientist (level reset)
-  - [ ] No interaction with blackbox
+- [x] When someone checks the solution:
+  - [x] Battery should be disabled (energy)
+  - [x] He should be able to interact with lasers
+  - [x] He should be able to interact with scientist (level reset)
+  - [x] No interaction with blackbox and planets
 - [ ] Make a nicer cat :)
-- [ ] Sounds
+- [ ] Sounds?
 - [ ] Music?
-- [ ] Skip tutorial button
+- [ ] Skip tutorial button    n[]-
 - [ ] Some funny texts for the scientist maybe?

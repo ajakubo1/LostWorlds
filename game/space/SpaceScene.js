@@ -17,35 +17,32 @@ import Renderable from "../core/Renderable";
 const tutorialDialog = [
   "Let's not waste any more time",
   "You have to place the particles from here",
-  "To the blackbox",
+  "To the blackbox - they somewhere in it",
   "And you have to do it correctly",
   "You don't know where the 'red particle' is in the box",
   "But you can check it out using lasers here",
   "Lasers need power",
-  "When battery is depleted, you can replace it",
+  "You can replace the battery whenever",
   "But this screws up current particle layout",
   "And you have to start from scratch",
-  "Oh, but don't worry about it in the tutorial level",
-  "So this red particle",
-  "It bends the laser beam by 90 degrees at corner squares",
-  "Click those two laser buttons to see it happening",
-  "I guess you've noticed that there are two beams there",
-  "That big one goes into the blackbox",
-  "And is affected by particles in the box",
-  "Smaller one goes above",
-  "And is affected by particles that you place above the box",
-  "So the point here is to align those lasers together perfectly",
-  "Now place 'red particle' here, and check beams once again",
-  "OK, next thing",
-  "If you shoot directly at a particle, beam will stop",
-  "And - if the particle is placed at the edge of the box",
-  "And you shoot from that edge to a border square",
-  "The beam will return",
-  "OK, you know everything now",
-  "Ekhm... Well...",
+  "Don't worry about it in the tutorial level",
+  "So normaly, the beam will go in a straight line", // 10
+  "Unless there is a particle nearby", // 11
+  "Notice how the beam splits into two", // 12
+  "That big beam goes into the blackbox", // 13
+  "And is affected by particles in the box", // 14
+  "Smaller one goes above the box", // 15
+  "And is affected by particles that you place on the box", // 16
+  "I will place the 'red particle' where it belongs", // 17
+  "As it bends the beam by 90 degrees at it's corners", // 17
+  "So the point here is to align those lasers together perfectly", // 18
+  "If you shoot directly at a particle, beam will stop", // 19
+  "And - if the particle is placed at the edge of the box", // 20
+  "And you shoot lasers from that edge", // 21
+  "The beam will return", // 22
   "You can play around here",
   "When you are finished - and particle placement is good",
-  "Click me"
+  "Click me, I will check your solution"
 ];
 
 export default class SpaceScene extends Scene {
@@ -173,9 +170,10 @@ export default class SpaceScene extends Scene {
 
     this.scientist = new Scientist(80, Engine.height - 95, dialog, 4, 2);
     this.scientist.onClick(this.check);
-
+    this.energyNotAffected = false;
     if (config.isTutorial) {
       this.scientist.setDialogStepCallback(this.nextStep);
+      this.energyNotAffected = true;
     }
 
     this.indicator = [];
@@ -197,7 +195,7 @@ export default class SpaceScene extends Scene {
       this.indicator = [new Indicator(this.leftPanel)];
     } else if(step === 1) {
       this.indicator = [new Indicator(this.middlePanel)];
-    } else if(step === 3 || step === 10) {
+    } else if(step === 3) {
       this.indicator = [new Indicator(this.fakePlanets[0])];
     } else if(step === 4) {
       this.indicator = [];
@@ -206,24 +204,48 @@ export default class SpaceScene extends Scene {
       }
     } else if(step === 5) {
       this.indicator = [new Indicator(this.energyIndicator)];
-    } else if(step === 19) {
-      this.indicator = [new Indicator(this.planetSquares[1])];
-    } else if(step === 12) {
+    } else if(step === 10) {
+      this.activateLaser(this.probeSquares[5]);
+    } else if(step === 11 || step === 19) {
+      this.deactivateLaser();
+      this.activateLaser(this.probeSquares[3]);
+    } else if(step === 13 || step === 14) {
       this.indicator = [];
-      this.indicator.push(new Indicator(this.probeSquares[2]));
       this.indicator.push(new Indicator(this.probeSquares[3]));
-    } else if(step === 21) {
+      this.indicator.push(new Indicator(this.probeSquares[11]));
+      this.indicator[0].y -= 50;
+      this.indicator[1].x -= 50;
+    } else if(step === 15 || step === 16) {
+      this.indicator = [new Indicator(this.probeSquares[3])];
+      this.indicator[0].y -= 250;
+      this.indicator[0].height = 250;
+    } else if(step === 17) {
+      this.deactivateLaser();
+      this.selectPlanet(this.fakePlanets[0]);
+      this.placePlanet(this.planetSquares[1]);
+      this.indicator = [new Indicator(this.planetSquares[1])];
+    } else if(step === 18) {
       this.indicator = [];
-      this.indicator.push(new Indicator(this.probeSquares[0]));
-      this.indicator.push(new Indicator(this.probeSquares[1]));
-      this.indicator.push(new Indicator(this.probeSquares[8]));
-      this.indicator.push(new Indicator(this.probeSquares[9]));
-    } else if(step === 23 || step === 24) {
+      this.indicator.push(new Indicator(this.planetSquares[3]));
+      this.indicator.push(new Indicator(this.planetSquares[5]));
+    } else if(step === 20) {
+      this.indicator = [];
+      this.deactivateLaser();
+      this.activateLaser(this.probeSquares[8]);
+    } else if(step === 21) {
+      this.deactivateLaser();
+      this.indicator = [new Indicator(this.planetSquares[1])];
+    } else if(step === 22) {
+      this.deactivateLaser();
       this.indicator = [];
       this.indicator.push(new Indicator(this.probeSquares[6]));
       this.indicator.push(new Indicator(this.probeSquares[10]));
-    } else if(step > 28) {
+      this.activateLaser(this.probeSquares[6]);
+    } else if(step === 24) {
+      this.deactivateLaser();
+    }  else if(step > 26) {
       this.indicator = [new Indicator(this.scientist)];
+      this.isTutorial = false;
     } else {
       this.indicator = [];
     }
@@ -425,6 +447,60 @@ export default class SpaceScene extends Scene {
     }
   }
 
+  deactivateLaser() {
+    if (this.clickedSquare !== null) {
+      this.clickedSquare.setState('inactive');
+      this.clickedSquare = null;
+      this.beam = null;
+      this.fake = null;
+    }
+  }
+
+  activateLaser(probeSquare) {
+    this.clickedSquare = probeSquare;
+    this.clickedSquare.setState('active');
+    this.beam = new Beam(this.limitX1, this.limitY1, this.limitX2, this.limitY2);
+    this.beam.setProbe(probeSquare);
+    this.beam.setScene(this);
+    this.fake = new Beam(this.limitX1, this.limitY1, this.limitX2, this.limitY2);
+    this.fake.setProbe(probeSquare);
+    this.fake.setScene(this);
+    this.fake.fakeIt();
+  }
+
+  selectPlanet(square) {
+    if (this.selectedPlanet !== null) {
+      this.selectedPlanet.setState('inactive')
+    }
+
+    if (this.selectedPlanet === square) {
+      this.selectedPlanet = null;
+    } else {
+      this.selectedPlanet = square;
+      this.selectedPlanet.setState('active');
+    }
+    return true;
+  }
+
+  placePlanet(square) {
+    let recount = false;
+    if (square.fake) {
+      square.setFake(null);
+      recount = true;
+    }
+
+    if (this.selectedPlanet) {
+      square.setFake(this.selectedPlanet);
+      this.selectedPlanet.setState('inactive');
+      this.selectedPlanet = null;
+      recount = true;
+    }
+
+    if (recount) {
+      this.planetPlaced();
+    }
+  }
+
   determineDirection (x, y, direction, fake) {
     let directionTable = this.determine;
     if (fake) {
@@ -478,27 +554,12 @@ export default class SpaceScene extends Scene {
     if (x > 160 && x < Engine.width - 160) {
       if (x > this.limitX1 && x < this.limitX2 && y > this.limitY1 && y < this.limitY2) {
         //Squares
-        if (!this.solutionMode) {
+        if (!this.solutionMode && !this.isTutorial) {
           const length = this.planetSquares.length;
           for (i = 0; i < length; i += 1) {
             const square = this.planetSquares[i];
             if (square.inRange(x, y)) {
-              let recount = false;
-              if (square.fake) {
-                square.setFake(null);
-                recount = true;
-              }
-
-              if (this.selectedPlanet) {
-                square.setFake(this.selectedPlanet);
-                this.selectedPlanet.setState('inactive');
-                this.selectedPlanet = null;
-                recount = true;
-              }
-
-              if (recount) {
-                this.planetPlaced();
-              }
+              this.placePlanet(square);
               break;
             }
           }
@@ -506,83 +567,61 @@ export default class SpaceScene extends Scene {
 
       } else {
         //Probes
-        const length = this.probeSquares.length;
-        for (i = 0; i < length; i += 1) {
-          const square = this.probeSquares[i];
-          if (square.inRange(x, y)) {
-            this.clickedSquare = square;
-            this.clickedSquare.setState('active');
-            this.beam = new Beam(this.limitX1, this.limitY1, this.limitX2, this.limitY2);
-            this.beam.setProbe(square);
-            this.beam.setScene(this);
-            this.fake = new Beam(this.limitX1, this.limitY1, this.limitX2, this.limitY2);
-            this.fake.setProbe(square);
-            this.fake.setScene(this);
-            this.fake.fakeIt();
-            break;
+        if (!this.isTutorial) {
+          const length = this.probeSquares.length;
+          for (i = 0; i < length; i += 1) {
+            const square = this.probeSquares[i];
+            if (square.inRange(x, y)) {
+              this.activateLaser(square);
+              break;
+            }
           }
         }
       }
     } else {
       //Screens
       if (x < 160) {
-        if (!this.solutionMode) {
+        if (!this.solutionMode && !this.isTutorial) {
           const length = this.fakePlanets.length;
           for (i = 0; i < length; i += 1) {
             const square = this.fakePlanets[i];
             if (square.inRange(x, y)) {
-              if (this.selectedPlanet !== null) {
-                this.selectedPlanet.setState('inactive')
-              }
-
-              if (this.selectedPlanet === square) {
-                this.selectedPlanet = null;
-              } else {
-                this.selectedPlanet = square;
-                this.selectedPlanet.setState('active');
-              }
+              this.selectPlanet(square);
               break;
             }
           }
         }
       } else {
-        if (this.solutionButton.state === 1 && this.solutionButton.inRange(x, y)) {
-          this.solutionButton.click();
-        }
+        if (!this.isTutorial) {
+          if (this.solutionButton.state === 1 && this.solutionButton.inRange(x, y)) {
+            this.solutionButton.click();
+          }
 
-        this.energyIndicator.pressed(x, y);
+          this.energyIndicator.pressed(x, y);
+        }
       }
     }
   }
 
   released () {
-    if (this.clickedSquare !== null) {
-      this.clickedSquare.setState('inactive');
-      this.clickedSquare = null;
-    }
-    if (this.beam !== null) {
-      this.beam = null;
-      this.fake = null;
+    if (!this.isTutorial) {
+      this.deactivateLaser();
     }
   }
 
   moved(x, y) {
     this.scientist.moved(x, y);
-    if (this.clickedSquare !== null && !this.clickedSquare.inRange(x, y)) {
-      this.clickedSquare.setState('inactive');
-      this.clickedSquare = null;
+    if(!this.isTutorial) {
+      if (this.clickedSquare !== null && !this.clickedSquare.inRange(x, y)) {
+        this.deactivateLaser();
+      } else {
+        if (this.solutionButton.state === 0 && this.solutionButton.inRange(x, y)) {
+          this.solutionButton.setHover();
+        }
 
-      if (this.beam !== null) {
-        this.beam = null;
-        this.fake = null;
-      }
-    } else {
-      if (this.solutionButton.state === 0 && this.solutionButton.inRange(x, y)) {
-        this.solutionButton.setHover();
-      }
-
-      if (this.solutionButton.state === 1 && !this.solutionButton.inRange(x, y)) {
-        this.solutionButton.setNormal();
+        if (this.solutionButton.state === 1 && !this.solutionButton.inRange(x, y)) {
+          this.solutionButton.setNormal();
+        }
       }
     }
   }
@@ -596,7 +635,7 @@ export default class SpaceScene extends Scene {
         this.energyIndicator.update();
       }
 
-      if (this.energyIndicator.energy === 0 && !this.isTutorial) {
+      if (this.energyIndicator.energy === 0 && !this.energyNotAffected) {
         this.released();
       }
     }
