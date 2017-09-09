@@ -92,13 +92,8 @@ export default class MenuScene extends Scene {
   }
 
   moved(x, y) {
-    if (this.skip.state === 0 && this.skip.inRange(x, y)) {
-      this.skip.setHover();
-    } else if (this.skip.state === 1 && !this.skip.inRange(x, y)) {
-      this.skip.setNormal();
-    } else {
-      this.scientist.moved(x, y)
-    }
+    this.skip.moved(x, y);
+    this.scientist.moved(x, y)
   }
 
   released() {
@@ -106,11 +101,8 @@ export default class MenuScene extends Scene {
   }
 
   pressed(x, y) {
-    if (this.skip.inRange(x, y)) {
-      this.skip.click();
-    } else {
-      this.scientist.pressed(x, y);
-    }
+    this.skip.pressed(x, y);
+    this.scientist.pressed(x, y);
   }
 
   update() {

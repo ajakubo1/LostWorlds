@@ -593,10 +593,7 @@ export default class SpaceScene extends Scene {
         }
       } else {
         if (!this.isTutorial) {
-          if (this.solutionButton.state === 1 && this.solutionButton.inRange(x, y)) {
-            this.solutionButton.click();
-          }
-
+          this.solutionButton.pressed(x, y);
           this.energyIndicator.pressed(x, y);
         }
       }
@@ -615,13 +612,7 @@ export default class SpaceScene extends Scene {
       if (this.clickedSquare !== null && !this.clickedSquare.inRange(x, y)) {
         this.deactivateLaser();
       } else {
-        if (this.solutionButton.state === 0 && this.solutionButton.inRange(x, y)) {
-          this.solutionButton.setHover();
-        }
-
-        if (this.solutionButton.state === 1 && !this.solutionButton.inRange(x, y)) {
-          this.solutionButton.setNormal();
-        }
+        this.solutionButton.moved(x, y);
       }
     }
   }

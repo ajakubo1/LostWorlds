@@ -38,6 +38,22 @@ export default class Button extends Renderable {
     }
   }
 
+  pressed(x, y) {
+    if (this.state === 1 && this.inRange(x, y)) {
+      this.onClick();
+      return true;
+    }
+    return false;
+  }
+
+  moved(x, y) {
+    if (this.state === 0 && this.inRange(x, y)) {
+      this.setHover();
+    } else if(this.state === 1 && !this.inRange(x, y)) {
+      this.setNormal();
+    }
+  }
+
   click() {
     this.onClick();
   }

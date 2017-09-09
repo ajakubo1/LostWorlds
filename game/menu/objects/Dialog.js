@@ -94,8 +94,7 @@ export default class Dialog extends Renderable {
   }
 
   pressed(x, y) {
-    if(this.continueEnabled && this.continue.inRange(x, y)) {
-      this.continue.click();
+    if(this.continueEnabled && this.continue.pressed(x, y)) {
       return true;
     } else if (this.inRange(x, y)){
       this.loadText();
@@ -105,10 +104,8 @@ export default class Dialog extends Renderable {
   }
 
   moved(x, y) {
-    if(this.continueEnabled && this.continue.state === 0 && this.continue.inRange(x, y)) {
-      this.continue.setHover();
-    } else if(this.continueEnabled && this.continue.state === 1 && !this.continue.inRange(x, y)) {
-      this.continue.setNormal();
+    if(this.continueEnabled) {
+      this.continue.moved(x, y);
     }
   }
 
