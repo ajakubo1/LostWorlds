@@ -4,6 +4,7 @@ import Background from '../space/objects/Background';
 import LevelSquare from "./objects/LevelSquare";
 import Scientist from "../menu/objects/Scientist";
 import Indicator from "./objects/Indicator";
+import {fillText} from "../core/Letters";
 
 const tutorialDialog = [
   "welcome to my lab!",
@@ -100,5 +101,7 @@ export default class LevelScene extends Scene {
     if (this.indicator) {
       this.indicator.render(context);
     }
+
+    fillText(0, 0, Engine.width, 60, "blackbox: lost particles", context, "#ffffff", 5)
   }
 }
