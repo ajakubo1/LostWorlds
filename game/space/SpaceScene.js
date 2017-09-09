@@ -643,7 +643,7 @@ export default class SpaceScene extends Scene {
         this.energyIndicator.update();
       }
 
-      if (this.energyIndicator.energy === 0 && !this.energyNotAffected) {
+      if (this.energyIndicator.energy === 0 && !this.energyNotAffected && !this.solutionMode) {
         this.released();
       }
     }
