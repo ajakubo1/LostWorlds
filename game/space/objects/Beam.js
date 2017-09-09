@@ -2,6 +2,7 @@ import Renderable from '../../core/Renderable';
 import Engine from '../../core/Engine';
 import { IDENTIFIERS as ASSET_IDENTIFIERS } from '../../core/Assets';
 import {TYPES} from "./Planet";
+import {opositeDirection} from "../SpaceScene";
 
 let colors = {
   "RED": ["#CC0000", "#FF0033", "#CC0066"],
@@ -35,7 +36,6 @@ export default class Beam extends Renderable {
     this.pathX = [];
     this.pathY = [];
     this.directionHistory = [];
-    this.colorHistory = [];
     this.step = 0;
     this.currentColor = TYPES.RED;
     if (this.probe.x < this.x) {
@@ -56,7 +56,6 @@ export default class Beam extends Renderable {
       this.direction = 'up'
     }
     this.directionHistory.push(this.direction);
-    this.colorHistory.push(this.currentColor);
   }
 
   drawBeam(context, lineWidth, fill, opacity = 1.0) {
@@ -141,18 +140,6 @@ export default class Beam extends Renderable {
     this.drawPoint(context);
   }
 
-  opositeDirection(direction) {
-    if (direction === 'left') {
-      return 'right';
-    } else if (direction === 'right') {
-      return 'left';
-    } else if (direction === 'up') {
-      return 'down';
-    } else if (direction === 'down') {
-      return 'up';
-    }
-  }
-
   update() {
 
     this.step += 1;
@@ -181,16 +168,16 @@ export default class Beam extends Renderable {
           this.currentColor = colors[directions[1]] ? directions[1] : this.currentColor;
           const displacement = directions[2];
           if (displacement) {
-            console.info(displacement);
             this.pathX.push(displacement[0]);
             this.pathY.push(displacement[1]);
-            this.directionHistory.push(this.opositeDirection(this.direction));
-            this.colorHistory.push(this.currentColor);
+            this.directionHistory.push(opositeDirection(this.direction));
             lastElement = this.pathX.length - 1;
             prevX = this.pathX[lastElement];
             prevY = this.pathY[lastElement];
           }
         }
+      } else {
+
       }
 
       if (this.direction === 'stop') {
@@ -212,7 +199,6 @@ export default class Beam extends Renderable {
       }
 
       this.directionHistory.push(this.direction);
-      this.colorHistory.push(this.currentColor);
     }
   }
 }

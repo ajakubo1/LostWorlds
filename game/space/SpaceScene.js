@@ -45,6 +45,18 @@ const tutorialDialog = [
   "Click me and I will check your solution"
 ];
 
+export const opositeDirection = (direction) => {
+  if (direction === 'left') {
+    return 'right';
+  } else if (direction === 'right') {
+    return 'left';
+  } else if (direction === 'up') {
+    return 'down';
+  } else if (direction === 'down') {
+    return 'up';
+  }
+};
+
 export default class SpaceScene extends Scene {
 
   constructor(config, currentLevel) {
@@ -273,18 +285,6 @@ export default class SpaceScene extends Scene {
     return [potX, potY]
   }
 
-  opositeDirection(direction) {
-    if (direction === 'left') {
-      return 'right';
-    } else if (direction === 'right') {
-      return 'left';
-    } else if (direction === 'up') {
-      return 'down';
-    } else if (direction === 'down') {
-      return 'up';
-    }
-  }
-
   determineColorChange(from, to) {
     if (!from) {
       return to;
@@ -321,13 +321,13 @@ export default class SpaceScene extends Scene {
     }
 
     if (determineObject[type]) {
-      if (determineObject[type] === this.opositeDirection(type)) {
+      if (determineObject[type] === opositeDirection(type)) {
         return;
-      } else if (determineObject[type] === this.opositeDirection(change)){
+      } else if (determineObject[type] === opositeDirection(change)){
         determineObject['change_' + type] = this.determineColorChange(
           determineObject['change_' + type], planet
         );
-        determineObject[type] = this.opositeDirection(type);
+        determineObject[type] = opositeDirection(type);
       } else {
         determineObject['change_' + type] = this.determineColorChange(
           determineObject['change_' + type], planet
@@ -452,7 +452,6 @@ export default class SpaceScene extends Scene {
   getSecondSingularity(singularity) {
     let i;
     for (i = 0; i < this.planets.length; i += 1) {
-      console.info(this.planets[i], singularity);
       if (this.planets[i].type === TYPES.SINGULARITY &&
         (this.planets[i].x !== singularity.x || this.planets[i].y !== singularity.y)) {
         return this.planets[i];

@@ -23,4 +23,4 @@ TODO
 - [ ] Music?
 - [x] Skip tutorial button
 - [ ] Some funny texts for the scientist maybe?
-- [ ] draw '1' and '2' in pixels
+- [x] draw '1' and '2' in pixels
