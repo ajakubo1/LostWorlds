@@ -25,18 +25,24 @@ export default class Button extends Renderable {
   }
 
   render(context) {
-    if(this.state === 0) {
-      context.fillStyle = this.color;
-    } else {
-      context.fillStyle = this.colorHover;
+    if (!this.noRender) {
+      if(this.state === 0) {
+        context.fillStyle = this.color;
+      } else {
+        context.fillStyle = this.colorHover;
+      }
+
+      context.fillRect(this.x, this.y, this.width, this.height);
+
+      fillText(this.x, this.y, this.width, this.height, this.text, context, 'red', this.size)
     }
-
-    context.fillRect(this.x, this.y, this.width, this.height);
-
-    fillText(this.x, this.y, this.width, this.height, this.text, context, 'red', this.size)
   }
 
   click() {
     this.onClick();
+  }
+
+  disabled() {
+    this.noRender = true;
   }
 }

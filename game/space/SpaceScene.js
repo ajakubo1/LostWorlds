@@ -67,7 +67,7 @@ export default class SpaceScene extends Scene {
     this.fake = null;
     this.energyIndicator = new Energy(Engine.width - 125, 25, 100, 350, this.restartLevel);
     this.solutionButton = new Button(
-      Engine.width - 120, Engine.height - 165, 90, 30,
+      Engine.width - 120, Engine.height - 50, 90, 30,
       'Solution', undefined, undefined, this.checkSolution
     );
 
@@ -187,6 +187,8 @@ export default class SpaceScene extends Scene {
     config.newSingularity = false;
     config.newWormhole = false;
     config.newCat = false;
+
+    this.solutionMode = false;
   }
 
   nextStep(step) {
@@ -476,29 +478,32 @@ export default class SpaceScene extends Scene {
     if (x > 160 && x < Engine.width - 160) {
       if (x > this.limitX1 && x < this.limitX2 && y > this.limitY1 && y < this.limitY2) {
         //Squares
-        const length = this.planetSquares.length;
-        for (i = 0; i < length; i += 1) {
-          const square = this.planetSquares[i];
-          if (square.inRange(x, y)) {
-            let recount = false;
-            if (square.fake) {
-              square.setFake(null);
-              recount = true;
-            }
+        if (!this.solutionMode) {
+          const length = this.planetSquares.length;
+          for (i = 0; i < length; i += 1) {
+            const square = this.planetSquares[i];
+            if (square.inRange(x, y)) {
+              let recount = false;
+              if (square.fake) {
+                square.setFake(null);
+                recount = true;
+              }
 
-            if (this.selectedPlanet) {
-              square.setFake(this.selectedPlanet);
-              this.selectedPlanet.setState('inactive');
-              this.selectedPlanet = null;
-              recount = true;
-            }
+              if (this.selectedPlanet) {
+                square.setFake(this.selectedPlanet);
+                this.selectedPlanet.setState('inactive');
+                this.selectedPlanet = null;
+                recount = true;
+              }
 
-            if (recount) {
-              this.planetPlaced();
+              if (recount) {
+                this.planetPlaced();
+              }
+              break;
             }
-            break;
           }
         }
+
       } else {
         //Probes
         const length = this.probeSquares.length;
@@ -521,21 +526,23 @@ export default class SpaceScene extends Scene {
     } else {
       //Screens
       if (x < 160) {
-        const length = this.fakePlanets.length;
-        for (i = 0; i < length; i += 1) {
-          const square = this.fakePlanets[i];
-          if (square.inRange(x, y)) {
-            if (this.selectedPlanet !== null) {
-              this.selectedPlanet.setState('inactive')
-            }
+        if (!this.solutionMode) {
+          const length = this.fakePlanets.length;
+          for (i = 0; i < length; i += 1) {
+            const square = this.fakePlanets[i];
+            if (square.inRange(x, y)) {
+              if (this.selectedPlanet !== null) {
+                this.selectedPlanet.setState('inactive')
+              }
 
-            if (this.selectedPlanet === square) {
-              this.selectedPlanet = null;
-            } else {
-              this.selectedPlanet = square;
-              this.selectedPlanet.setState('active');
+              if (this.selectedPlanet === square) {
+                this.selectedPlanet = null;
+              } else {
+                this.selectedPlanet = square;
+                this.selectedPlanet.setState('active');
+              }
+              break;
             }
-            break;
           }
         }
       } else {
@@ -585,7 +592,9 @@ export default class SpaceScene extends Scene {
     if (this.beam !== null) {
       this.beam.update();
       this.fake.update();
-      this.energyIndicator.update();
+      if (!this.solutionMode) {
+        this.energyIndicator.update();
+      }
 
       if (this.energyIndicator.energy === 0 && !this.isTutorial) {
         this.released();
@@ -620,6 +629,14 @@ export default class SpaceScene extends Scene {
   }
 
   check() {
+    if(this.solutionMode) {
+      this.displayScientistDialog(
+        [
+          "Let's reset the box now",
+          "So you can figure it out on your own this time"
+        ], this.restartLevel);
+    }
+
     var i, j;
     for (i = 0; i < this.width; i += 1) {
       for (j = 0 ; j < this.height; j += 1) {
@@ -679,6 +696,8 @@ export default class SpaceScene extends Scene {
 
   checkSolution() {
     this.fakeDetermine = this.determine;
+    this.solutionMode = true;
+    this.solutionButton.disabled();
 
     let i, j;
 
