@@ -1,6 +1,5 @@
 import Renderable from '../../core/Renderable';
 import Engine from '../../core/Engine';
-import { IDENTIFIERS as ASSET_IDENTIFIERS } from '../../core/Assets';
 import {fillText} from "../../core/Letters";
 import Button from "../../core/Button";
 
@@ -11,7 +10,7 @@ export default class Dialog extends Renderable {
     this.continueClicked = this.continueClicked.bind(this);
 
     this.continue = new Button(x + width - 50, y + height - 20, 50, 20,
-      '[...]', '#121212', '#424242', this.continueClicked);
+      '[...]', this.continueClicked, '#888888', '#666666', '#AA1111');
 
     if (texts === null) {
       this.noGuideText = true;
@@ -37,10 +36,22 @@ export default class Dialog extends Renderable {
   setPixelSize(size) {
     this.size = size;
     this.continue.setFontSize(size - 1);
-    this.continue.width = 30 * (size - 1);
-    this.continue.height = 15 * (size - 1);
-    this.continue.x = this.x + this.width - this.continue.width;
-    this.continue.y = this.y + this.height - this.continue.height;
+
+    const origWidth = 30;
+    const origHeight = 15;
+
+    let buttonWidth = origWidth;
+    let buttonHeight = origHeight;
+
+    if (Engine.isMobile()) {
+      buttonWidth = 2 * origWidth;
+      buttonHeight = 2 * origHeight;
+    }
+    this.continue.width = buttonWidth * (size - 1);
+    this.continue.height = buttonHeight * (size - 1);
+
+    this.continue.x = this.x + this.width - origWidth;
+    this.continue.y = this.y + this.height - origHeight;
   }
 
   textToLoad(text) {

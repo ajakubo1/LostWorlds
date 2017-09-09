@@ -21,6 +21,10 @@ class EngineImplementation {
     this.globals = null;
   }
 
+  isMobile() {
+    return this.events.isMobile;
+  }
+
   setScene(newScene) {
     this.scene = newScene
   }

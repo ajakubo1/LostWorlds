@@ -65,8 +65,8 @@ export default class SpaceScene extends Scene {
     this.fake = null;
     this.energyIndicator = new Energy(Engine.width - 125, 25, 100, 350, this.restartLevel);
     this.solutionButton = new Button(
-      Engine.width - 120, Engine.height - 50, 90, 30,
-      'Solution', undefined, undefined, this.checkSolution
+      Engine.width - 120, Engine.height - 60, 90, 40,
+      'Solution', this.checkSolution
     );
 
     this.width = config.width;
@@ -168,8 +168,8 @@ export default class SpaceScene extends Scene {
     if (config.isTutorial) {
       dialog = tutorialDialog;
       this.skipTutorial = new Button(
-        Engine.width - 120, Engine.height - 100, 90, 30,
-        'Skip Tutorial', undefined, undefined, this.disableTutorial
+        Engine.width - 120, Engine.height - 110, 90, 40,
+        'Skip Tutorial', this.disableTutorial
       )
     }
 

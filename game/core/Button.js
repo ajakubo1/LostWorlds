@@ -2,11 +2,12 @@ import Renderable from './Renderable';
 import {fillText} from './Letters';
 
 export default class Button extends Renderable {
-  constructor(x, y, width, height, text, color = '#222299', hoverColor = '#1111FF', onClick) {
+  constructor(x, y, width, height, text, onClick, color = '#DDDDDD', hoverColor = '#ffffff', textColor = '#000000') {
     super(x, y, width, height);
     this.text = text;
     this.color = color;
     this.colorHover = hoverColor;
+    this.textColor = textColor;
     this.state = 0;
     this.onClick = onClick;
     this.size = 2;
@@ -34,12 +35,12 @@ export default class Button extends Renderable {
 
       context.fillRect(this.x, this.y, this.width, this.height);
 
-      fillText(this.x, this.y, this.width, this.height, this.text, context, 'red', this.size)
+      fillText(this.x, this.y, this.width, this.height, this.text, context, this.textColor, this.size)
     }
   }
 
   pressed(x, y) {
-    if (this.state === 1 && this.inRange(x, y)) {
+    if (this.inRange(x, y)) {
       this.onClick();
       return true;
     }
@@ -52,10 +53,6 @@ export default class Button extends Renderable {
     } else if(this.state === 1 && !this.inRange(x, y)) {
       this.setNormal();
     }
-  }
-
-  click() {
-    this.onClick();
   }
 
   disabled() {
