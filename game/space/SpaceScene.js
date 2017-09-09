@@ -17,16 +17,16 @@ import Renderable from "../core/Renderable";
 const tutorialDialog = [
   "Let's not waste any more time",
   "You have to place the particles from here",
-  "To the blackbox - they somewhere in it",
-  "And you have to do it correctly",
+  "To the blackbox",
   "You don't know where the 'red particle' is in the box",
   "But you can check it out using lasers here",
+  "You see - particles are bending and influencing the laser beam",
   "Lasers need power",
   "You can replace the battery whenever",
   "But this screws up current particle layout",
-  "And you have to start from scratch",
+  "And you have to start your work from scratch",
   "Don't worry about it in the tutorial level",
-  "So normaly, the beam will go in a straight line", // 10
+  "Normaly, the beam will go in a straight line", // 10
   "Unless there is a particle nearby", // 11
   "Notice how the beam splits into two", // 12
   "That big beam goes into the blackbox", // 13
@@ -34,15 +34,15 @@ const tutorialDialog = [
   "Smaller one goes above the box", // 15
   "And is affected by particles that you place on the box", // 16
   "I will place the 'red particle' where it belongs", // 17
-  "As it bends the beam by 90 degrees at it's corners", // 17
+  "As it bends the beam by 90 degrees at corner squares nearby", // 17
   "So the point here is to align those lasers together perfectly", // 18
   "If you shoot directly at a particle, beam will stop", // 19
   "And - if the particle is placed at the edge of the box", // 20
-  "And you shoot lasers from that edge", // 21
+  "And you shoot neighboring lasers", // 21
   "The beam will return", // 22
   "You can play around here",
   "When you are finished - and particle placement is good",
-  "Click me, I will check your solution"
+  "Click me and I will check your solution"
 ];
 
 export default class SpaceScene extends Scene {
@@ -195,9 +195,9 @@ export default class SpaceScene extends Scene {
       this.indicator = [new Indicator(this.leftPanel)];
     } else if(step === 1) {
       this.indicator = [new Indicator(this.middlePanel)];
-    } else if(step === 3) {
+    } else if(step === 2) {
       this.indicator = [new Indicator(this.fakePlanets[0])];
-    } else if(step === 4) {
+    } else if(step === 3) {
       this.indicator = [];
       for (i = 0; i < this.probeSquares.length; i += 1) {
         this.indicator.push(new Indicator(this.probeSquares[i]))
