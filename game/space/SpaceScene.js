@@ -663,7 +663,7 @@ export default class SpaceScene extends Scene {
       this.displayScientistDialog(
         [
           'Not quite.',
-          'You still have ' + this.checkLimit + ' left.'
+          'You can ask me ' + this.checkLimit + ' more times before we go to lunch'
         ], null);
     } else {
       this.displayScientistDialog(
