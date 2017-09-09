@@ -109,6 +109,23 @@ Engine.globals = {
       ],
       open: false
     }, {
+      name: 'Feeling blue',
+      width: 3,
+      height: 3,
+      planets: [
+        {
+          type: PLANET_TYPES.RED,
+          x: 0,
+          y: 1,
+        }, {
+          type: PLANET_TYPES.BLUE,
+          x: 1,
+          y: 1,
+        }
+      ],
+      open: false,
+      newPlanets: true,
+    }, {
       name: 'Serious stuff',
       width: 6,
       height: 6,
@@ -124,9 +141,19 @@ Engine.globals = {
         }
       ],
       open: false,
-      newPlanets: true,
     }, {
-      name: 'The unknown',
+      name: 'The Singularity',
+      width: 4,
+      height: 4,
+      planets: [
+        {
+          type: PLANET_TYPES.SINGULARITY,
+        }
+      ],
+      open: false,
+      newSingularity: true,
+    }, {
+      name: 'What a mess',
       width: 6,
       height: 6,
       planets: [
@@ -141,44 +168,20 @@ Engine.globals = {
         }
       ],
       open: false,
-      newSingularity: true,
     }, {
-      name: 'Worm hole?',
-      width: 7,
-      height: 6,
+      name: 'Schrodinger',
+      width: 4,
+      height: 4,
       planets: [
         {
-          type: PLANET_TYPES.RED,
-        }, {
-          type: PLANET_TYPES.GREEN,
-        }, {
-          type: PLANET_TYPES.BLUE,
-        }, {
-          type: PLANET_TYPES.SINGULARITY,
-        }, {
-          type: PLANET_TYPES.SINGULARITY,
-        }
-      ],
-      open: false,
-      newWormhole: true,
-    }, {
-      name: 'Cat?',
-      width: 7,
-      height: 7,
-      planets: [
-        {
-          type: PLANET_TYPES.RED,
-        }, {
-          type: PLANET_TYPES.RED,
-        }, {
-          type: PLANET_TYPES.RED,
-        }, {
-          type: PLANET_TYPES.GREEN,
-        }, {
-          type: PLANET_TYPES.BLUE,
-        }, {
           type: PLANET_TYPES.CAT,
-        }
+          x: 0,
+          y: 1
+        },{
+          type: PLANET_TYPES.GREEN,
+          x: 2,
+          y: 2
+        },
       ],
       open: false,
       newCat: true,

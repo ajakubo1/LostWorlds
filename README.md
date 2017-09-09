@@ -11,7 +11,7 @@ TODO
 - [x] Menu for picking levels + tutorial levels for each type
 
 
-- [ ] First tutorial should be more interactive (lasers firing on itself)
+- [x] First tutorial should be more interactive (lasers firing on itself)
 - [ ] Tutorials/test areas for new particles
 - [x] When someone checks the solution:
   - [x] Battery should be disabled (energy)
@@ -21,5 +21,5 @@ TODO
 - [ ] Make a nicer cat :)
 - [ ] Sounds?
 - [ ] Music?
-- [ ] Skip tutorial button    n[]-
+- [ ] Skip tutorial button
 - [ ] Some funny texts for the scientist maybe?
