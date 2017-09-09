@@ -95,7 +95,8 @@ Engine.globals = {
         }
       ],
       open: true,
-      isTutorial: true
+      isTutorial: true,
+      energyNotAffected: true
     }, {
       name: 'Easy start',
       width: 4,
@@ -125,6 +126,7 @@ Engine.globals = {
       ],
       open: false,
       newPlanets: true,
+      energyNotAffected: true
     }, {
       name: 'Serious stuff',
       width: 6,
@@ -152,6 +154,7 @@ Engine.globals = {
       ],
       open: false,
       newSingularity: true,
+      energyNotAffected: true,
     }, {
       name: 'What a mess',
       width: 6,
@@ -185,6 +188,7 @@ Engine.globals = {
       ],
       open: false,
       newCat: true,
+      energyNotAffected: true
     }
   ],
   tutorialEnabled: true

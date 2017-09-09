@@ -56,6 +56,7 @@ export default class SpaceScene extends Scene {
     this.nextStep = this.nextStep.bind(this);
     this.restartLevel = this.restartLevel.bind(this);
     this.levelWon = this.levelWon.bind(this);
+    this.disableTutorial = this.disableTutorial.bind(this);
     this.checkLimit = 3;
 
     this.clickedSquare = null;
@@ -166,15 +167,19 @@ export default class SpaceScene extends Scene {
     let dialog = null;
     if (config.isTutorial) {
       dialog = tutorialDialog;
+      this.skipTutorial = new Button(
+        Engine.width - 120, Engine.height - 100, 90, 30,
+        'Skip Tutorial', undefined, undefined, this.disableTutorial
+      )
     }
 
     this.scientist = new Scientist(80, Engine.height - 95, dialog, 4, 2);
     this.scientist.onClick(this.check);
-    this.energyNotAffected = false;
     if (config.isTutorial) {
       this.scientist.setDialogStepCallback(this.nextStep);
-      this.energyNotAffected = true;
     }
+
+    this.energyNotAffected = config.energyNotAffected;
 
     this.indicator = [];
 
@@ -187,6 +192,12 @@ export default class SpaceScene extends Scene {
     config.newCat = false;
 
     this.solutionMode = false;
+  }
+
+  disableTutorial() {
+    this.skipTutorial = null;
+    this.isTutorial = false;
+    this.scientist.stopSpeach();
   }
 
   nextStep(step) {
@@ -595,6 +606,8 @@ export default class SpaceScene extends Scene {
         if (!this.isTutorial) {
           this.solutionButton.pressed(x, y);
           this.energyIndicator.pressed(x, y);
+        } else {
+          this.skipTutorial.pressed(x, y);
         }
       }
     }
@@ -614,6 +627,8 @@ export default class SpaceScene extends Scene {
       } else {
         this.solutionButton.moved(x, y);
       }
+    } else {
+      this.skipTutorial.moved(x, y);
     }
   }
 
@@ -789,6 +804,10 @@ export default class SpaceScene extends Scene {
       this.indicator[i].render(context);
     }
     this.scientist.render(context);
+
+    if (this.skipTutorial) {
+      this.skipTutorial.render(context);
+    }
   }
 
 
