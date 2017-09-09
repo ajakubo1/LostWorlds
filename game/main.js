@@ -4,13 +4,13 @@ import { TYPES as PLANET_TYPES } from './space/objects/Planet';
 import {createOpaqCircle, createOpaqSquare, createSquare} from './core/Placeholders';
 import MenuScene from "./menu/MenuScene";
 
-const gameCanvas = document.getElementById('game');
+const gameCanvas = document.getElementById('g');
 
 Engine.setup(gameCanvas, 960, 540);
 
 Engine._putAsset(
   ASSET_IDENTIFIERS.RED,
-  createOpaqCircle(50, 50, 15, '#A10000', '#A10000', 2, 0.3),
+  createOpaqCircle(50, 50, 15, '#a10000', '#a10000', 2, 0.3),
 );
 Engine._putAsset(
   ASSET_IDENTIFIERS.BLUE,
@@ -18,7 +18,7 @@ Engine._putAsset(
 );
 Engine._putAsset(
   ASSET_IDENTIFIERS.GREEN,
-  createOpaqCircle(50, 50, 15, '#00A100', '#00A100', 2, 0.3),
+  createOpaqCircle(50, 50, 15, '#00a100', '#00a100', 2, 0.3),
 );
 Engine._putAsset(
   ASSET_IDENTIFIERS.SINGULARITY,
@@ -38,15 +38,15 @@ Engine._putAsset(
 );
 Engine._putAsset(
   ASSET_IDENTIFIERS.PROBE_SQUARE,
-  createOpaqSquare(50, 50, '#00CC99', '#00CC99', 2, 0.3),
+  createOpaqSquare(50, 50, '#00cc99', '#00cc99', 2, 0.3),
 );
 Engine._putAsset(
   ASSET_IDENTIFIERS.PROBE_SQUARE_ACTIVE,
-  createOpaqSquare(50, 50, '#E80000', '#E80000', 2, 0.3),
+  createOpaqSquare(50, 50, '#e80000', '#e80000', 2, 0.3),
 );
 Engine._putAsset(
   ASSET_IDENTIFIERS.ENERGY,
-  createSquare(100, 350, '#DD55AA'),
+  createSquare(100, 350, '#dd55aa'),
 );
 Engine._putAsset(
   ASSET_IDENTIFIERS.BACKGROUND,
@@ -70,7 +70,7 @@ Engine._putAsset(
 Engine.globals = {
   levels: [
     {
-      name: 'Tutorial',
+      name: 'tutorial',
       width: 3,
       height: 3,
       planets: [
@@ -84,7 +84,7 @@ Engine.globals = {
       isTutorial: true,
       energyNotAffected: true
     }, {
-      name: 'Easy start',
+      name: 'easy start',
       width: 4,
       height: 4,
       planets: [
@@ -96,7 +96,7 @@ Engine.globals = {
       ],
       open: false
     }, {
-      name: 'Feeling blue',
+      name: 'feeling blue',
       width: 3,
       height: 3,
       planets: [
@@ -114,7 +114,7 @@ Engine.globals = {
       newPlanets: true,
       energyNotAffected: true
     }, {
-      name: 'Serious stuff',
+      name: 'serious stuff',
       width: 6,
       height: 6,
       planets: [
@@ -130,7 +130,7 @@ Engine.globals = {
       ],
       open: false,
     }, {
-      name: 'The Singularity',
+      name: 'the singularity',
       width: 4,
       height: 4,
       planets: [
@@ -142,7 +142,7 @@ Engine.globals = {
       newSingularity: true,
       energyNotAffected: true,
     }, {
-      name: 'What a mess',
+      name: 'what a mess',
       width: 6,
       height: 6,
       planets: [
@@ -158,7 +158,7 @@ Engine.globals = {
       ],
       open: false,
     }, {
-      name: 'Schrodinger',
+      name: 'schrodinger',
       width: 4,
       height: 4,
       planets: [
