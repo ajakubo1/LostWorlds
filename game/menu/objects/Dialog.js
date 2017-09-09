@@ -37,21 +37,30 @@ export default class Dialog extends Renderable {
     this.size = size;
     this.continue.setFontSize(size - 1);
 
-    const origWidth = 30;
-    const origHeight = 15;
+    const origWidth = 30 * (size - 1);
+    const origHeight = 15 * (size - 1);
 
     let buttonWidth = origWidth;
     let buttonHeight = origHeight;
 
     if (Engine.isMobile()) {
-      buttonWidth = 2 * origWidth;
-      buttonHeight = 2 * origHeight;
+      buttonWidth = 1.5 * origWidth;
+      buttonHeight = 1.5 * origHeight;
     }
-    this.continue.width = buttonWidth * (size - 1);
-    this.continue.height = buttonHeight * (size - 1);
 
-    this.continue.x = this.x + this.width - origWidth;
-    this.continue.y = this.y + this.height - origHeight;
+    if(buttonWidth > 100) {
+      buttonWidth = 100
+    }
+
+    if (buttonHeight > 60) {
+      buttonHeight = 60;
+    }
+
+    this.continue.width = buttonWidth;
+    this.continue.height = buttonHeight;
+
+    this.continue.x = this.x + this.width - origWidth / 2;
+    this.continue.y = this.y + this.height - origHeight / 2;
   }
 
   textToLoad(text) {
