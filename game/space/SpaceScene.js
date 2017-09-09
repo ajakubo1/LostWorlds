@@ -776,6 +776,7 @@ export default class SpaceScene extends Scene {
         level.open = true;
       }
     }
+    Engine.globals.levels[this.currentLevel].done = true;
     this.backToLevel();
   }
 

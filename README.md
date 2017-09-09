@@ -18,7 +18,7 @@ TODO
   - [x] He should be able to interact with lasers
   - [x] He should be able to interact with scientist (level reset)
   - [x] No interaction with blackbox and planets
-- [ ] Make a nicer cat :)
+- [x] Make a nicer cat :)
 - [ ] Sounds?
 - [ ] Music?
 - [x] Skip tutorial button

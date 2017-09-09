@@ -63,6 +63,11 @@ Engine._putAsset(
 );
 
 Engine._putAsset(
+  ASSET_IDENTIFIERS.LEVEL_SQUARE_DONE,
+  createSquare(100, 100, '#006666'),
+);
+
+Engine._putAsset(
   ASSET_IDENTIFIERS.LEVEL_SQUARE_ACTIVE,
   createSquare(100, 100, '#6600ff'),
 );
@@ -70,7 +75,6 @@ Engine._putAsset(
 Engine.globals = {
   levels: [
     {
-      name: 'tutorial',
       width: 3,
       height: 3,
       planets: [
@@ -78,16 +82,12 @@ Engine.globals = {
           type: PLANET_TYPES.RED,
           x: 0,
           y: 1,
-        },
-        {
-          type: PLANET_TYPES.CAT
         }
       ],
       open: true,
       isTutorial: true,
       energyNotAffected: true
     }, {
-      name: 'easy start',
       width: 4,
       height: 4,
       planets: [
@@ -99,7 +99,6 @@ Engine.globals = {
       ],
       open: false
     }, {
-      name: 'feeling blue',
       width: 3,
       height: 3,
       planets: [
@@ -117,7 +116,6 @@ Engine.globals = {
       newPlanets: true,
       energyNotAffected: true
     }, {
-      name: 'serious stuff',
       width: 6,
       height: 6,
       planets: [
@@ -133,7 +131,6 @@ Engine.globals = {
       ],
       open: false,
     }, {
-      name: 'the singularity',
       width: 4,
       height: 4,
       planets: [
@@ -145,7 +142,6 @@ Engine.globals = {
       newSingularity: true,
       energyNotAffected: true,
     }, {
-      name: 'what a mess',
       width: 6,
       height: 6,
       planets: [
@@ -161,7 +157,6 @@ Engine.globals = {
       ],
       open: false,
     }, {
-      name: 'schrodinger',
       width: 4,
       height: 4,
       planets: [
@@ -182,6 +177,11 @@ Engine.globals = {
   ],
 };
 
+let i;
+for (i = 0; i < Engine.globals.levels.length; i += 1) {
+  const level = Engine.globals.levels[i];
+  level.open = true;
+}
 
 Engine.setScene(new MenuScene());
 Engine.startScene();

@@ -14,7 +14,11 @@ export default class LevelSquare extends Renderable {
 
   setNormal() {
     this.state = 0;
-    this.image = Engine.getAsset(ASSET_IDENTIFIERS.LEVEL_SQUARE);
+    if (this.info.done) {
+      this.image = Engine.getAsset(ASSET_IDENTIFIERS.LEVEL_SQUARE_DONE);
+    } else {
+      this.image = Engine.getAsset(ASSET_IDENTIFIERS.LEVEL_SQUARE);
+    }
   }
 
   setHover() {
@@ -27,13 +31,16 @@ export default class LevelSquare extends Renderable {
   }
 
   setInfo(info) {
+    if(info.done) {
+      this.image = Engine.getAsset(ASSET_IDENTIFIERS.LEVEL_SQUARE_DONE);
+    }
     this.info = info;
   }
 
   render(context) {
     context.drawImage(this.image, this.x, this.y, this.width, this.height);
 
-    fillText(this.x, this.y, this.width, 40, this.info.name, context, '#ffffff', 2)
+    fillText(this.x, this.y, this.width, this.height, (this.level + 1) + '', context, '#ffffff', 2)
   }
 
   goToLevel() {
