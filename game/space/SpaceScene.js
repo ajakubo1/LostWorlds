@@ -45,6 +45,36 @@ const tutorialDialog = [
   "click me and I will check your solution"
 ];
 
+const newPlanetsDialog = [
+  "in this box, there is a new type of particle",
+  "a 'blue particle'",
+  "you may also encounter a 'green' variety",
+  "practice here, how red and blue interact with each other",
+  "also, notice the laser discoloration when you hit blue"
+];
+
+const newSingularityDialog = [
+  "once again",
+  "i want to introduce you to a new particle type",
+  "this here is a 'singularity'",
+  "yes - as in - small black hole",
+  "your laser can get stuck in it's event horizon"
+];
+
+const newCatDialog = [
+  "this new particle",
+  "i call a 'schrodinger particle'",
+  "when you hit it",
+  "it bends the beam in a different direction each time",
+  "enjoy!"
+];
+
+const newWormholeDialog = [
+  "are you aware",
+  "that two singularities",
+  "create a wormhole?"
+];
+
 export const opositeDirection = (direction) => {
   if (direction === 'left') {
     return 'right';
@@ -183,6 +213,14 @@ export default class SpaceScene extends Scene {
         Engine.width - 120, Engine.height - 110, 90, 40,
         'skip tutorial', this.disableTutorial
       )
+    } else if(config.newPlanets) {
+      dialog = newPlanetsDialog;
+    } else if (config.newSingularity) {
+      dialog = newSingularityDialog;
+    } else if (config.newCat) {
+      dialog = newCatDialog;
+    } else if (config.newWormhole) {
+      dialog = newWormholeDialog;
     }
 
     this.scientist = new Scientist(80, Engine.height - 95, dialog, 4, 2);
