@@ -173,6 +173,111 @@ Engine.globals = {
       open: false,
       newCat: true,
       energyNotAffected: true
+    }, {
+      width: 7,
+      height: 7,
+      planets: [
+        {
+          type: PLANET_TYPES.RED,
+        },{
+          type: PLANET_TYPES.RED,
+        }, {
+          type: PLANET_TYPES.GREEN,
+        }, {
+          type: PLANET_TYPES.BLUE,
+        }, {
+          type: PLANET_TYPES.CAT,
+        }, {
+          type: PLANET_TYPES.CAT,
+        }
+      ],
+      open: false,
+    }, {
+      width: 4,
+      height: 4,
+      planets: [
+        {
+          type: PLANET_TYPES.SINGULARITY,
+          x: 0,
+          y: 1
+        },{
+          type: PLANET_TYPES.SINGULARITY,
+          x: 2,
+          y: 2
+        },
+      ],
+      open: false,
+      newWormhole: true,
+      energyNotAffected: true
+    }, {
+      width: 7,
+      height: 7,
+      planets: [
+        {
+          type: PLANET_TYPES.RED,
+        },{
+          type: PLANET_TYPES.BLUE,
+        }, {
+          type: PLANET_TYPES.SINGULARITY,
+        }, {
+          type: PLANET_TYPES.SINGULARITY,
+        }, {
+          type: PLANET_TYPES.CAT,
+        }, {
+          type: PLANET_TYPES.CAT,
+        }
+      ],
+      open: false,
+    }, {
+      width: 8,
+      height: 7,
+      planets: [
+        {
+          type: PLANET_TYPES.RED,
+        },{
+          type: PLANET_TYPES.RED,
+        }, {
+          type: PLANET_TYPES.BLUE,
+        }, {
+          type: PLANET_TYPES.BLUE,
+        }, {
+          type: PLANET_TYPES.GREEN,
+        }, {
+          type: PLANET_TYPES.GREEN,
+        }, {
+          type: PLANET_TYPES.CAT,
+        }, {
+          type: PLANET_TYPES.CAT,
+        }
+      ],
+      open: false,
+    }, {
+      width: 9,
+      height: 7,
+      planets: [
+        {
+          type: PLANET_TYPES.RED,
+        },{
+          type: PLANET_TYPES.RED,
+        }, {
+          type: PLANET_TYPES.BLUE,
+        }, {
+          type: PLANET_TYPES.BLUE,
+        }, {
+          type: PLANET_TYPES.GREEN,
+        }, {
+          type: PLANET_TYPES.GREEN,
+        }, {
+          type: PLANET_TYPES.CAT,
+        }, {
+          type: PLANET_TYPES.CAT,
+        }, {
+          type: PLANET_TYPES.SINGULARITY,
+        }, {
+          type: PLANET_TYPES.SINGULARITY,
+        }
+      ],
+      open: false,
     }
   ],
 };

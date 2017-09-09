@@ -700,14 +700,13 @@ export default class SpaceScene extends Scene {
     if (this.checkLimit > 0) {
       this.displayScientistDialog(
         [
-          'Not quite.',
+          'not quite.',
           'You can ask me ' + this.checkLimit + ' more times before we go to lunch'
         ], null);
     } else {
       this.displayScientistDialog(
         [
           "not quite.",
-          "this particle placement is wacky",
           "well, let's take a break and go to lunch",
         ], this.backToLevel);
     }
@@ -746,7 +745,6 @@ export default class SpaceScene extends Scene {
 
     this.displayScientistDialog(
       [
-        'oh, cool!',
         'you did it!',
         'go ahead and try another blackbox then'
       ], this.levelWon);

@@ -25,3 +25,4 @@ TODO
 - [ ] Some funny texts for the scientist maybe?
 - [x] draw '1' and '2' in pixels
 - [ ] Do some levels man!
+- [ ] One singularity placed, other one not bug
