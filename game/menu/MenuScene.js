@@ -41,20 +41,20 @@ export default class MenuScene extends Scene {
 
 
     this.texts1 = [
-      "Oh, what a mess!",           // 0
-      "My lab is wrecked!",         // 3
-      "Someone opened the cages once again!",   // 4
-      "Bloody monkeys escaped!"
+      "oh, what a mess!",           // 0
+      "my lab is wrecked!",         // 3
+      "someone opened the cages once again!",   // 4
+      "bloody monkeys escaped!"
     ];
-    this.texts2 = [ "Oh, and who are you?!",             // 6
-      "Yes you!",                   // 7
-      "I have never seen you here!",                   // 7
-      "Are you the new intern?",    // 8
-      "Splendid!",     // 12
-      "You will help me out!",      // 13
-      "I've lost all of the data", // 15
-      "Good thing I know what's in each of the blackbox", // 18
-      "Follow me" // 20
+    this.texts2 = [ "oh, and who are you?!",             // 6
+      "yes you!",                   // 7
+      "i have never seen you here!",                   // 7
+      "are you the new intern?",    // 8
+      "splendid!",     // 12
+      "you will help me out!",      // 13
+      "i've lost all of the data", // 15
+      "good thing i know what's in each of the blackbox", // 18
+      "follow me" // 20
     ];
 
     this.scientist = new Scientist(

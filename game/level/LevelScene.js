@@ -3,16 +3,15 @@ import Engine from '../core/Engine';
 import Background from '../space/objects/Background';
 import LevelSquare from "./objects/LevelSquare";
 import Scientist from "../menu/objects/Scientist";
-import Dialog from "../menu/objects/Dialog";
 import Indicator from "./objects/Indicator";
 
 const tutorialDialog = [
-  "Welcome to my lab!",
-  "This is a blackbox",
-  "It's essentially a microscopic universe",
-  "Well... In a box.",
-  "It helps me in sciency stuff",
-  "Go ahead! Take a look!",
+  "welcome to my lab!",
+  "this is a blackbox",
+  "it's essentially a microscopic universe",
+  "well... in a box.",
+  "it helps me in sciency stuff",
+  "go ahead! take a look!",
 ];
 
 export default class LevelScene extends Scene {

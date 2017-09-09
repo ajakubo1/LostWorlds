@@ -15,34 +15,34 @@ import Indicator from "../level/objects/Indicator";
 import Renderable from "../core/Renderable";
 
 const tutorialDialog = [
-  "Let's not waste any more time",
-  "You have to place the particles from here",
-  "To the blackbox",
-  "You don't know where the 'red particle' is in the box",
-  "But you can check it out using lasers here",
-  "You see - particles are bending and influencing the laser beam",
-  "Lasers need power",
-  "You can replace the battery whenever",
-  "But this screws up current particle layout",
-  "And you have to start your work from scratch",
-  "Don't worry about it in the tutorial level",
-  "Normaly, the beam will go in a straight line", // 10
-  "Unless there is a particle nearby", // 11
-  "Notice how the beam splits into two", // 12
-  "That big beam goes into the blackbox", // 13
-  "And is affected by particles in the box", // 14
-  "Smaller one goes above the box", // 15
-  "And is affected by particles that you place on the box", // 16
-  "I will place the 'red particle' where it belongs", // 17
-  "As it bends the beam by 90 degrees at corner squares nearby", // 17
-  "So the point here is to align those lasers together perfectly", // 18
-  "If you shoot directly at a particle, beam will stop", // 19
-  "And - if the particle is placed at the edge of the box", // 20
-  "And you shoot neighboring lasers", // 21
-  "The beam will return", // 22
-  "You can play around here",
-  "When you are finished - and particle placement is good",
-  "Click me and I will check your solution"
+  "let's not waste any more time",
+  "you have to place the particles from here",
+  "to the blackbox",
+  "you don't know where the 'red particle' is in the box",
+  "but you can check it out using lasers here",
+  "you see - particles are bending and influencing the laser beam",
+  "lasers need power",
+  "you can replace the battery whenever",
+  "but this screws up current particle layout",
+  "and you have to start your work from scratch",
+  "don't worry about it in the tutorial level",
+  "normaly, the beam will go in a straight line", // 10
+  "unless there is a particle nearby", // 11
+  "notice how the beam splits into two", // 12
+  "that big beam goes into the blackbox", // 13
+  "and is affected by particles in the box", // 14
+  "smaller one goes above the box", // 15
+  "and is affected by particles that you place on the box", // 16
+  "i will place the 'red particle' where it belongs", // 17
+  "as it bends the beam by 90 degrees at corner squares nearby", // 17
+  "so the point here is to align those lasers together perfectly", // 18
+  "if you shoot directly at a particle, beam will stop", // 19
+  "and - if the particle is placed at the edge of the box", // 20
+  "and you shoot neighboring lasers", // 21
+  "the beam will return", // 22
+  "you can play around here",
+  "when you are finished - and particle placement is good",
+  "click me and I will check your solution"
 ];
 
 export const opositeDirection = (direction) => {
@@ -78,7 +78,7 @@ export default class SpaceScene extends Scene {
     this.energyIndicator = new Energy(Engine.width - 125, 25, 100, 350, this.restartLevel);
     this.solutionButton = new Button(
       Engine.width - 120, Engine.height - 60, 90, 40,
-      'Solution', this.checkSolution
+      'solution', this.checkSolution
     );
 
     this.width = config.width;
@@ -181,7 +181,7 @@ export default class SpaceScene extends Scene {
       dialog = tutorialDialog;
       this.skipTutorial = new Button(
         Engine.width - 120, Engine.height - 110, 90, 40,
-        'Skip Tutorial', this.disableTutorial
+        'skip tutorial', this.disableTutorial
       )
     }
 
@@ -667,9 +667,9 @@ export default class SpaceScene extends Scene {
     } else {
       this.displayScientistDialog(
         [
-          "Not quite.",
-          "This particle placement is wacky",
-          "Well, let's take a break and go to lunch",
+          "not quite.",
+          "this particle placement is wacky",
+          "well, let's take a break and go to lunch",
         ], this.backToLevel);
     }
   }
@@ -678,8 +678,8 @@ export default class SpaceScene extends Scene {
     if(this.solutionMode) {
       this.displayScientistDialog(
         [
-          "Let's reset the box now",
-          "So you can figure it out on your own this time"
+          "let's reset the box now",
+          "so you can figure it out on your own this time"
         ], this.restartLevel);
     }
 
@@ -707,9 +707,9 @@ export default class SpaceScene extends Scene {
 
     this.displayScientistDialog(
       [
-        'Oh, cool!',
-        'You did it!',
-        'Go ahead and try another blackbox then'
+        'oh, cool!',
+        'you did it!',
+        'go ahead and try another blackbox then'
       ], this.levelWon);
   }
 
