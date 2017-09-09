@@ -198,6 +198,8 @@ export default class SpaceScene extends Scene {
     this.skipTutorial = null;
     this.isTutorial = false;
     this.scientist.stopSpeach();
+    this.indicator = [];
+    this.deactivateLaser();
   }
 
   nextStep(step) {

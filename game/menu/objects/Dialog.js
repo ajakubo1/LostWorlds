@@ -10,7 +10,7 @@ export default class Dialog extends Renderable {
     this.continueClicked = this.continueClicked.bind(this);
 
     this.continue = new Button(x + width - 50, y + height - 20, 50, 20,
-      '[...]', this.continueClicked, '#888888', '#666666', '#AA1111');
+      '[...]', this.continueClicked, '#333333', '#545454', '#AA1111');
 
     if (texts === null) {
       this.noGuideText = true;
