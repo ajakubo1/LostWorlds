@@ -1,7 +1,7 @@
 import Engine from './core/Engine';
 import { IDENTIFIERS as ASSET_IDENTIFIERS } from './core/Assets';
 import { TYPES as PLANET_TYPES } from './space/objects/Planet';
-import {createOpaqCircle, createOpaqSquare, createSquare} from './core/Placeholders';
+import {createOpaqCircle, createOpaqSquare, createSquare, drawCat} from './core/Placeholders';
 import MenuScene from "./menu/MenuScene";
 
 const gameCanvas = document.getElementById('g');
@@ -26,7 +26,7 @@ Engine._putAsset(
 );
 Engine._putAsset(
   ASSET_IDENTIFIERS.CAT,
-  createOpaqCircle(50, 50, 15, '#aa4400', '#aa4400', 1, 0.6),
+  drawCat(),
 );
 Engine._putAsset(
   ASSET_IDENTIFIERS.PLANET_SQUARE,
@@ -78,6 +78,9 @@ Engine.globals = {
           type: PLANET_TYPES.RED,
           x: 0,
           y: 1,
+        },
+        {
+          type: PLANET_TYPES.CAT
         }
       ],
       open: true,

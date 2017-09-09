@@ -12,7 +12,7 @@ TODO
 
 
 - [x] First tutorial should be more interactive (lasers firing on itself)
-- [ ] Tutorials/test areas for new particles
+- [x] Tutorials/test areas for new particles
 - [x] When someone checks the solution:
   - [x] Battery should be disabled (energy)
   - [x] He should be able to interact with lasers
@@ -24,3 +24,4 @@ TODO
 - [x] Skip tutorial button
 - [ ] Some funny texts for the scientist maybe?
 - [x] draw '1' and '2' in pixels
+- [ ] Do some levels man!
