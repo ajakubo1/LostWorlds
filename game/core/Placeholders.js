@@ -43,7 +43,7 @@ export const createOpaqSquare = (width, height, color, borderColor, borderSize, 
 
 export const drawCat = () =>{
   const canvas = createOpaqCircle(50, 50, 12, '#aa4400', '#aa4400', 1, 0.6);
-  const context = canvas.getContext('2d');
+  let context = canvas.getContext('2d');
 
   context.drawImage(
     createOpaqCircle(50, 50, 8, '#aa4400', '#aa4400', 1, 0.6),
@@ -72,7 +72,15 @@ export const drawCat = () =>{
     -6, 15
   );
 
-  return canvas;
+  const toReturn = createCanvas(50, 50);
+
+  context = toReturn.getContext('2d');
+  context.drawImage(
+    canvas,
+    5, 5
+  );
+
+  return toReturn;
 };
 
   export const createOpaqCircle = (width, height, range, color, borderColor, borderSize, alpha, s = 0, d = 2*Math.PI) => {

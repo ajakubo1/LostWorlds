@@ -63,7 +63,8 @@ const newSingularityDialog = [
 
 const newCatDialog = [
   "this new particle",
-  "i call a 'schrodinger particle'",
+  "i call a 'schrodinger's bunny'",
+  "i mean 'shrodinger's particle'!",
   "when you hit it",
   "it bends the beam in a different direction each time",
   "enjoy!"
