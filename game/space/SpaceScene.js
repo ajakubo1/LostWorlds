@@ -56,7 +56,7 @@ const newSingularityDialog = [
   "i want to introduce you to a new particle type",
   "this here is a 'singularity'",
   "as in - small black hole",
-  "your laser can get stuck in its event horizon"
+  "your laser can get stuck in its event horizon",
 ];
 
 const newCatDialog = [
@@ -118,7 +118,7 @@ export default class SpaceScene extends Scene {
     this.determine = new Array(this.width);
 
     this.probeSquares = new Array(this.width * 2 + this.height * 2);
-    let currentProbeSquare = 0;
+    this.currentProbeSquare = 0;
     this.planetSquares = new Array(this.width * this.height);
     let currentPlanetSquare = 0;
 
@@ -164,35 +164,14 @@ export default class SpaceScene extends Scene {
     this.fillDirections();
 
     for (i = 0; i < this.width; i += 1) {
-      obj = new ProbeSquare(
-        this.limitX1 + i * 50,
-        this.limitY1 - 100,
-        50, 50
-      );
-      this.probeSquares[currentProbeSquare++] = obj;
-
-      obj = new ProbeSquare(
-        this.limitX1 + i * 50,
-        this.limitY2 + 50,
-        50, 50
-      );
-      this.probeSquares[currentProbeSquare++] = obj;
+      const x = this.limitX1 + i * 50;
+      this.addProbe(x, this.limitY1 - 100);
+      this.addProbe(x, this.limitY2 + 50);
     }
-
     for (i = 0; i < this.height; i += 1) {
-      obj = new ProbeSquare(
-        this.limitX1 - 100,
-        this.limitY1 + i * 50,
-        50, 50
-      );
-      this.probeSquares[currentProbeSquare++] = obj;
-
-      obj = new ProbeSquare(
-        this.limitX2 + 50,
-        this.limitY1 + i * 50,
-        50, 50
-      );
-      this.probeSquares[currentProbeSquare++] = obj;
+      const y = this.limitY1 + i * 50;
+      this.addProbe(this.limitX1 - 100, y);
+      this.addProbe(this.limitX2 + 50, y);
     }
 
     for (i = 0; i < this.planets.length; i += 1) {
@@ -240,6 +219,10 @@ export default class SpaceScene extends Scene {
     config.newCat = false;
 
     this.solutionMode = false;
+  }
+
+  addProbe(x, y) {
+    this.probeSquares[this.currentProbeSquare++] = new ProbeSquare(x, y, 50, 50);
   }
 
   disableTutorial() {
@@ -630,6 +613,16 @@ export default class SpaceScene extends Scene {
     return [returnDirection, colorChange, displacement];
   }
 
+  helperLoop(table, callback, x, y) {
+    let i;
+    for (i = 0 ; i < table.length; i += 1) {
+      if (table[i].inRange(x, y)) {
+        callback(table[i]);
+        break;
+      }
+    }
+  }
+
   pressed(x, y) {
     let i;
 
@@ -641,41 +634,20 @@ export default class SpaceScene extends Scene {
       if (x > this.limitX1 && x < this.limitX2 && y > this.limitY1 && y < this.limitY2) {
         //Squares
         if (!this.solutionMode && !this.isTutorial) {
-          const length = this.planetSquares.length;
-          for (i = 0; i < length; i += 1) {
-            const square = this.planetSquares[i];
-            if (square.inRange(x, y)) {
-              this.placePlanet(square);
-              break;
-            }
-          }
+          this.helperLoop(this.planetSquares, this.placePlanet, x, y);
         }
 
       } else {
         //Probes
         if (!this.isTutorial) {
-          const length = this.probeSquares.length;
-          for (i = 0; i < length; i += 1) {
-            const square = this.probeSquares[i];
-            if (square.inRange(x, y)) {
-              this.activateLaser(square);
-              break;
-            }
-          }
+          this.helperLoop(this.probeSquares, this.activateLaser, x, y);
         }
       }
     } else {
       //Screens
       if (x < 160) {
         if (!this.solutionMode && !this.isTutorial) {
-          const length = this.fakePlanets.length;
-          for (i = 0; i < length; i += 1) {
-            const square = this.fakePlanets[i];
-            if (square.inRange(x, y)) {
-              this.selectPlanet(square);
-              break;
-            }
-          }
+          this.helperLoop(this.fakePlanets, this.selectPlanet, x, y);
         }
       } else {
         if (!this.isTutorial) {
