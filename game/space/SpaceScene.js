@@ -46,31 +46,26 @@ const tutorialDialog = [
 ];
 
 const newPlanetsDialog = [
-  "in this box, there is a new type of particle",
-  "a 'blue particle'",
+  "there is a 'blue particle' here",
   "you may also encounter a 'green' variety",
-  "notice the laser discoloration"
+  "check how it discolors the laser"
 ];
 
 const newSingularityDialog = [
-  "i want to introduce you to a new particle type",
   "this here is a 'singularity'",
   "as in - small black hole",
   "your laser can get stuck in its event horizon",
 ];
 
 const newCatDialog = [
-  "this new particle",
-  "is the 'schrodinger's bunny'",
+  "this new particle is the 'schrodinger's bunny'",
   "i mean 'shrodinger's particle'!",
   "when you hit it",
   "it bends the beam in a different direction each time"
 ];
 
 const newWormholeDialog = [
-  "are you aware",
-  "that two singularities",
-  "create a wormhole for your laser?"
+  "two singularities create a wormhole for your laser"
 ];
 
 export const opositeDirection = (direction) => {

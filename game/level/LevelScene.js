@@ -15,6 +15,12 @@ const tutorialDialog = [
   "go ahead! take a look!",
 ];
 
+const finishedDialog = [
+  "well done!",
+  "you sorted out all of the blackboxes!",
+  "I will hire you, that talent can't go to waste!"
+];
+
 export default class LevelScene extends Scene {
   constructor(dialog = 99) {
     super();
@@ -25,6 +31,7 @@ export default class LevelScene extends Scene {
     this.levels = [];
     let i;
     const levels = Engine.globals.levels;
+    let doneLevels = 0;
     for (i = 0; i < levels.length; i += 1) {
       const level = levels[i];
       if (level.open) {
@@ -33,10 +40,17 @@ export default class LevelScene extends Scene {
       } else {
         break;
       }
+
+      if (!Engine.globals.finished && level.done) {
+        doneLevels += 1;
+      }
     }
     let text = null;
     if (dialog === 0) {
       text = tutorialDialog;
+    } else if (doneLevels === 12) {
+      text = finishedDialog;
+      Engine.globals.finished = true;
     }
     this.scientist = new Scientist(Engine.width / 2 - 50, Engine.height - 95, text, 4, 2);
     if (dialog === 0) {
