@@ -466,7 +466,7 @@ export default class SpaceScene extends Scene {
     }
   }
 
-  getFakeFromSquare(square) {
+  getFromSquare(square) {
     let i;
     for (i = 0; i < this.planets.length; i += 1) {
       if (this.planets[i].x === square.idX && this.planets[i].y === square.idY) {
@@ -475,14 +475,27 @@ export default class SpaceScene extends Scene {
     }
   }
 
-  getSingularityCount() {
+  getFakeFromSquare(square) {
+    let i;
+    for (i = 0; i < this.fakePlanets.length; i += 1) {
+      if (this.fakePlanets[i].square.idX === square.idX &&
+        this.fakePlanets[i].square.idY === square.idY) {
+        return i;
+      }
+    }
+  }
+
+  getSingularityCount(fake) {
     let i;
     let sum = 0;
     for (i = 0; i < this.planets.length; i += 1) {
       if (this.planets[i].type === TYPES.SINGULARITY) {
-        sum += 1;
+        if ((fake && this.fakePlanets[i].square) || !fake) {
+          sum += 1;
+        }
       }
     }
+
     return sum;
   }
 
@@ -492,6 +505,17 @@ export default class SpaceScene extends Scene {
       if (this.planets[i].type === TYPES.SINGULARITY &&
         (this.planets[i].x !== singularity.x || this.planets[i].y !== singularity.y)) {
         return this.planets[i];
+      }
+    }
+  }
+
+  getSecondFakeSingularity(singularity) {
+    let i;
+    for (i = 0; i < this.fakePlanets.length; i += 1) {
+      if (this.fakePlanets[i].type === TYPES.SINGULARITY &&
+        (this.fakePlanets[i].square.idX !== singularity.idX ||
+          this.fakePlanets[i].square.idY !== singularity.idY)) {
+        return this.fakePlanets[i].square;
       }
     }
   }
@@ -578,11 +602,27 @@ export default class SpaceScene extends Scene {
     if (returnDirection === "stop" ) {
       // Get the cat
       if (instruction.planet === TYPES.CAT) {
-        const cat = this.fakePlanets[this.getFakeFromSquare(square)];
+        let cat;
+        if (fake) {
+          cat = this.fakePlanets[this.getFakeFromSquare(square)];
+        } else {
+          cat = this.fakePlanets[this.getFromSquare(square)];
+        }
         returnDirection = cat.getDirectionForCat(direction, fake);
-      } else if (instruction.planet === TYPES.SINGULARITY && this.getSingularityCount() === 2){
-        const s1 = this.planets[this.getFakeFromSquare(square)];
-        const s2 = this.getSecondSingularity(s1);
+      } else if (instruction.planet === TYPES.SINGULARITY && this.getSingularityCount(fake) === 2){
+        let s1, s2, id = this.getFromSquare(square);
+        if (fake) {
+          id = this.getFakeFromSquare(square);
+          s1 = this.fakePlanets[id].square;
+          s2 = this.getSecondFakeSingularity(s1);
+          s2 = {
+            x: s2.idX,
+            y: s2.idY
+          };
+        } else {
+          s1 = this.planets[id];
+          s2 = this.getSecondSingularity(s1);
+        }
         returnDirection = direction;
         displacement = [this.limitX1 + s2.x * 50 + 20, this.limitY1 + s2.y * 50 + 20];
       }

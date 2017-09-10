@@ -13,11 +13,6 @@ export default class Planet extends Renderable {
     this.lastHorizontal = "up";
   }
 
-  setId(x, y) {
-    this.idX = x;
-    this.idY = y;
-  }
-
   getImage() {
     return Engine.getAsset(this.type);
   }
