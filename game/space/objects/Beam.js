@@ -3,15 +3,15 @@ import {TYPES} from "./Planet";
 import {opositeDirection} from "../SpaceScene";
 
 let colors = {
-  "RED": ["#CC0000", "#FF0033", "#CC0066"],
-  "GREEN": ["#006600", "#009900", "#00CC00"],
-  "BLUE": ["#0000FF", "#0033FF", "#0066FF"]
+  "RED": ["#cc0000", "#ff0033", "#cc0066"],
+  "GREEN": ["#006600", "#009900", "#00cc00"],
+  "BLUE": ["#0000ff", "#0033ff", "#0066ff"]
 };
 
 let sideColors = {
-  "RED": ["#F80000", "#D80000", "#A80000"],
-  "GREEN": ["#33FF00", "#33CC00", "#339900"],
-  "BLUE": ["#3366FF", "#3333FF", "#3300FF"]
+  "RED": ["#f80000", "#d80000", "#a80000"],
+  "GREEN": ["#33ff00", "#33cc00", "#339900"],
+  "BLUE": ["#3366ff", "#3333ff", "#3300ff"]
 };
 
 export default class Beam extends Renderable {

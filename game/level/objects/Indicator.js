@@ -22,7 +22,7 @@ export default class Indicator extends Renderable {
 
   render(context) {
     context.globalAlpha = this.time / this.maxTime;
-    context.strokeStyle = '#AAAA00';
+    context.strokeStyle = '#aaaa00';
     context.lineWidth = 5;
 
     context.strokeRect(this.x, this.y, this.width, this.height);
