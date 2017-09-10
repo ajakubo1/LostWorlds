@@ -29,9 +29,7 @@ export default class LevelScene extends Scene {
       const level = levels[i];
       if (level.open) {
         const y = Math.floor(i / 6);
-        const square = new LevelSquare(100 + i % 6 * 125, 100 + y * 125, 100, 100, i);
-        square.setInfo(level);
-        this.levels.push(square);
+        this.levels.push(new LevelSquare(100 + i % 6 * 125, 100 + y * 125, 100, 100, i, level));
       } else {
         break;
       }

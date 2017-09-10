@@ -6,10 +6,14 @@ import {fillText} from "../../core/Letters";
 
 export default class LevelSquare extends Renderable {
 
-  constructor(x, y, width, height, level) {
+  constructor(x, y, width, height, level, info) {
     super(x, y, width, height);
+    this.info = info;
     this.state = 0;
     this.level = level;
+    if (info.done) {
+      this.image = Engine.getAsset(ASSET_IDENTIFIERS.LEVEL_SQUARE_DONE);
+    }
   }
 
   setNormal() {
@@ -28,13 +32,6 @@ export default class LevelSquare extends Renderable {
 
   getImage() {
     return Engine.getAsset(ASSET_IDENTIFIERS.LEVEL_SQUARE);
-  }
-
-  setInfo(info) {
-    if(info.done) {
-      this.image = Engine.getAsset(ASSET_IDENTIFIERS.LEVEL_SQUARE_DONE);
-    }
-    this.info = info;
   }
 
   render(context) {
