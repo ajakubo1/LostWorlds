@@ -296,7 +296,7 @@ export default class SpaceScene extends Scene {
   getPotentialLocation() {
     let potX = Math.floor(Math.random() * this.width);
     let potY = Math.floor(Math.random() * this.height);
-    if (this.determine[potX][potY] !== null && this.determine[potX][potY].planet) {
+    if (this.determine[potX][potY] && this.determine[potX][potY].planet) {
       return this.getPotentialLocation();
     }
     return [potX, potY]
@@ -458,7 +458,7 @@ export default class SpaceScene extends Scene {
   getFakeFromSquare(square) {
     let i;
     for (i = 0; i < this.fakePlanets.length; i += 1) {
-      if (this.fakePlanets[i].square.idX === square.idX &&
+      if (this.fakePlanets[i].square && this.fakePlanets[i].square.idX === square.idX &&
         this.fakePlanets[i].square.idY === square.idY) {
         return i;
       }
@@ -492,7 +492,7 @@ export default class SpaceScene extends Scene {
   getSecondFakeSingularity(singularity) {
     let i;
     for (i = 0; i < this.fakePlanets.length; i += 1) {
-      if (this.fakePlanets[i].type === TYPES.SINGULARITY &&
+      if (this.fakePlanets[i].type === TYPES.SINGULARITY && this.fakePlanets[i].square &&
         (this.fakePlanets[i].square.idX !== singularity.idX ||
           this.fakePlanets[i].square.idY !== singularity.idY)) {
         return this.fakePlanets[i].square;
@@ -501,7 +501,7 @@ export default class SpaceScene extends Scene {
   }
 
   deactivateLaser() {
-    if (this.laser !== null) {
+    if (this.laser) {
       this.laser.setState(ASSET_IDENTIFIERS.PROBE_SQUARE);
       this.laser = null;
       this.beam = null;
@@ -522,7 +522,7 @@ export default class SpaceScene extends Scene {
   }
 
   selectPlanet(square) {
-    if (this.selectedPlanet !== null) {
+    if (this.selectedPlanet) {
       this.selectedPlanet.setState(1)
     }
 
@@ -669,7 +669,7 @@ export default class SpaceScene extends Scene {
   moved(x, y) {
     this.scientist.moved(x, y);
     if(!this.isTutorial) {
-      if (this.laser !== null && !this.laser.inRange(x, y)) {
+      if (this.laser && !this.laser.inRange(x, y)) {
         this.deactivateLaser();
       } else {
         this.solutionButton.moved(x, y);
@@ -681,7 +681,7 @@ export default class SpaceScene extends Scene {
 
   update() {
     let i;
-    if (this.beam !== null) {
+    if (this.beam) {
       this.beam.update();
       this.fake.update();
       if (!this.solutionMode) {
@@ -725,8 +725,8 @@ export default class SpaceScene extends Scene {
         const real = this.determine[i][j];
         const fake = this.fakeDetermine[i][j];
 
-        if (real !== null && real.planet) {
-          if (fake !== null && fake.planet) {
+        if (real && real.planet) {
+          if (fake && fake.planet) {
             if (real.planet.type !== fake.planet.type) {
               this.limitOK();
               return;
@@ -802,6 +802,7 @@ export default class SpaceScene extends Scene {
   }
 
   backToLevel() {
+    this.resetPlanets();
     Engine.removeScene();
     Engine.setScene(new LevelScene());
     Engine.startScene();
@@ -818,7 +819,7 @@ export default class SpaceScene extends Scene {
       this.probeSquares[i].render(context);
     }
 
-    if (this.beam !== null) {
+    if (this.beam) {
       this.beam.render(context);
       context.fillStyle = "#111111";
       context.fillRect(this.limitX1, this.limitY1, this.width * 50, this.height * 50);
@@ -830,7 +831,7 @@ export default class SpaceScene extends Scene {
       this.objects[i].render(context);
     }
 
-    if (this.beam !== null) {
+    if (this.beam) {
       this.fake.render(context);
     }
 

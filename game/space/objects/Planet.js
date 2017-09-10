@@ -18,17 +18,25 @@ export default class Planet extends Renderable {
   }
 
   render(context) {
-    this.renderInLocation(this.x, this.y, context)
+    this.renderInLocation(this.x, this.y, context);
+
+    if (this.square) {
+      this.renderSelectionBox(this.x, this.y, context, 'white');
+    }
+  }
+
+  renderSelectionBox(x, y, context, color) {
+    context.fillStyle = color;
+    context.globalAlpha = 0.2;
+    context.fillRect(x, y, this.width, this.height);
+    context.globalAlpha = 1.0;
   }
 
   renderInLocation(x, y, context) {
     context.drawImage(this.image, x, y, this.width, this.height);
 
     if (this.state === 0) {
-      context.fillStyle = 'red';
-      context.globalAlpha = 0.2;
-      context.fillRect(x, y, this.width, this.height);
-      context.globalAlpha = 1.0;
+      this.renderSelectionBox(x, y, context, 'red')
     }
   }
 
