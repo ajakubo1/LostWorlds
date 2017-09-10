@@ -52,7 +52,7 @@ class EngineImplementation {
 
 class Engine {
   constructor() {
-    if (instance === null) {
+    if (!instance) {
       instance = new EngineImplementation()
     }
 

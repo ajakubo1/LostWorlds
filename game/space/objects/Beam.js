@@ -69,7 +69,11 @@ export default class Beam extends Renderable {
     context.moveTo(beginX,beginY);
     for (i = 1; i < length; i += 1) {
       if (currentDirection !== this.directionHistory[i]) {
-        context.lineTo(this.pathX[i-1] + 5,this.pathY[i-1] + 5);
+        if (currentDirection === TYPES.SINGULARITY) {
+          context.moveTo(this.pathX[i-1] + 5,this.pathY[i-1] + 5);
+        } else {
+          context.lineTo(this.pathX[i-1] + 5,this.pathY[i-1] + 5);
+        }
         currentDirection = this.directionHistory[i]
       }
     }
@@ -138,6 +142,22 @@ export default class Beam extends Renderable {
     this.drawPoint(context);
   }
 
+  moveLine(direction, x, y) {
+    if (direction === 'up') {
+      this.pathX.push(x);
+      this.pathY.push(y - 10)
+    } else if (direction === 'down') {
+      this.pathX.push(x);
+      this.pathY.push(y + 10)
+    } else if (direction === 'left') {
+      this.pathX.push(x - 10);
+      this.pathY.push(y);
+    } else if (direction === 'right') {
+      this.pathX.push(x + 10);
+      this.pathY.push(y);
+    }
+  }
+
   update() {
 
     this.step += 1;
@@ -171,34 +191,18 @@ export default class Beam extends Renderable {
           }
           const displacement = directions[2];
           if (displacement) {
-            this.pathX.push(displacement[0]);
-            this.pathY.push(displacement[1]);
-            this.directionHistory.push(opositeDirection(this.direction));
+            this.moveLine(this.direction, displacement[0], displacement[1]);
+            this.directionHistory.push(TYPES.SINGULARITY);
             lastElement = this.pathX.length - 1;
             prevX = this.pathX[lastElement];
             prevY = this.pathY[lastElement];
           }
         }
       }
-
       if (this.direction === 'stop') {
         this.finished = true;
       }
-
-      if (this.direction === 'up') {
-        this.pathX.push(prevX);
-        this.pathY.push(prevY - 10)
-      } else if (this.direction === 'down') {
-        this.pathX.push(prevX);
-        this.pathY.push(prevY + 10)
-      } else if (this.direction === 'left') {
-        this.pathX.push(prevX - 10);
-        this.pathY.push(prevY);
-      } else if (this.direction === 'right') {
-        this.pathX.push(prevX + 10);
-        this.pathY.push(prevY);
-      }
-
+      this.moveLine(this.direction, prevX, prevY);
       this.directionHistory.push(this.direction);
     }
   }

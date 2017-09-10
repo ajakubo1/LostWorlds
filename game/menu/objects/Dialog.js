@@ -12,7 +12,7 @@ export default class Dialog extends Renderable {
     this.continue = new Button(x + width - 50, y + height - 20, 50, 20,
       '[...]', this.continueClicked, '#333333', '#545454', '#AA1111');
 
-    if (texts === null) {
+    if (!texts) {
       this.noGuideText = true;
       this.finished = 0;
     } else {
@@ -64,7 +64,7 @@ export default class Dialog extends Renderable {
   }
 
   textToLoad(text) {
-    if (text !== null) {
+    if (text) {
       this.scientist.setTalking(true);
     } else {
       this.scientist.setTalking(false);

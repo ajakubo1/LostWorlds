@@ -240,7 +240,7 @@ export default class SpaceScene extends Scene {
   }
 
   nextStep(step) {
-    if(step === 0) {
+    if(!step) {
       this.indicate([this.leftPanel])
     } else if(step === 1 || step === 6) {
       this.indicate([this.middlePanel])
@@ -328,7 +328,7 @@ export default class SpaceScene extends Scene {
     }
 
     let determineObject = determineTable[x][y];
-    if (determineObject === null) {
+    if (!determineObject) {
       determineTable[x][y] = {};
       determineObject = determineTable[x][y];
     }
@@ -339,9 +339,11 @@ export default class SpaceScene extends Scene {
 
     if (determineObject[type]) {
       if (determineObject[type] === opositeDirection(type)) {
-        determineObject['change_' + type] = this.determineColorChange(
-          determineObject['change_' + type], planet
-        );
+        if (opositeDirection(type) === change) {
+          determineObject['change_' + type] = this.determineColorChange(
+            determineObject['change_' + type], planet
+          );
+        }
         return;
       } else if (determineObject[type] === opositeDirection(change)){
         determineObject['change_' + type] = this.determineColorChange(
@@ -393,7 +395,7 @@ export default class SpaceScene extends Scene {
       this.addDirection(x + 1, y + 1, 'up', 'right', type, fake);
       this.addDirection(x + 1, y + 1, 'left', 'down', type, fake);
 
-      if (x === 0) {
+      if (!x) {
         this.addDirection(x, y - 1, 'right', 'left', type, fake);
         this.addDirection(x, y + 1, 'right', 'left', type, fake);
       } else if (x === this.width -1) {
@@ -401,7 +403,7 @@ export default class SpaceScene extends Scene {
         this.addDirection(x, y + 1, 'left', 'right', type, fake);
       }
 
-      if (y === 0) {
+      if (!y) {
         this.addDirection(x + 1, y, 'down', 'up', type, fake);
         this.addDirection(x - 1, y, 'down', 'up', type, fake);
       } else if (y === this.height -1) {
@@ -574,7 +576,7 @@ export default class SpaceScene extends Scene {
 
     const instruction = directionTable[square.idX][square.idY];
 
-    if (instruction === null) {
+    if (!instruction) {
       return [ direction, null ]
     }
 
@@ -691,7 +693,7 @@ export default class SpaceScene extends Scene {
         this.energyIndicator.update();
       }
 
-      if (this.energyIndicator.energy === 0 && !this.energyNotAffected && !this.solutionMode) {
+      if (!this.energyIndicator.energy && !this.energyNotAffected && !this.solutionMode) {
         this.released();
       }
     }

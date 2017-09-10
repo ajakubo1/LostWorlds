@@ -86,7 +86,7 @@ export default class Scientist extends Renderable {
     ];
     this.talking = false;
     this.dialogSize = dialogSize;
-    if (texts === null) {
+    if (!texts) {
       this.dialog = null
     } else {
       this.say(texts)

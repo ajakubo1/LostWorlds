@@ -9,7 +9,7 @@ export const createSquare = (width, height, color, borderColor = null) => {
   const canvas = createCanvas(width, height);
   const context = canvas.getContext('2d');
 
-  const b = borderColor === null ? 2 : 4;
+  const b = !borderColor ? 2 : 4;
   const w = width - 2 * b;
   const h = height - 2 * b;
 
@@ -23,7 +23,7 @@ export const createOpaqSquare = (width, height, color, borderColor, borderSize, 
   const canvas = createCanvas(width, height);
   const context = canvas.getContext('2d');
 
-  const b = borderColor === null ? 2 : borderSize;
+  const b = !borderColor ? 2 : borderSize;
   const w = width - 2 * x - 2 * b;
   const h = height - 2 * y - 2 * b;
 

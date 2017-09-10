@@ -27,7 +27,7 @@ export default class Button extends Renderable {
 
   render(context) {
     if (!this.noRender) {
-      if(this.state === 0) {
+      if(!this.state) {
         context.fillStyle = this.color;
       } else {
         context.fillStyle = this.colorHover;
@@ -48,9 +48,9 @@ export default class Button extends Renderable {
   }
 
   moved(x, y) {
-    if (this.state === 0 && this.inRange(x, y)) {
+    if (!this.state && this.inRange(x, y)) {
       this.setHover();
-    } else if(this.state === 1 && !this.inRange(x, y)) {
+    } else if(this.state && !this.inRange(x, y)) {
       this.setNormal();
     }
   }

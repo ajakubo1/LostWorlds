@@ -19,7 +19,7 @@ export default class PlanetSquare extends Renderable {
 
     this.fake = planet;
 
-    if (this.fake !== null) {
+    if (this.fake) {
       this.fake.setSquare(this)
     }
   }
