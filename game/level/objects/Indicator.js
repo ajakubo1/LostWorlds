@@ -9,7 +9,7 @@ export default class Indicator extends Renderable {
   }
 
   update() {
-    this.time = this.time + this.interval;
+    this.time += this.interval;
 
     if (this.time === this.maxTime) {
       this.interval = -1;

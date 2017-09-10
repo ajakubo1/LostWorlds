@@ -47,13 +47,12 @@ export default class MenuScene extends Scene {
       "bloody monkeys escaped!"
     ];
     this.texts2 = [ "oh, and who are you?!",             // 6
-      "yes you!",                   // 7
       "i have never seen you here!",                   // 7
       "are you the new intern?",    // 8
       "splendid!",     // 12
       "you will help me out!",      // 13
       "i've lost all of the data", // 15
-      "good thing i know what's in each of the blackbox", // 18
+      "good thing i know what's in blackboxes", // 18
       "follow me" // 20
     ];
 

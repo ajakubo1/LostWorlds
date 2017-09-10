@@ -17,8 +17,7 @@ const tutorialDialog = [
 
 const finishedDialog = [
   "well done!",
-  "you sorted out all of the blackboxes!",
-  "I will hire you, that talent can't go to waste!"
+  "you sorted out all of the blackboxes!"
 ];
 
 export default class LevelScene extends Scene {
@@ -46,14 +45,14 @@ export default class LevelScene extends Scene {
       }
     }
     let text = null;
-    if (dialog === 0) {
+    if (!dialog) {
       text = tutorialDialog;
     } else if (doneLevels === 12) {
       text = finishedDialog;
       Engine.globals.finished = true;
     }
     this.scientist = new Scientist(Engine.width / 2 - 50, Engine.height - 95, text, 4, 2);
-    if (dialog === 0) {
+    if (!dialog) {
       this.scientist.setDialogStepCallback(this.nextStep);
     }
   }

@@ -22,8 +22,8 @@ const tutorialDialog = [
   "but you can check it out using lasers here",
   "lasers deplete the battery",
   "you can replace it whenever",
-  "but this randomises particle placement in the blackbox",
-  "don't worry - you have infinite power in tutorial levels",
+  "but this changes positions of particles in the blackbox",
+  "you have infinite power in tutorial levels",
   "normally, the laser beam will go in a straight line", // 10
   "but particles are bending and influencing the laser beam", // 11
   "'red particle' is here, as it bends the beam by 90 degrees at corner squares",
@@ -34,16 +34,16 @@ const tutorialDialog = [
   "and is affected by particles that you place", // 16
   "i will place the 'red particle' where it belongs", // 17
   "so both lasers align", // 18
-  "that's how you can make sure you made the right decision",
-  "if you shoot directly at a particle, the beam will stop", // 19
-  "next thing - if the particle is placed at the edge of the box", // 20
+  "this is how you know you made the right decision",
+  "shoot directly at a particle and beam will stop", // 19
+  "if a particle is placed at the edge of the box", // 20
   "and you activate a nearby laser from that edge", // 21
   "the beam will return", // 22
   "oh - and in case you get too annoyed",
   "you can check how particles are placed in current blackbox",
   "so - you can play around here",
   "when you are finished - and particle placement is correct",
-  "click me and I will check your solution",
+  "click me and I will check your box",
 ];
 
 const newPlanetsDialog = [
@@ -54,13 +54,11 @@ const newPlanetsDialog = [
 
 const newSingularityDialog = [
   "this here is a 'singularity'",
-  "as in - small black hole",
-  "your laser can get stuck in its event horizon",
+  "experiment on it - as it behaves differently from particles",
 ];
 
 const newCatDialog = [
-  "this new particle is the 'schrodinger's bunny'",
-  "i mean 'shrodinger's particle'!",
+  "this new particle is the 'schrodinger bunny'",
   "when you hit it",
   "it bends the beam in a different direction each time"
 ];
@@ -725,8 +723,8 @@ export default class SpaceScene extends Scene {
     if(this.solutionMode) {
       this.displayScientistDialog(
         [
-          "Hope you learned something",
-          "I'll reset the box now"
+          "hope you learned something",
+          "i'll reset the box now"
         ], this.restartLevel);
     }
 
