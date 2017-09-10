@@ -282,11 +282,5 @@ Engine.globals = {
   ],
 };
 
-let i;
-for (i = 0; i < Engine.globals.levels.length; i += 1) {
-  const level = Engine.globals.levels[i];
-  level.open = true;
-}
-
 Engine.setScene(new MenuScene());
 Engine.startScene();
