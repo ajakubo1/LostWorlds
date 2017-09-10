@@ -107,6 +107,7 @@ export default class Scientist extends Renderable {
 
   stopSpeach() {
     this.dialogFinished();
+    this.setTalking(false);
   }
 
   say(texts, callback = null) {

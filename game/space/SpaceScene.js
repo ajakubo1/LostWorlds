@@ -550,6 +550,12 @@ export default class SpaceScene extends Scene {
     if (this.selectedPlanet) {
       square.setFake(this.selectedPlanet);
       this.selectedPlanet.setState(1);
+
+      const sq = this.fakePlanets[this.getFromSquare(this.selectedPlanet.square)];
+      if (sq && sq.type === this.selectedPlanet.type) {
+        this.selectedPlanet.align(sq);
+      }
+
       this.selectedPlanet = null;
       recount = true;
     }
