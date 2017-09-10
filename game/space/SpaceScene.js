@@ -735,14 +735,12 @@ export default class SpaceScene extends Scene {
     if (this.checkLimit > 0) {
       this.displayScientistDialog(
         [
-          'not quite.',
-          'You can ask me ' + this.checkLimit + ' more times before we go to lunch'
+          'not quite. Try one more time',
         ], null);
     } else {
       this.displayScientistDialog(
         [
-          "not quite.",
-          "well, let's take a break and go to lunch",
+          "not quite. Maybe check an easier box?",
         ], this.backToLevel);
     }
   }
@@ -751,8 +749,8 @@ export default class SpaceScene extends Scene {
     if(this.solutionMode) {
       this.displayScientistDialog(
         [
-          "let's reset the box now",
-          "so you can figure it out on your own this time"
+          "Hope you learned something",
+          "I'll reset the box now"
         ], this.restartLevel);
     }
 
@@ -780,8 +778,7 @@ export default class SpaceScene extends Scene {
 
     this.displayScientistDialog(
       [
-        'you did it!',
-        'go ahead and try another blackbox then'
+        'you did it! try another blackbox!',
       ], this.levelWon);
   }
 

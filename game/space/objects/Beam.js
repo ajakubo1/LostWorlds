@@ -32,6 +32,7 @@ export default class Beam extends Renderable {
     this.directionHistory = [];
     this.step = 0;
     this.currentColor = TYPES.RED;
+    this.singularityNearby = false;
     if (this.probe.x < this.x) {
       this.pathX.push(this.probe.x + this.probe.width);
       this.pathY.push(this.probe.y + 20);
@@ -78,6 +79,9 @@ export default class Beam extends Renderable {
   }
 
   getActualColor(colorset) {
+    if (this.singularityNearby) {
+      return '#212121';
+    }
     let color = colorset[0];
     if (this.step > 2 && this.step < 6) {
       color = colorset[1];
@@ -101,7 +105,7 @@ export default class Beam extends Renderable {
     } else {
       this.drawBeam(context, 6, this.getHelperColor());
       this.drawBeam(context, 3, this.getColor());
-      this.drawBeam(context, 1, "white");
+      this.drawBeam(context, 1, "#ffffff");
     }
   }
 
@@ -151,15 +155,20 @@ export default class Beam extends Renderable {
       if (prevX < this.x - 50 || prevX > this.width + 40 ||
         prevY < this.y - 50 || prevY > this.height + 40) {
         this.finished = true;
+        this.singularityNearby = false;
         return;
       }
 
       if (prevX > this.x && prevX < this.width &&
         prevY > this.y && prevY < this.height) {
         if ((lastElement + 3) % 5 === 0) {
+          this.singularityNearby = false;
           let directions = this.scene.determineDirection(prevX, prevY, this.direction, this.fake);
           this.direction = directions[0];
           this.currentColor = colors[directions[1]] ? directions[1] : this.currentColor;
+          if (directions[1] === TYPES.SINGULARITY) {
+            this.singularityNearby = true;
+          }
           const displacement = directions[2];
           if (displacement) {
             this.pathX.push(displacement[0]);
@@ -170,8 +179,6 @@ export default class Beam extends Renderable {
             prevY = this.pathY[lastElement];
           }
         }
-      } else {
-
       }
 
       if (this.direction === 'stop') {
