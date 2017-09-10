@@ -97,6 +97,9 @@ export default class SpaceScene extends Scene {
     this.restartLevel = this.restartLevel.bind(this);
     this.levelWon = this.levelWon.bind(this);
     this.disableTutorial = this.disableTutorial.bind(this);
+    this.placePlanet = this.placePlanet.bind(this);
+    this.activateLaser = this.activateLaser.bind(this);
+    this.selectPlanet = this.selectPlanet.bind(this);
     this.checkLimit = 3;
 
     this.laser = null;
