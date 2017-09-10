@@ -29,4 +29,4 @@ TODO
 - [x] Tune how singularities work
 - [x] red and blue particle check
 - [ ] fake bunnies don't work :(
-- [ ] Sometimes beam doesn't align (black hole + black hole)
+- [x] Sometimes beam doesn't align (black hole + black hole)
