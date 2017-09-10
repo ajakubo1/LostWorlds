@@ -339,6 +339,9 @@ export default class SpaceScene extends Scene {
 
     if (determineObject[type]) {
       if (determineObject[type] === opositeDirection(type)) {
+        determineObject['change_' + type] = this.determineColorChange(
+          determineObject['change_' + type], planet
+        );
         return;
       } else if (determineObject[type] === opositeDirection(change)){
         determineObject['change_' + type] = this.determineColorChange(

@@ -26,4 +26,7 @@ TODO
 - [x] draw '1' and '2' in pixels
 - [x] Do some levels man!
 - [x] One singularity placed, other one not bug
-- [ ] Tune how singularities work
+- [x] Tune how singularities work
+- [x] red and blue particle check
+- [ ] fake bunnies don't work :(
+- [ ] Sometimes beam doesn't align (black hole + black hole)
