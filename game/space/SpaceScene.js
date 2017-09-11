@@ -708,20 +708,9 @@ export default class SpaceScene extends Scene {
     this.scientist.update();
   }
 
-  displayScientistDialog(texts, callback) {
-    this.scientist.say(texts, callback);
-  }
-
-  limitOK() {
-    this.displayScientistDialog(
-      [
-        "not quite. Maybe check an easier box?",
-      ], this.backToLevel);
-  }
-
   check() {
     if(this.solutionMode) {
-      this.displayScientistDialog(
+      this.scientist.say(
         [
           "hope you learned something",
           "i'll reset the box now"
@@ -737,18 +726,26 @@ export default class SpaceScene extends Scene {
         if (real && real.planet) {
           if (fake && fake.planet) {
             if (real.planet.type !== fake.planet.type) {
-              this.limitOK();
+              Engine.globals.lost += 1;
+              this.scientist.say(
+                [
+                  "not quite. Maybe check an easier box?",
+                ], this.backToLevel);
               return;
             }
           } else {
-            this.limitOK();
+            Engine.globals.lost += 1;
+            this.scientist.say(
+              [
+                "not quite. Maybe check an easier box?",
+              ], this.backToLevel);
             return;
           }
         }
       }
     }
 
-    this.displayScientistDialog(
+    this.scientist.say(
       [
         'you did it! try another blackbox!',
       ], this.levelWon);
@@ -764,6 +761,7 @@ export default class SpaceScene extends Scene {
 
   restartLevel() {
     this.resetPlanets();
+    Engine.globals.lost += 1;
     Engine.removeScene();
     Engine.setScene(new SpaceScene(Engine.globals.levels[this.currentLevel], this.currentLevel));
     Engine.startScene();
@@ -779,6 +777,7 @@ export default class SpaceScene extends Scene {
       }
     }
     Engine.globals.levels[this.currentLevel].done = true;
+    Engine.globals.won += 1;
     this.backToLevel();
   }
 
@@ -790,7 +789,7 @@ export default class SpaceScene extends Scene {
     let i, j;
 
     const length = this.planetSquares.length;
-    for (i = 0; i < length; i += 1) {
+    for (i = 0; i < this.planetSquares.length; i += 1) {
       const square = this.planetSquares[i];
       square.setFake(null);
     }

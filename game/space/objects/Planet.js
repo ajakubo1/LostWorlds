@@ -13,6 +13,7 @@ export default class Planet extends Renderable {
     this.lastHorizontal = "up";
     this.lastVerticalFake = "left";
     this.lastHorizontalFake = "up";
+    this.aligned = false;
   }
 
   getImage() {
@@ -32,6 +33,7 @@ export default class Planet extends Renderable {
     context.globalAlpha = 0.2;
     context.fillRect(x, y, this.width, this.height);
     context.globalAlpha = 1.0;
+
   }
 
   renderInLocation(x, y, context) {
@@ -49,7 +51,7 @@ export default class Planet extends Renderable {
 
   getDirectionForCat (direction, fake) {
     if (direction === "left" || direction === "right") {
-      if (fake) {
+      if (fake && !this.aligned) {
         this.lastHorizontalFake = opositeDirection(this.lastHorizontalFake);
         return this.lastHorizontalFake;
       } else {
@@ -57,7 +59,7 @@ export default class Planet extends Renderable {
         return this.lastHorizontal;
       }
     } else {
-      if (fake) {
+      if (fake && !this.aligned) {
         this.lastVerticalFake = opositeDirection(this.lastVerticalFake);
         return this.lastVerticalFake
       } else {
@@ -68,6 +70,7 @@ export default class Planet extends Renderable {
   }
 
   setSquare(square) {
+    this.aligned = false;
     if (this.square && square) {
       this.square.setFake(null);
     }

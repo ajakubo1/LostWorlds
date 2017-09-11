@@ -73,6 +73,8 @@ Engine._putAsset(
 );
 
 Engine.globals = {
+  won: 0,
+  lost: 0,
   levels: [
     {
       width: 3,

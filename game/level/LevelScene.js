@@ -113,6 +113,8 @@ export default class LevelScene extends Scene {
       this.indicator.render(context);
     }
 
-    fillText(0, 0, Engine.width, 60, "blackbox: lost particles", context, "#ffffff", 5)
+    fillText(0, 0, Engine.width, 60, "blackbox: lost particles", context, "#ffffff", 5);
+    fillText(0, 350, Engine.width / 2, 60, "Won: " + Engine.globals.won, context, "#ffffff", 3);
+    fillText(Engine.width / 2, 350, Engine.width / 2, 60, "Lost: " + Engine.globals.lost, context, "#ffffff", 3);
   }
 }
