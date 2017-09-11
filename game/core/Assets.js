@@ -1,16 +1,14 @@
 export default class Assets {
   constructor() {
     this.assets = {};
-    this.types = {};
   }
 
   get(id) {
     return this.assets[id];
   }
 
-  set(id, asset, type) {
+  set(id, asset) {
     this.assets[id] = asset;
-    this.types[id] = type;
   }
 };
 

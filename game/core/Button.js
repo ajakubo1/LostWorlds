@@ -2,7 +2,7 @@ import Renderable from './Renderable';
 import {fillText} from './Letters';
 
 export default class Button extends Renderable {
-  constructor(x, y, width, height, text, onClick, color = '#DDDDDD', hoverColor = '#ffffff', textColor = '#000000') {
+  constructor(x, y, width, height, text, onClick, color = '#dddddd', hoverColor = '#ffffff', textColor = '#000000') {
     super(x, y, width, height);
     this.text = text;
     this.color = color;

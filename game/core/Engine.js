@@ -41,8 +41,8 @@ class EngineImplementation {
     this.events.removeOnPressEvent();
   }
 
-  _putAsset(id, asset, type = "PLACEHOLDER") {
-    this.assets.set(id, asset, type)
+  _putAsset(id, asset) {
+    this.assets.set(id, asset)
   }
 
   getAsset(id) {

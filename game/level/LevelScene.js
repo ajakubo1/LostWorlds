@@ -68,13 +68,7 @@ export default class LevelScene extends Scene {
   moved(x, y) {
     let i;
     for (i = 0 ; i < this.levels.length ; i += 1) {
-      if (this.levels[i].state === 0 && this.levels[i].inRange(x, y)) {
-        this.levels[i].setHover();
-        break;
-      } else if (this.levels[i].state === 1 && !this.levels[i].inRange(x, y)) {
-        this.levels[i].setNormal();
-        break;
-      }
+      this.levels[i].moved(x, y);
     }
 
     this.scientist.moved(x, y);
@@ -87,10 +81,7 @@ export default class LevelScene extends Scene {
   pressed(x, y) {
     let i;
     for (i = 0 ; i < this.levels.length ; i += 1) {
-      if (this.levels[i].inRange(x, y)) {
-        this.levels[i].goToLevel();
-        break;
-      }
+      this.levels[i].pressed(x, y);
     }
     this.scientist.pressed(x, y);
   }
