@@ -47,6 +47,7 @@ export default class Planet extends Renderable {
   align(planet) {
     this.lastVerticalFake = planet.lastVertical;
     this.lastHorizontalFake = planet.lastHorizontal;
+    this.aligned = true;
   }
 
   getDirectionForCat (direction, fake) {
@@ -55,7 +56,9 @@ export default class Planet extends Renderable {
         this.lastHorizontalFake = opositeDirection(this.lastHorizontalFake);
         return this.lastHorizontalFake;
       } else {
-        this.lastHorizontal = opositeDirection(this.lastHorizontal);
+        if (!fake) {
+          this.lastHorizontal = opositeDirection(this.lastHorizontal);
+        }
         return this.lastHorizontal;
       }
     } else {
@@ -63,7 +66,9 @@ export default class Planet extends Renderable {
         this.lastVerticalFake = opositeDirection(this.lastVerticalFake);
         return this.lastVerticalFake
       } else {
-        this.lastVertical = opositeDirection(this.lastVertical);
+        if (!fake) {
+          this.lastVertical = opositeDirection(this.lastVertical);
+        }
         return this.lastVertical;
       }
     }

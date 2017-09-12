@@ -28,5 +28,5 @@ TODO
 - [x] One singularity placed, other one not bug
 - [x] Tune how singularities work
 - [x] red and blue particle check
-- [ ] fake bunnies don't work :(
+- [x] fake bunnies don't work :(
 - [x] Sometimes beam doesn't align (black hole + black hole)

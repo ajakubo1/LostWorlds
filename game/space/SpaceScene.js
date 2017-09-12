@@ -33,7 +33,7 @@ const tutorialDialog = [
   "smaller one goes above the box", // 15
   "and is affected by particles that you place", // 16
   "i will place the 'red particle' where it belongs", // 17
-  "so both lasers align", // 18
+  "now - both lasers align", // 18
   "this is how you know you made the right decision",
   "shoot directly at a particle and beam will stop", // 19
   "if a particle is placed at the edge of the box", // 20
@@ -789,11 +789,6 @@ export default class SpaceScene extends Scene {
     let i, j;
 
     const length = this.planetSquares.length;
-    for (i = 0; i < this.planetSquares.length; i += 1) {
-      const square = this.planetSquares[i];
-      square.setFake(null);
-    }
-
     for (i = 0 ; i < this.planets.length; i += 1) {
       let square;
       for (j = 0; j < length; j += 1) {
@@ -803,7 +798,8 @@ export default class SpaceScene extends Scene {
         }
       }
 
-      square.setFake(this.fakePlanets[i]);
+      this.selectPlanet(this.fakePlanets[i]);
+      this.placePlanet(square);
     }
 
     this.planetPlaced();

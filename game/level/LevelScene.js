@@ -9,9 +9,10 @@ import {fillText} from "../core/Letters";
 const tutorialDialog = [
   "welcome to my lab!",
   "this is a blackbox",
+  "yes, i know it's purple",
   "it's essentially a microscopic universe",
   "well... in a box.",
-  "it helps me in sciency stuff",
+  "anyway - it helps me in sciency stuff",
   "go ahead! take a look!",
 ];
 
@@ -58,7 +59,7 @@ export default class LevelScene extends Scene {
   }
 
   nextStep(step) {
-    if(step === 0 || step === 4) {
+    if(step === 0 || step > 4) {
       this.indicator = new Indicator(this.levels[0]);
     } else {
       this.indicator = null;
